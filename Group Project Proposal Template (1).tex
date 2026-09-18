@@ -1,0 +1,136 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\setstretch{1.10}
+\setlength{\emergencystretch}{2em}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    urlcolor=blue!50!black,
+    citecolor=black
+}
+
+% --------------------
+% Course information
+% --------------------
+\newcommand{\course}{DSA4213: Natural Language Processing for Data Science}
+\newcommand{\semester}{Semester 1, AY2026/2027}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Group Project Proposal}\\[0.4em]
+{\large Project Title}\\[0.9em]
+Group ID: \underline{\hspace{3cm}}\\[0.9em]
+\course\\
+\semester
+\end{center}
+
+% ====================
+% Administrative information
+% ====================
+\section*{Administrative Information}
+
+\begin{tabular}{@{}>{\bfseries\raggedright\arraybackslash}p{0.25\linewidth}
+                    >{\raggedright\arraybackslash}p{0.70\linewidth}@{}}
+Group members & Name (Student ID) for each member. \\[0.7em]
+Project direction & One short phrase describing the project area. \\[0.7em]
+Repository & Link, if available: \url{https://} \\
+\end{tabular}
+
+% ====================
+% Executive summary
+% ====================
+\section*{Project Summary}
+
+Summarize the agent-related question, the proposed system or study, the main
+evaluation plan, and what the project aims to learn or demonstrate.
+
+% ====================
+% 1. Problem and motivation
+% ====================
+\section*{1. Problem, Research Question, and Motivation}
+
+State one clear question, objective, or hypothesis. Explain the practical or
+scientific motivation, the intended users or setting, and why an \emph{agent-based}
+approach is relevant. Define what success would mean for this project.
+
+% ====================
+% 2. Related work and contribution
+% ====================
+\section*{2. Related Work and Proposed Contribution}
+
+Identify the most relevant prior systems, datasets, benchmarks, papers, or tools.
+Explain what the group will contribute beyond assembling existing components.
+Cite the sources on which the project design depends.
+
+% ====================
+% 3. Agent setup
+% ====================
+\section*{3. Agent and Task Setup}
+
+Describe the proposed setup precisely. For an empirical study, describe the agent
+system and the study design or conditions considered. The list below is a guide,
+not a checklist: you do not need to address every item. Include only the elements
+that are relevant to your project:
+
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item task and operating environment;
+    \item inputs or observations and outputs or actions;
+    \item model(s), prompts, tools, APIs, retrieval sources, memory, or other agents;
+    \item users, simulators, datasets, benchmarks, or interaction protocols; and
+    \item stopping conditions, constraints, permissions, and failure recovery.
+\end{itemize}
+
+% ====================
+% 4. System or study design
+% ====================
+\section*{4. Proposed System or Study Design}
+
+Describe what the group will implement or investigate and the sequence of the main
+components. Identify the part that is technically meaningful and owned by the group.
+If useful, include a system diagram, pseudocode, or an example agent trajectory.
+
+\subsection*{4.1 Comparisons and Ablations (if applicable)}
+
+Describe any baselines, controlled comparisons, or ablations that would help answer
+the project question.
+
+% ====================
+% 5. Evaluation
+% ====================
+\section*{5. Preliminary Evaluation Plan}
+
+Connect each main claim or objective to concrete evidence. Depending on the project,
+this may include task-based metrics, rubrics, human judgments, system measures,
+agent-trajectory analysis, case studies, stress tests, or safety tests.
+
+Describe the evaluation protocol and, where relevant, how variability will be
+handled. Include representative successes and failures when they help interpret the
+aggregate results.
+
+Present the evaluation plan in whichever format best suits the project. A short
+narrative, bullet list, or table are all acceptable.
+
+% ====================
+% 6. Risks and responsible practice
+% ====================
+\section*{6. Risks, Limitations, and Responsible Practice}
+
+Identify the main risks or limitations relevant to the project. Where appropriate,
+describe safeguards or a fallback. Do not include credentials, private data, or
+material that the group does not have permission to share.
+
+\bibliographystyle{plain}
+% \bibliography{references}
+
+\end{document}
