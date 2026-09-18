@@ -1,0 +1,38 @@
+Applying the deck's project template (slide 41) — "We want someone to ___. Our agents will ___. Our contribution is ___. We will demonstrate and evaluate it through ___." — to each of these three directions:
+
+Section 2 — Autonomous Research
+
+(reference: AI Scientist, Lu et al. 2024)
+
+We want someone to hand the agent an open question about an NLP model's behavior — not a fixed dataset task, but something like "does this model's performance degrade under X perturbation, and why?"
+Our agents will propose an experiment, write and run the code, inspect the results, and decide whether to follow up, abandon the line of inquiry, or attempt to reproduce a surprising result.
+Our contribution is the mechanism the agent uses to pick informative next experiments (rather than random ones) and/or a self-check step that catches misread results before they become claims.
+We will demonstrate and evaluate it through a research notebook showing the full decision trail, and a final report where every claim links back to the run, code, and figure that produced it. Evidence to collect: reproducibility of runs, whether claims actually hold up under re-execution.
+Section 5 — Embodied Action and Skill Learning
+
+(reference: Voyager and SayCan — note this doesn't require physical robots; both the slides' project idea and Voyager itself run in a simulated/game environment, so it fits your "no physical research" constraint)
+
+We want someone to watch an agent tackle a task it can't yet do, in a game or simulated world with visible state and actions.
+Our agents will attempt the task, extract a reusable skill from a successful attempt, store it in a skill library, and later call on that skill as a building block for a harder goal.
+Our contribution is the logic for what to learn next, how a skill gets verified before being saved (so bad skills don't pollute the library), or how skills compose into longer plans.
+We will demonstrate and evaluate it through an inspectable skill library the audience can browse, a replay of how each skill was learned, and a transfer test — moving the agent to a new but related setting to see which skills carry over.
+Section 6 — Agent Security
+
+(reference: AgentDojo, Debenedetti et al., NeurIPS 2024)
+
+We want someone to give the agent a legitimate task (e.g., "read these documents and summarize/act on them") while an attacker embeds competing instructions inside the content the agent has to read.
+Our agents will process untrusted content through tools while distinguishing the user's actual instructions from injected ones, deciding which actions are authorized.
+Our contribution is a specific defense mechanism, a new attack strategy that exposes a gap in existing defenses, or a benchmark targeting an underexplored injection vector.
+We will demonstrate and evaluate it through paired metrics — attack success rate and task utility — replaying attempts to show exactly where an attack was blocked (or got through) and confirming the original task still got done.
+
+Given your stated interest, Section 2 + Section 6 combined (a research agent that has to detect and resist injected/adversarial content while doing its research loop) is still the most novel angle — it's not just AgentDojo's email-agent setting, and it avoids the physical-robot territory of Section 5 entirely if you'd rather drop that one.
+
+Want me to turn any one of these three into a fuller project spec (system architecture + evaluation plan)?
+
+
+
+Regarding Section 2, evaluation metrics: Novel results
+
+Regarding Section 6, evaluation metrics: refcount of access to sensitive info, string compare to file content for proportion of info leaked.
+
+Or Use LLMs as judge as well
