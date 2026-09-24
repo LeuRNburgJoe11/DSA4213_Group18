@@ -134,6 +134,24 @@ aggregate results.
 Present the evaluation plan in whichever format best suits the project. A short
 narrative, bullet list, or table are all acceptable.
 
+5. Preliminary Evaluation Plan
+
+Primary metrics, computed per configuration (baseline, each defense, hybrid):
+Attack success rate (ASR) — fraction of injection episodes where the agent executes the attacker's intended side-effecting call (e.g., sends to the wrong recipient).
+Task utility — fraction of benign episodes where the agent correctly completes the user's original request, scored against AgentDojo-style task checks or a rubric.
+Utility-under-attack — task completion rate on injection episodes specifically, to separate "defense blocked the attack" from "defense also broke the legitimate task."
+Secondary/diagnostic metrics:
+Tool-call budget used per episode (proxy for latency/overhead added by each defense).
+False-positive rate of the confirmation-gate classifier on benign side-effecting calls.
+Breakdown of ASR by injection type (visible / obfuscated / multi-step delayed-trigger) and position (early / late), tying results back to the section 4.1 ablations.
+Protocol:
+Fixed set of benign + injection task instances, run identically across all four configurations for a controlled comparison.
+Multiple runs per episode (e.g., n=3–5) to account for LLM sampling variance; report mean ± spread rather than a single run.
+Automated pass/fail checks on final tool-call logs where possible; manual review for ambiguous trajectories.
+Qualitative analysis:
+2–3 representative successful defenses (attack blocked, task still completed) and 2–3 representative failures (attack succeeded, or defense broke utility) included as annotated trajectories in the report to illustrate why a defense worked or failed, not just that it did.
+Presentation: results as a summary table (configuration × ASR × utility) plus one plot showing the security-utility trade-off frontier across configurations, supplemented by the trajectory case studies.
+
 % ====================
 % 6. Risks and responsible practice
 % ====================
@@ -142,6 +160,25 @@ narrative, bullet list, or table are all acceptable.
 Identify the main risks or limitations relevant to the project. Where appropriate,
 describe safeguards or a fallback. Do not include credentials, private data, or
 material that the group does not have permission to share.
+
+
+5. Preliminary Evaluation Plan
+
+Primary metrics, computed per configuration (baseline, each defense, hybrid):
+Attack success rate (ASR) — fraction of injection episodes where the agent executes the attacker's intended side-effecting call (e.g., sends to the wrong recipient).
+Task utility — fraction of benign episodes where the agent correctly completes the user's original request, scored against AgentDojo-style task checks or a rubric.
+Utility-under-attack — task completion rate on injection episodes specifically, to separate "defense blocked the attack" from "defense also broke the legitimate task."
+Secondary/diagnostic metrics:
+Tool-call budget used per episode (proxy for latency/overhead added by each defense).
+False-positive rate of the confirmation-gate classifier on benign side-effecting calls.
+Breakdown of ASR by injection type (visible / obfuscated / multi-step delayed-trigger) and position (early / late), tying results back to the section 4.1 ablations.
+Protocol:
+Fixed set of benign + injection task instances, run identically across all four configurations for a controlled comparison.
+Multiple runs per episode (e.g., n=3–5) to account for LLM sampling variance; report mean ± spread rather than a single run.
+Automated pass/fail checks on final tool-call logs where possible; manual review for ambiguous trajectories.
+Qualitative analysis:
+2–3 representative successful defenses (attack blocked, task still completed) and 2–3 representative failures (attack succeeded, or defense broke utility) included as annotated trajectories in the report to illustrate why a defense worked or failed, not just that it did.
+Presentation: results as a summary table (configuration × ASR × utility) plus one plot showing the security-utility trade-off frontier across configurations, supplemented by the trajectory case studies.
 
 \bibliographystyle{plain}
 % \bibliography{references}
