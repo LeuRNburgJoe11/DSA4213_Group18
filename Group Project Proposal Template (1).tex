@@ -123,35 +123,30 @@ the project question.
 % ====================
 \section*{5. Preliminary Evaluation Plan}
 
-Connect each main claim or objective to concrete evidence. Depending on the project,
-this may include task-based metrics, rubrics, human judgments, system measures,
-agent-trajectory analysis, case studies, stress tests, or safety tests.
+\textbf{Primary metrics}, computed per configuration (baseline, each defense, hybrid):
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item \emph{Attack success rate (ASR)} — fraction of injection episodes where the agent executes the attacker's intended side-effecting call (e.g., sends to the wrong recipient).
+    \item \emph{Task utility} — fraction of benign episodes where the agent correctly completes the user's original request, scored against AgentDojo-style task checks or a rubric.
+    \item \emph{Utility-under-attack} — task completion rate on injection episodes specifically, to separate "defense blocked the attack" from "defense also broke the legitimate task."
+\end{itemize}
 
-Describe the evaluation protocol and, where relevant, how variability will be
-handled. Include representative successes and failures when they help interpret the
-aggregate results.
+\textbf{Secondary/diagnostic metrics:}
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item Tool-call budget used per episode (proxy for latency/overhead added by each defense).
+    \item False-positive rate of the confirmation-gate classifier on benign side-effecting calls.
+    \item Breakdown of ASR by injection type (visible / obfuscated / multi-step delayed-trigger) and position (early / late), tying results back to the section 4.1 ablations.
+\end{itemize}
 
-Present the evaluation plan in whichever format best suits the project. A short
-narrative, bullet list, or table are all acceptable.
+\textbf{Protocol:}
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item Fixed set of benign + injection task instances, run identically across all four configurations for a controlled comparison.
+    \item Multiple runs per episode (e.g., $n=3$–$5$) to account for LLM sampling variance; report mean $\pm$ spread rather than a single run.
+    \item Automated pass/fail checks on final tool-call logs where possible; manual review for ambiguous trajectories.
+\end{itemize}
 
-5. Preliminary Evaluation Plan
+\textbf{Qualitative analysis:} 2–3 representative successful defenses (attack blocked, task still completed) and 2–3 representative failures (attack succeeded, or defense broke utility) included as annotated trajectories in the report to illustrate why a defense worked or failed, not just that it did.
 
-Primary metrics, computed per configuration (baseline, each defense, hybrid):
-Attack success rate (ASR) — fraction of injection episodes where the agent executes the attacker's intended side-effecting call (e.g., sends to the wrong recipient).
-Task utility — fraction of benign episodes where the agent correctly completes the user's original request, scored against AgentDojo-style task checks or a rubric.
-Utility-under-attack — task completion rate on injection episodes specifically, to separate "defense blocked the attack" from "defense also broke the legitimate task."
-Secondary/diagnostic metrics:
-Tool-call budget used per episode (proxy for latency/overhead added by each defense).
-False-positive rate of the confirmation-gate classifier on benign side-effecting calls.
-Breakdown of ASR by injection type (visible / obfuscated / multi-step delayed-trigger) and position (early / late), tying results back to the section 4.1 ablations.
-Protocol:
-Fixed set of benign + injection task instances, run identically across all four configurations for a controlled comparison.
-Multiple runs per episode (e.g., n=3–5) to account for LLM sampling variance; report mean ± spread rather than a single run.
-Automated pass/fail checks on final tool-call logs where possible; manual review for ambiguous trajectories.
-Qualitative analysis:
-2–3 representative successful defenses (attack blocked, task still completed) and 2–3 representative failures (attack succeeded, or defense broke utility) included as annotated trajectories in the report to illustrate why a defense worked or failed, not just that it did.
-Presentation: results as a summary table (configuration × ASR × utility) plus one plot showing the security-utility trade-off frontier across configurations, supplemented by the trajectory case studies.
-
+\textbf{Presentation:} results as a summary table (configuration $\times$ ASR $\times$ utility) plus one plot showing the security-utility trade-off frontier across configurations, supplemented by the trajectory case studies.
 % ====================
 % 6. Risks and responsible practice
 % ====================
@@ -161,26 +156,37 @@ Identify the main risks or limitations relevant to the project. Where appropriat
 describe safeguards or a fallback. Do not include credentials, private data, or
 material that the group does not have permission to share.
 
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item \textbf{Scope limitation:} findings are specific to the simulated environment and chosen base LLM(s); ASR and utility numbers may not transfer to other tool sets, models, or real deployments — this will be stated explicitly as a limitation, not generalized.
+    \item \textbf{Injection realism:} synthetic injection prompts may not reflect the sophistication of real-world attacks; the group will note this as a threat-model boundary rather than claim comprehensive coverage.
+    \item \textbf{Model/API variance:} LLM outputs are non-deterministic and API models may change over the project timeline; mitigated by pinning model versions where possible and running multiple trials per episode.
+    \item \textbf{Dual-use consideration:} the project involves designing working prompt-injection attacks. These will be developed and tested strictly within the group's own sandboxed simulation, never against any real third-party service, and will be presented alongside their corresponding defenses rather than as standalone exploits.
+    \item \textbf{No real data:} all task content (emails, calendar entries, etc.) will be synthetic — no real personal data, credentials, or private material will be used or included in the report or repository.
+    \item \textbf{Fallback plan:} if API costs or time constraints limit the number of defenses/ablations that can be run, the group will prioritize the baseline vs. two defenses and the single-turn vs. delayed-trigger comparison, dropping remaining ablations first.
+\end{itemize}
 
-5. Preliminary Evaluation Plan
 
-Primary metrics, computed per configuration (baseline, each defense, hybrid):
-Attack success rate (ASR) — fraction of injection episodes where the agent executes the attacker's intended side-effecting call (e.g., sends to the wrong recipient).
-Task utility — fraction of benign episodes where the agent correctly completes the user's original request, scored against AgentDojo-style task checks or a rubric.
-Utility-under-attack — task completion rate on injection episodes specifically, to separate "defense blocked the attack" from "defense also broke the legitimate task."
-Secondary/diagnostic metrics:
-Tool-call budget used per episode (proxy for latency/overhead added by each defense).
-False-positive rate of the confirmation-gate classifier on benign side-effecting calls.
-Breakdown of ASR by injection type (visible / obfuscated / multi-step delayed-trigger) and position (early / late), tying results back to the section 4.1 ablations.
-Protocol:
-Fixed set of benign + injection task instances, run identically across all four configurations for a controlled comparison.
-Multiple runs per episode (e.g., n=3–5) to account for LLM sampling variance; report mean ± spread rather than a single run.
-Automated pass/fail checks on final tool-call logs where possible; manual review for ambiguous trajectories.
-Qualitative analysis:
-2–3 representative successful defenses (attack blocked, task still completed) and 2–3 representative failures (attack succeeded, or defense broke utility) included as annotated trajectories in the report to illustrate why a defense worked or failed, not just that it did.
-Presentation: results as a summary table (configuration × ASR × utility) plus one plot showing the security-utility trade-off frontier across configurations, supplemented by the trajectory case studies.
+
 
 \bibliographystyle{plain}
+\bibitem{debenedetti2024agentdojo}
+E.~Debenedetti, J.~Zhang, M.~Balunovi\'{c}, L.~Beurer-Kellner, M.~Fischer, and
+F.~Tram\`{e}r.
+\newblock AgentDojo: A dynamic environment to evaluate attacks and defenses
+for LLM agents.
+\newblock \emph{NeurIPS Datasets and Benchmarks Track}, 2024.
+
+\bibitem{greshake2023youve}
+K.~Greshake, S.~Abdelnabi, S.~Mishra, C.~Endres, T.~Holz, and M.~Fritz.
+\newblock Not what you've signed up for: Compromising real-world LLM-integrated
+applications with indirect prompt injection.
+\newblock \emph{Proceedings of the 16th ACM Workshop on Artificial
+Intelligence and Security (AISec)}, 2023.
+
+\bibitem{chen2024struq}
+S.~Chen, J.~Piet, C.~Sitawarin, and D.~Wagner.
+\newblock StruQ: Defending against prompt injection with structured queries.
+\newblock \emph{arXiv preprint arXiv:2402.06363}, 2024.
 % \bibliography{references}
 
 \end{document}
