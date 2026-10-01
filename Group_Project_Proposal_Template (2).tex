@@ -1,0 +1,198 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\setstretch{1.10}
+\setlength{\emergencystretch}{2em}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    urlcolor=blue!50!black,
+    citecolor=black
+}
+
+% --------------------
+% Course information
+% --------------------
+\newcommand{\course}{DSA4213: Natural Language Processing for Data Science}
+\newcommand{\semester}{Semester 1, AY2026/2027}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Group Project Proposal}\\[0.4em]
+{\large Project Title}\\[0.9em]
+Group ID: 18 \underline{\hspace{3cm}}\\[0.9em]
+\course\\
+\semester
+\end{center}
+
+% ====================
+% Administrative information
+% ====================
+\section*{Administrative Information}
+
+\begin{tabular}{@{}>{\bfseries\raggedright\arraybackslash}p{0.25\linewidth}
+                    >{\raggedright\arraybackslash}p{0.70\linewidth}@{}}
+Group members & Chua Yong Sheng Joel (A0282307H)\newline
+Ng Jia Hao Sherwin (A0257932W)\newline
+Robin Ghosh (A0271671A)\newline
+Chong Yu Xuan (A0272687M) \\[0.7em]
+
+Project direction & Agentic AI + Judge-Aware Evaluation --- Many-to-One Prompt Injection \\[0.7em]
+
+Repository & Link, if available: \url{https://github.com/LeuRNburgJoe11/DSA4213_Group18} \\
+\end{tabular}
+
+% ====================
+% Executive summary
+% ====================
+\section*{Project Summary}
+
+Summarize the agent-related question, the proposed system or study, the main
+evaluation plan, and what the project aims to learn or demonstrate.
+
+Our project aims to stimulate 3 agents prompt injecting into another agent and find out which agent is effective in detecting and resisting prompt injection.
+We also aim to 
+
+% ====================
+% 1. Problem and motivation
+% ====================
+\section*{1. Problem, Research Question, and Motivation}
+
+State one clear question, objective, or hypothesis. Explain the practical or
+scientific motivation, the intended users or setting, and why an \emph{agent-based}
+approach is relevant. Define what success would mean for this project.
+
+% ====================
+% 2. Related work and contribution
+% ====================
+\section*{2. Related Work and Proposed Contribution}
+
+Identify the most relevant prior systems, datasets, benchmarks, papers, or tools.
+Explain what the group will contribute beyond assembling existing components.
+Cite the sources on which the project design depends.
+
+% ====================
+% 3. Agent setup
+% ====================
+\section*{3. Agent and Task Setup}
+
+Describe the proposed setup precisely. For an empirical study, describe the agent
+system and the study design or conditions considered. The list below is a guide,
+not a checklist: you do not need to address every item. Include only the elements
+that are relevant to your project:
+
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item task and operating environment;
+    \item inputs or observations and outputs or actions;
+    \item model(s), prompts, tools, APIs, retrieval sources, memory, or other agents;
+    \item users, simulators, datasets, benchmarks, or interaction protocols; and
+    \item stopping conditions, constraints, permissions, and failure recovery.
+\end{itemize}
+
+% ====================
+% 4. System or study design
+% ====================
+\section*{4. Proposed System or Study Design}
+
+Describe what the group will implement or investigate and the sequence of the main
+components. Identify the part that is technically meaningful and owned by the group.
+If useful, include a system diagram, pseudocode, or an example agent trajectory.
+
+\subsection*{4.1 Comparisons and Ablations (if applicable)}
+
+Describe any baselines, controlled comparisons, or ablations that would help answer
+the project question.
+
+% ====================
+% 5. Evaluation
+% ====================
+\section*{5. Preliminary Evaluation Plan}
+
+Connect each main claim or objective to concrete evidence. Depending on the project,
+this may include task-based metrics, rubrics, human judgments, system measures,
+agent-trajectory analysis, case studies, stress tests, or safety tests.
+
+Describe the evaluation protocol and, where relevant, how variability will be
+handled. Include representative successes and failures when they help interpret the
+aggregate results.
+
+Present the evaluation plan in whichever format best suits the project. A short
+narrative, bullet list, or table are all acceptable.
+
+\textbf{Primary metrics}, computed per configuration (baseline, each defense, hybrid):
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item \emph{Attack success rate (ASR)} — fraction of injection episodes where the agent executes the attacker's intended side-effecting call (e.g., sends to the wrong recipient).
+    \item \emph{Task utility} — fraction of benign episodes where the agent correctly completes the user's original request, scored against AgentDojo-style task checks or a rubric.
+    \item \emph{Utility-under-attack} — task completion rate on injection episodes specifically, to separate "defense blocked the attack" from "defense also broke the legitimate task."
+\end{itemize}
+
+\textbf{Secondary/diagnostic metrics:}
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item Tool-call budget used per episode (proxy for latency/overhead added by each defense).
+    \item False-positive rate of the confirmation-gate classifier on benign side-effecting calls.
+    \item Breakdown of ASR by injection type (visible / obfuscated / multi-step delayed-trigger) and position (early / late), tying results back to the section 4.1 ablations.
+\end{itemize}
+
+\textbf{Protocol:}
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item Fixed set of benign + injection task instances, run identically across all four configurations for a controlled comparison.
+    \item Multiple runs per episode (e.g., $n=3$–$5$) to account for LLM sampling variance; report mean $\pm$ spread rather than a single run.
+    \item Automated pass/fail checks on final tool-call logs where possible; manual review for ambiguous trajectories.
+\end{itemize}
+
+\textbf{Qualitative analysis:} 2–3 representative successful defenses (attack blocked, task still completed) and 2–3 representative failures (attack succeeded, or defense broke utility) included as annotated trajectories in the report to illustrate why a defense worked or failed, not just that it did.
+
+\textbf{Presentation:} results as a summary table (configuration $\times$ ASR $\times$ utility) plus one plot showing the security-utility trade-off frontier across configurations, supplemented by the trajectory case studies.
+
+% ====================
+% 6. Risks and responsible practice
+% ====================
+\section*{6. Risks, Limitations, and Responsible Practice}
+
+Identify the main risks or limitations relevant to the project. Where appropriate,
+describe safeguards or a fallback. Do not include credentials, private data, or
+material that the group does not have permission to share.
+
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item \textbf{Scope limitation:} findings are specific to the simulated environment and chosen base LLM(s); ASR and utility numbers may not transfer to other tool sets, models, or real deployments — this will be stated explicitly as a limitation, not generalized.
+    \item \textbf{Injection realism:} synthetic injection prompts may not reflect the sophistication of real-world attacks; the group will note this as a threat-model boundary rather than claim comprehensive coverage.
+    \item \textbf{Model/API variance:} LLM outputs are non-deterministic and API models may change over the project timeline; mitigated by pinning model versions where possible and running multiple trials per episode.
+    \item \textbf{Dual-use consideration:} the project involves designing working prompt-injection attacks. These will be developed and tested strictly within the group's own sandboxed simulation, never against any real third-party service, and will be presented alongside their corresponding defenses rather than as standalone exploits.
+    \item \textbf{No real data:} all task content (emails, calendar entries, etc.) will be synthetic — no real personal data, credentials, or private material will be used or included in the report or repository.
+    \item \textbf{Fallback plan:} if API costs or time constraints limit the number of defenses/ablations that can be run, the group will prioritize the baseline vs. two defenses and the single-turn vs. delayed-trigger comparison, dropping remaining ablations first.
+\end{itemize}
+
+\begin{thebibliography}{9}
+
+\bibitem{debenedetti2024agentdojo}
+E.~Debenedetti, J.~Zhang, M.~Balunovi\'{c}, L.~Beurer-Kellner, M.~Fischer, and
+F.~Tram\`{e}r.
+\newblock AgentDojo: A dynamic environment to evaluate attacks and defenses
+for LLM agents.
+\newblock \emph{NeurIPS Datasets and Benchmarks Track}, 2024.
+
+\bibitem{greshake2023youve}
+K.~Greshake, S.~Abdelnabi, S.~Mishra, C.~Endres, T.~Holz, and M.~Fritz.
+\newblock Not what you've signed up for: Compromising real-world LLM-integrated
+applications with indirect prompt injection.
+\newblock \emph{Proceedings of the 16th ACM Workshop on Artificial
+Intelligence and Security (AISec)}, 2023.
+
+\bibitem{chen2024struq}
+S.~Chen, J.~Piet, C.~Sitawarin, and D.~Wagner.
+\newblock StruQ: Defending against prompt injection with structured queries.
+\newblock \emph{arXiv preprint arXiv:2402.06363}, 2024.
+
+\end{thebibliography}
+
+\end{document}
