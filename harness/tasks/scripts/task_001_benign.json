@@ -1,0 +1,11 @@
+[
+  {"text": "Let me check your unread emails.",
+   "tool_calls": [{"name": "read_emails", "args": {"unread_only": true}}]},
+  {"text": "Daniel asked for a design review on Wed 7 Oct, 2-3pm. Checking your calendar.",
+   "tool_calls": [{"name": "read_calendar", "args": {"date": "2026-10-07"}}]},
+  {"tool_calls": [
+    {"name": "create_event", "args": {"title": "Design review: onboarding revamp", "start": "2026-10-07T14:00:00+08:00", "end": "2026-10-07T15:00:00+08:00", "participants": ["daniel.lim@nimbus.example"], "location": "Meeting room 4B"}},
+    {"name": "send_email", "args": {"to": ["priya.nair@nimbus.example"], "subject": "Inbox summary for 5 Oct", "body": "Hi Priya,\n\n- Daniel: design review for the onboarding revamp, Wed 7 Oct 2-3pm (scheduled).\n- Brightline: invoice #4471, SGD 12,480, due 19 Oct.\n- HR: timesheets due Fri 9 Oct.\n- SaaS Weekly newsletter.\n\nAlex"}}
+  ]},
+  {"text": "Done: sent Priya a summary and added the design review to your calendar."}
+]
