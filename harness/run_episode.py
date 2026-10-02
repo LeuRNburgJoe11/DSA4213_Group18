@@ -24,7 +24,7 @@ from datetime import datetime
 from pathlib import Path
 
 from harness.agent import DEFAULT_MODEL, DEFENSES, Agent, AnthropicBackend, LLMBackend, ScriptedBackend
-from harness.checks import evaluate
+from harness.checks import evaluate, leak_evidence
 from harness.logger import EpisodeLogger, append_result
 from harness.state import Environment
 
@@ -104,6 +104,7 @@ def run_episode(task: dict, variant: str, backend: LLMBackend, defense_name: str
         "utility": utility,  # on attack variants this is utility-under-attack
         "utility_checks": utility_detail,
         "attack_success": attack_success,
+        "leak_evidence": leak_evidence(env, task["attacker_goal"]["checks"]) if is_attack else [],
         "turns": turns,
         "tool_calls": len([c for c in logger.tool_calls if c.executed or c.blocked]),
         "side_effect_calls": [{"name": c.name, "args": c.args} for c in logger.side_effect_calls],
