@@ -23,7 +23,8 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from harness.agent import DEFAULT_MODEL, DEFENSES, Agent, AnthropicBackend, LLMBackend, ScriptedBackend
+from harness.agent import (DEFAULT_MODEL, DEFENSES, Agent, AnthropicBackend,
+                           LLMBackend, OpenRouterBackend, ScriptedBackend)
 from harness.checks import evaluate, leak_evidence
 from harness.logger import EpisodeLogger, append_result
 from harness.state import Environment
@@ -130,6 +131,10 @@ def make_backend(args: argparse.Namespace) -> LLMBackend:
             raise SystemExit("--backend scripted needs --script")
         with open(args.script, encoding="utf-8") as fh:
             return ScriptedBackend(json.load(fh))
+    if args.backend == "openrouter":
+        if not args.model:
+            raise SystemExit("--backend openrouter requires --model author/slug")
+        return OpenRouterBackend(model=args.model)
     return AnthropicBackend(model=args.model, effort=args.effort, fallbacks=args.fallbacks)
 
 
@@ -140,15 +145,22 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--defense", default="none", choices=sorted(DEFENSES))
     p.add_argument("--trials", type=int, default=1, help="repeats per variant (sampling variance)")
     p.add_argument("--max-tool-calls", type=int, default=10)
-    p.add_argument("--backend", default="anthropic", choices=["anthropic", "scripted"])
+    p.add_argument("--backend", default="anthropic", choices=["anthropic", "openrouter", "scripted"])
     p.add_argument("--script", help="scripted backend: path to a JSON list of turns")
-    p.add_argument("--model", default=DEFAULT_MODEL)
+    p.add_argument("--model", default=None,
+                   help="model ID; required for OpenRouter (author/slug), defaults to repo Anthropic model")
     p.add_argument("--effort", default="medium", choices=["low", "medium", "high", "xhigh", "max"])
     p.add_argument("--fallbacks", action="store_true",
                    help="enable server-side refusal fallback (mixes models; off by default)")
     p.add_argument("--run-id", default=None, help="output folder name under --out")
     p.add_argument("--out", default="runs")
     args = p.parse_args(argv)
+    if args.backend == "anthropic" and args.model is None:
+        args.model = DEFAULT_MODEL
+    if args.backend == "openrouter" and not args.model:
+        p.error("--backend openrouter requires --model author/slug")
+    if args.backend != "anthropic" and args.fallbacks:
+        p.error("--fallbacks is only supported for the Anthropic backend")
 
     try:
         from dotenv import load_dotenv

@@ -19,6 +19,8 @@ Three pieces live here:
 
 from __future__ import annotations
 
+import json
+import os
 import time
 from dataclasses import dataclass, field
 from typing import Any
@@ -118,6 +120,92 @@ class AnthropicBackend(LLMBackend):
             usage=usage,
             stop_details=getattr(resp, "stop_details", None),
         )
+
+
+class OpenRouterBackend(LLMBackend):
+    """OpenRouter Chat Completions through the OpenAI-compatible SDK.
+
+    The agent stores messages in Anthropic's tool-block format. Convert them at
+    this boundary so the agent and its deterministic scoring are provider-neutral.
+    """
+
+    name = "openrouter"
+
+    def __init__(self, model: str, max_tokens: int = 4096, client: Any = None):
+        if not model:
+            raise ValueError("OpenRouter requires an explicit --model author/slug")
+        if client is None:
+            key = os.getenv("OPENROUTER_API_KEY")
+            if not key:
+                raise ValueError("OPENROUTER_API_KEY is missing; set it in .env or your environment")
+            from openai import OpenAI  # lazy import: scripted runs need no SDK
+            client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=key)
+        self.client = client
+        self.model = model
+        self.max_tokens = max_tokens
+
+    def describe(self) -> dict:
+        return {"backend": self.name, "model": self.model, "max_tokens": self.max_tokens}
+
+    @staticmethod
+    def _messages(system: str, messages: list[dict]) -> list[dict]:
+        converted = [{"role": "system", "content": system}]
+        for message in messages:
+            content = message["content"]
+            if isinstance(content, str):
+                converted.append({"role": message["role"], "content": content})
+            elif message["role"] == "assistant":
+                text = "".join(block["text"] for block in content if block["type"] == "text")
+                calls = [
+                    {"id": block["id"], "type": "function",
+                     "function": {"name": block["name"],
+                                  "arguments": json.dumps(block["input"])}}
+                    for block in content if block["type"] == "tool_use"
+                ]
+                turn = {"role": "assistant", "content": text or None}
+                if calls:
+                    turn["tool_calls"] = calls
+                converted.append(turn)
+            else:
+                for block in content:
+                    if block["type"] != "tool_result":
+                        raise ValueError(f"unsupported user content block: {block['type']}")
+                    converted.append({"role": "tool", "tool_call_id": block["tool_use_id"],
+                                      "content": block["content"]})
+        return converted
+
+    def complete(self, system: str, messages: list[dict], tools: list[dict]) -> LLMResponse:
+        schemas = [
+            {"type": "function", "function": {"name": tool["name"],
+                                           "description": tool["description"],
+                                           "parameters": tool["input_schema"]}}
+            for tool in tools
+        ]
+        resp = self.client.chat.completions.create(
+            model=self.model, max_tokens=self.max_tokens,
+            messages=self._messages(system, messages), tools=schemas,
+        )
+        choice = resp.choices[0]
+        msg = choice.message
+        calls = []
+        for call in msg.tool_calls or []:
+            args = json.loads(call.function.arguments)
+            if not isinstance(args, dict):
+                raise ValueError(f"tool call {call.id} arguments must be a JSON object")
+            calls.append(ToolCall(call.id, call.function.name, args))
+        text = msg.content or ""
+        raw_content = ([{"type": "text", "text": text}] if text else []) + [
+            {"type": "tool_use", "id": call.id, "name": call.name, "input": call.args}
+            for call in calls
+        ]
+        reason = "tool_use" if calls else {
+            "stop": "end_turn", "length": "max_tokens", "content_filter": "refusal"
+        }.get(choice.finish_reason, choice.finish_reason)
+        usage = {}
+        if resp.usage:
+            usage = {"input_tokens": resp.usage.prompt_tokens,
+                     "output_tokens": resp.usage.completion_tokens}
+        return LLMResponse(reason, text, calls, raw_content, usage)
 
 
 class ScriptedBackend(LLMBackend):
