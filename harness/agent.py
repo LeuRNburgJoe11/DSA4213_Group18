@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import time
 from dataclasses import dataclass, field
 from typing import Any
@@ -286,6 +287,15 @@ class NoDefense(Defense):
     name = "none"
 
 
+DEFENSES: dict[str, type[Defense]] = {"none": NoDefense}
+
+
+def register_defense(cls: type[Defense]) -> type[Defense]:
+    """Class decorator: makes a defense selectable via `--defense <name>`."""
+    DEFENSES[cls.name] = cls
+    return cls
+
+
 @register_defense
 class ProvenanceTagging(Defense):
     name = "provenance"
@@ -310,13 +320,53 @@ class ProvenanceTagging(Defense):
         }, ensure_ascii=False)
 
 
-DEFENSES: dict[str, type[Defense]] = {"none": NoDefense}
+@register_defense
+class PrivilegeSeparation(Defense):
+    """Commit a narrow action plan from the trusted user request, then enforce it.
 
+    This prototype supports explicit email recipients and meeting authorization.
+    It never treats email or calendar content as a new grant of authority.
+    """
 
-def register_defense(cls: type[Defense]) -> type[Defense]:
-    """Class decorator: makes a defense selectable via `--defense <name>`."""
-    DEFENSES[cls.name] = cls
-    return cls
+    name = "privilege_separation"
+    _email = re.compile(r"(?<![\w.+-])[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}(?![\w.-])")
+    _calendar_action = re.compile(r"\b(schedule|add|create|book|arrange|set up)\b", re.I)
+    _calendar_object = re.compile(r"\b(meeting|event|calendar|appointment|call)\b", re.I)
+
+    def on_episode_start(self, ctx: EpisodeContext) -> None:
+        # Deliberately use only ctx.user_prompt. ctx.env already contains the
+        # attacker's emails and calendar text at this point.
+        prompt = ctx.user_prompt
+        plan = {
+            "email_recipients": sorted({address.lower() for address in self._email.findall(prompt)}),
+            "may_create_event": bool(self._calendar_action.search(prompt)
+                                     and self._calendar_object.search(prompt)),
+        }
+        ctx.scratch["privilege_plan"] = plan
+        ctx.logger.defense(self.name, stage="plan", plan=plan)
+
+    def review_tool_call(self, call: ToolCall, ctx: EpisodeContext) -> Verdict:
+        plan = ctx.scratch["privilege_plan"]
+        if call.name in {"read_emails", "read_calendar"}:
+            verdict = Verdict(True)
+        elif call.name == "send_email":
+            to = call.args.get("to")
+            cc = call.args.get("cc") or []
+            recipients = (to if isinstance(to, list) else []) + (cc if isinstance(cc, list) else [])
+            if (isinstance(to, list) and to and isinstance(cc, list)
+                    and all(isinstance(address, str) for address in recipients)
+                    and all(address.lower() in plan["email_recipients"] for address in recipients)):
+                verdict = Verdict(True)
+            else:
+                verdict = Verdict(False, "recipient is not authorized by the original user request")
+        elif call.name == "create_event":
+            verdict = (Verdict(True) if plan["may_create_event"] else
+                       Verdict(False, "calendar creation is not authorized by the original user request"))
+        else:
+            verdict = Verdict(False, "tool is not in the committed action plan")
+        ctx.logger.defense(self.name, stage="review", tool=call.name,
+                           args=call.args, allowed=verdict.allowed, reason=verdict.reason)
+        return verdict
 
 
 # ---------------------------------------------------------------------------

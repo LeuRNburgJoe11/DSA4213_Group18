@@ -127,3 +127,28 @@ Hooks: `on_episode_start` (e.g. planner commits a plan into `ctx.scratch`),
 `system_prompt`, `user_message`, `format_tool_output`, `review_tool_call`
 (return `Verdict(False, reason)` to block; blocked calls are logged and never execute).
 Use `ctx.logger.defense(self.name, ...)` to record plans and verdicts in the trajectory.
+
+## Privilege separation prototype
+
+Select `--defense privilege_separation`. At episode start it commits a plan
+using **only the original user request**, then reviews tool calls before they
+execute. It allows mailbox/calendar reads, restricts email To and Cc recipients
+to addresses explicitly present in the user's request, and allows creating an
+event only when the user request asks to add or schedule one. The plan and each
+decision are logged as `defense` records. A blocked call is returned to the agent
+as an error and never changes the simulated mailbox or calendar.
+
+```bash
+python -m harness.run_episode --task harness/tasks/task_001.json \
+    --variant benign --backend scripted \
+    --script harness/tasks/scripts/task_001_benign.json \
+    --defense privilege_separation
+```
+
+This is a deliberately narrow, deterministic planner/executor prototype. It
+will block legitimate emails to recipients mentioned only in untrusted content,
+and it does not validate event titles, times, descriptions, or participants
+against the user's intent. Its natural-language action detection is simple;
+new tasks may need a richer trusted plan format. Do not interpret a blocked
+attack as proof that all side effects are authorized. Compare both benign
+utility and attack success with `--defense none`.
