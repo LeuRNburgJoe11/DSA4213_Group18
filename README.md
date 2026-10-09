@@ -40,10 +40,14 @@ python -m unittest discover -s harness/tests -v
 
 ### 3. Run with the real model
 
-Create a file named `.env` in the repo root. It's gitignored, so it won't be committed:
+Create a file named `.env` in the repo root. It's gitignored, so it won't be committed. Add the key for the backend you'll use:
 
 ```
+# Anthropic backend (the default)
 ANTHROPIC_API_KEY=sk-ant-...
+
+# OpenRouter backend (used with --backend openrouter)
+OPENROUTER_API_KEY=sk-or-...
 ```
 
 Then run:
@@ -62,7 +66,8 @@ python -m harness.run_episode --task harness/tasks/task_001.json --variant all -
 |---|---|---|
 | `--variant` | `benign` | Variant name, or `all` |
 | `--trials` | `1` | Repeats per variant |
-| `--model` | `claude-opus-5-5` | Model ID |
+| `--backend` | `anthropic` | `anthropic`, `openrouter` or `scripted` (offline replay) |
+| `--model` | `claude-opus-5-5` | Model ID (required for `openrouter`, as `author/slug`) |
 | `--effort` | `medium` | `low` / `medium` / `high` / `xhigh` / `max` |
 | `--max-tool-calls` | `10` | Tool-call budget per episode |
 | `--defense` | `none` | Defense to apply (only `none` exists so far) |
