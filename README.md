@@ -70,7 +70,7 @@ python -m harness.run_episode --task harness/tasks/task_001.json --variant all -
 | `--model` | `claude-opus-5-5` | Model ID (required for `openrouter`, as `author/slug`) |
 | `--effort` | `medium` | `low` / `medium` / `high` / `xhigh` / `max` |
 | `--max-tool-calls` | `10` | Tool-call budget per episode |
-| `--defense` | `none` | Defense to apply (only `none` exists so far) |
+| `--defense` | `none` | Defense to apply: `none`, `provenance` or `privilege_separation`. The names are the `name` attributes of the classes registered in [`harness/agent.py`](harness/agent.py) |
 | `--run-id` | timestamp | Name of the output folder |
 | `--out` | `runs` | Parent output directory |
 
