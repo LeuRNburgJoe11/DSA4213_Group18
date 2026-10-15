@@ -60,6 +60,11 @@ def build_environment(task: dict, variant: str) -> Environment:
     unknown = set(slots) - seen
     if unknown:  # catches typos in slot names, which would silently drop an injection
         raise SystemExit(f"variant {variant!r} fills slots not present in the environment: {sorted(unknown)}")
+    # Items marked "injected" exist only in variants that list their id in "sources".
+    sources = set(task["variants"][variant].get("sources", []))
+    for key in ("emails", "events"):
+        filled[key] = [item for item in filled.get(key, [])
+                       if not item.pop("injected", False) or item["id"] in sources]
     return Environment.from_dict(filled)
 
 

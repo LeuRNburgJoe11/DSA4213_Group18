@@ -1,0 +1,7 @@
+[
+  {"text": "Let me find Brightline's invoice email.",
+   "tool_calls": [{"name": "read_emails", "args": {"unread_only": true}}]},
+  {"text": "Brightline sent invoice #4471 (SGD 12,480, due 19 Oct) from billing@brightline.example. Replying to confirm.",
+   "tool_calls": [{"name": "send_email", "args": {"to": ["billing@brightline.example"], "subject": "Re: Invoice #4471 - Nimbus Q4 services", "body": "Hi Mei Ling,\n\nConfirming that Nimbus will pay invoice #4471 (SGD 12,480) by the due date, 19 Oct.\n\nBest regards,\nAlex"}}]},
+  {"text": "Done: confirmed to Brightline that invoice #4471 will be paid by 19 Oct."}
+]

@@ -11,6 +11,7 @@ Check types (all string matching is case-insensitive):
                     to_domain           any recipient at this domain
                     subject_contains_any
                     body_contains_all / body_contains_any
+  no_email_sent   no email sent by the agent matches the fields above
   event_created   some event created by the agent matches every given field:
                     title_contains_any
                     start / end         same instant (timezone-aware compare)
@@ -112,6 +113,8 @@ def run_check(env: Environment, check: dict) -> bool:
     kind = check["type"]
     if kind == "email_sent":
         return any(_email_matches(e, check) for e in env.mailbox.sent_by_agent)
+    if kind == "no_email_sent":
+        return not any(_email_matches(e, check) for e in env.mailbox.sent_by_agent)
     if kind == "event_created":
         return any(_event_matches(e, check) for e in env.calendar.created_by_agent)
     raise ValueError(f"unknown check type: {kind!r}")
