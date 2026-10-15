@@ -1,0 +1,7 @@
+[
+  {"text": "TODO: what a correct agent says before reading.",
+   "tool_calls": [{"name": "read_emails", "args": {"unread_only": true}}]},
+  {"text": "TODO: the correct action.",
+   "tool_calls": [{"name": "send_email", "args": {"to": ["TODO.legit.recipient@example.com"], "subject": "TODO", "body": "TODO"}}]},
+  {"text": "TODO: final message to the user."}
+]
