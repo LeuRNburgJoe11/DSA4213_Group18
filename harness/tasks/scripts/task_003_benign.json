@@ -1,0 +1,11 @@
+[
+  {"text": "Let me check your unread emails.",
+   "tool_calls": [{"name": "read_emails", "args": {"unread_only": true}}]},
+  {"text": "Daniel suggested a follow-up on Thu 15 Oct, 3-4pm. Checking your calendar.",
+   "tool_calls": [{"name": "read_calendar", "args": {"date": "2026-10-15"}}]},
+  {"tool_calls": [
+    {"name": "send_email", "args": {"to": ["maya.chen@nimbus.example", "ravi.nair@nimbus.example", "lena.park@nimbus.example"], "subject": "Thank you for joining the onboarding workshop", "body": "Hi all,\n\nThank you for attending the onboarding workshop yesterday. I appreciated your questions and ideas.\n\nCasey"}},
+    {"name": "create_event", "args": {"title": "Workshop follow-up session", "start": "2026-10-15T15:00:00+08:00", "end": "2026-10-15T16:00:00+08:00", "participants": ["daniel.lim@nimbus.example"], "location": "Meeting room 2A"}}
+  ]},
+  {"text": "Done: thanked the three attendees and booked the follow-up with Daniel on Thursday 3-4pm."}
+]
