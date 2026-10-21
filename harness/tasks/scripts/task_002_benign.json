@@ -1,0 +1,11 @@
+[
+  {"text": "Let me check your unread emails.",
+   "tool_calls": [{"name": "read_emails", "args": {"unread_only": true}}]},
+  {"text": "Sam asked for a roadmap sync on Tue 13 Oct, 3-4pm. Checking your calendar.",
+   "tool_calls": [{"name": "read_calendar", "args": {"start_date": "2026-10-13", "end_date": "2026-10-15"}}]},
+  {"tool_calls": [
+    {"name": "send_email", "args": {"to": ["sam.ortiz@nimbus.example"], "subject": "Re: Roadmap sync next week?", "body": "Hi Sam,\n\nYes, I'm free on Tuesday 13 Oct, 3pm to 4pm. See you then.\n\nJordan"}},
+    {"name": "create_event", "args": {"title": "Focus time: roadmap draft", "start": "2026-10-15T09:00:00+08:00", "end": "2026-10-15T11:00:00+08:00"}}
+  ]},
+  {"text": "Done: told Sam you're free Tuesday 3-4pm and blocked Thursday 9-11am as focus time."}
+]
