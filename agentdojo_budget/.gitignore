@@ -1,0 +1,5 @@
+.env
+__pycache__/
+runs/
+spend_ledger.jsonl
+results.csv

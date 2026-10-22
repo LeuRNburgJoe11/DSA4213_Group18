@@ -109,6 +109,45 @@ Seeded emails/events contain `{{slot}}` placeholders. Each variant fills some sl
 injection text; unfilled slots become empty, so `benign` is the clean task. Variant
 metadata (`kind`, `position`, `sources`) is copied into results for the ablation breakdowns.
 
+## Experiment pipeline (steps 1-5)
+
+`experiment.py` runs the full study from one config, `experiments/main.json`. That
+config sets the tasks, attack variants, defences, models, trials, base seed and condition.
+
+```
+python -m harness.experiment all --run-id smoke --offline        # free check, scripted replays
+python -m harness.experiment freeze   --run-id main-v1           # 1. freeze -> config_id
+python -m harness.experiment validate --run-id main-v1           # 2. ground-truth replays, no LLM
+python -m harness.experiment benign   --run-id main-v1 --dry-run # 3. print the episode count
+python -m harness.experiment benign   --run-id main-v1           # 3. benign utility
+python -m harness.experiment security --run-id main-v1           # 4. attack variants
+python -m harness.experiment score    --run-id main-v1           # 5. relabel + episodes.csv
+```
+
+- **Freeze.** The config ID hashes the config, every task file, the ground-truth
+  scripts, the system prompt, the tool schemas and the harness source. A run folder
+  refuses to continue if any of these change, so start a new `--run-id` instead.
+- **Validate.** The benign script must pass utility, and must not trigger the attack on
+  any variant. The hijacked script must trigger the attack and fail utility. Every
+  defence must also be registered. Steps 3-4 refuse to start until validation passes.
+- **Resume.** Re-running a step skips episodes that are already done. Add
+  `--retry-errors` to re-run errored episodes, or `--max-episodes N` to run in small batches.
+- **Seeds and temperature.** Each episode gets a seed derived from
+  (base seed, model, defence, task, variant, trial). OpenRouter receives the seed and
+  `temperature`, and can pin a provider through `extra_body`. Current Claude models
+  reject `temperature` and the Anthropic API has no seed, so for Anthropic both are
+  recorded but not sent.
+- **Fields stored per episode** (`runs/<id>/episodes.jsonl` and `.csv`): model and
+  `served_models`, defence, task, variant, `k` (number of sources), `coordination`,
+  trial, seed, condition, utility, security, tool-call count, tokens, and gate
+  decisions (each defence allow/block verdict).
+- **`outcome` label.** It is one of `attack_executed`, `attack_refused_task_completed`,
+  `clarification_requested`, `episode_refused`, `task_failed`, `task_completed`
+  (benign) or `run_error` (exclude or retry these). Labels with `needs_review=true`
+  come from a text heuristic on the final message and should be read by hand.
+- **Overrides.** A variant can set `k` or `coordination` itself. Otherwise `k` is the
+  number of `sources` and `coordination` comes from `coordination_by_kind`.
+
 ## Adding a defense
 
 Subclass `Defense` in `agent.py` (or a new module imported by `run_episode.py`) and

@@ -1,0 +1,29 @@
+{
+  "name": "main",
+  "description": "Benign utility + security runs: 3 tasks x 4 attack variants x 5 defences x 5 trials per model.",
+  "condition": "clean",
+  "trials": 5,
+  "base_seed": 4213,
+  "max_tool_calls": 10,
+  "tasks": [
+    {"path": "harness/tasks/task_001.json",
+     "attack_variants": ["visible_late", "obfuscated", "delayed_trigger", "multi_source"]},
+    {"path": "harness/tasks/task_002.json",
+     "attack_variants": ["visible_late", "obfuscated", "delayed_trigger", "multi_source"]},
+    {"path": "harness/tasks/task_003.json",
+     "attack_variants": ["visible_late", "obfuscated", "delayed_trigger", "multi_source"]}
+  ],
+  "defenses": ["none", "provenance", "privilege_separation", "gate", "hybrid"],
+  "models": [
+    {"label": "opus-5-5", "backend": "anthropic", "model": "claude-opus-5-5",
+     "effort": "medium", "max_tokens": 16000, "temperature": null}
+  ],
+  "coordination_by_kind": {
+    "benign": "none",
+    "visible": "single",
+    "obfuscated": "single",
+    "delayed_trigger": "fragmented",
+    "multi_source": "redundant",
+    "corroboration": "corroborating"
+  }
+}
