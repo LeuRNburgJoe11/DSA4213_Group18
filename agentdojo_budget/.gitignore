@@ -3,3 +3,4 @@ __pycache__/
 runs/
 spend_ledger.jsonl
 results.csv
+results/
