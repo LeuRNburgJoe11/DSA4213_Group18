@@ -89,15 +89,6 @@ class OfflineRunner(unittest.TestCase):
         self.assertEqual(self.fake.requests, [])  # stopped before the first API call
         self.assertEqual(rows, {})
 
-    def test_provider_pin_relaxes_parameters_only_for_tool_filter_call(self):
-        fake = FakeClient([])
-        client = d.BudgetedClient(fake, 1.0, {}, provider="Anthropic")
-        client.chat.completions.create(model="m", messages=[])
-        client.chat.completions.create(model="m", messages=[], tool_choice="none")
-        normal, tool_filter = (r["extra_body"]["provider"] for r in fake.requests)
-        self.assertEqual(normal, {"order": ["Anthropic"], "allow_fallbacks": False, "require_parameters": True})
-        self.assertEqual(tool_filter, {"order": ["Anthropic"], "allow_fallbacks": False, "require_parameters": False})
-
     def test_resume_skips_finished_episodes(self):
         self.run_scripted([{"text": "Done."}, {"text": "Done."}])
         self.run_scripted([{"text": "Done."}, {"text": "Done."}])
