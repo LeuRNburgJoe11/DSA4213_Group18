@@ -89,6 +89,16 @@ class OfflineRunner(unittest.TestCase):
         self.assertEqual(self.fake.requests, [])  # stopped before the first API call
         self.assertEqual(rows, {})
 
+    def test_zero_temperature_is_not_sent(self):
+        # tool_filter sends temperature=0.0 explicitly; main calls never do. Both must match.
+        fake = FakeClient([])
+        client = d.BudgetedClient(fake, 1.0, {}, provider="OpenAI")
+        client.chat.completions.create(model="m", messages=[], tool_choice="none", temperature=0.0)
+        client.chat.completions.create(model="m", messages=[], temperature=0.7)
+        self.assertNotIn("temperature", fake.requests[0])
+        self.assertEqual(fake.requests[1]["temperature"], 0.7)
+        self.assertTrue(fake.requests[0]["extra_body"]["provider"]["require_parameters"])
+
     def test_resume_skips_finished_episodes(self):
         self.run_scripted([{"text": "Done."}, {"text": "Done."}])
         self.run_scripted([{"text": "Done."}, {"text": "Done."}])
