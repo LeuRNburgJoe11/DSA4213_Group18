@@ -151,7 +151,11 @@ class BudgetedClient:
             extra = dict(kwargs.pop("extra_body", None) or {})
             extra["usage"] = {"include": True}  # ask OpenRouter to report cost
             if o.provider:
-                extra["provider"] = {"order": [o.provider], "allow_fallbacks": False, "require_parameters": True}
+                # tool_filter's filtering call sends tool_choice="none", which some pinned
+                # providers (e.g. Anthropic) don't list as supported, so OpenRouter 404s.
+                # Relax only that call; the provider pin and no-fallback rule still apply.
+                strict = kwargs.get("tool_choice") != "none"
+                extra["provider"] = {"order": [o.provider], "allow_fallbacks": False, "require_parameters": strict}
             kwargs["extra_body"] = extra
 
             completion = o._real.chat.completions.create(**kwargs)
