@@ -41,6 +41,15 @@ def reasoning_settings(model):
     return {"effort": "low"} if model in REASONING_FLASH_MODELS else {"enabled": False}
 
 
+def default_condition_set(task):
+    return "compact-six" if task == "33" else "discovery-seven"
+
+
+def default_inbox_exposure(task, condition_set):
+    discovery = task == "33-discovery" or (task == "25" and condition_set != "core-seven")
+    return "agent-selected" if discovery else "required"
+
+
 def plain(value):
     if hasattr(value, "model_dump"):
         return value.model_dump(mode="json")
@@ -74,32 +83,35 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", choices=("33", "25", "33-discovery"), default="33")
     parser.add_argument("--model", choices=(MODEL, *sorted(REASONING_FLASH_MODELS)), default=MODEL)
-    parser.add_argument("--inbox-exposure", choices=("required", "agent-selected"), default="required",
+    parser.add_argument("--inbox-exposure", choices=("required", "agent-selected"), default=None,
                         help="Allow autonomous evidence retrieval in recipient-discovery conditions.")
     parser.add_argument("--conditions", nargs="+", help="Run only these members of the selected condition set (fresh output directory).")
     parser.add_argument("--controlled-inbox", action="store_true",
-                        help="Use 1-2 emails and get_received_emails as the only mail-reading tool")
-    parser.add_argument("--condition-set", choices=(*CONDITION_SETS, "discovery-five"), default=None,
-                        help="Defaults: compact-six for task33, core-seven for task25, discovery-five for recipient discovery")
+                        help="Use the selected task's controlled mail fixture")
+    parser.add_argument("--condition-set", choices=(*CONDITION_SETS, "discovery-five", "discovery-seven", "history-vs-context", "history-vs-contradiction"), default=None,
+                        help="Both discovery tasks default to discovery-seven and agent-selected retrieval; task33 legacy defaults to compact-six")
     args = parser.parse_args()
     model = args.model
     max_iters, max_calls = execution_limits(args.task)
     environment_version, prompt_version = ENVIRONMENT_VERSION, PROMPT_VERSION
     if args.condition_set is None:
-        args.condition_set = {"33": "compact-six", "25": "core-seven", "33-discovery": "discovery-five"}[args.task]
+        args.condition_set = default_condition_set(args.task)
     if args.task == "33-discovery":
         from agentdojo_budget import identity_task33_discovery as discovery
-        if args.condition_set != "discovery-five" or not args.controlled_inbox:
-            parser.error("Recipient discovery requires --condition-set discovery-five --controlled-inbox.")
+        if args.condition_set not in discovery.CONDITION_SETS or not args.controlled_inbox:
+            parser.error("Recipient discovery requires its own condition set and --controlled-inbox.")
         CONDITIONS, CONDITION_SETS, PROMPT = discovery.CONDITIONS, discovery.CONDITION_SETS, discovery.PROMPT
         build_environment, make_suite, score_episode = discovery.build_environment, discovery.make_suite, discovery.score_episode
         environment_version, prompt_version = discovery.ENVIRONMENT_VERSION, discovery.PROMPT_VERSION
     if args.task == "25":
-        from agentdojo_budget import identity_task25 as task25
+        if args.condition_set == "core-seven":
+            from agentdojo_budget import identity_task25 as task25
+        else:
+            from agentdojo_budget import identity_task25_discovery as task25
         environment_version = task25.ENVIRONMENT_VERSION
         prompt_version = task25.PROMPT_VERSION
-        if args.condition_set != "core-seven" or not args.controlled_inbox:
-            parser.error("Task25 requires --condition-set core-seven --controlled-inbox.")
+        if args.condition_set not in task25.CONDITION_SETS or not args.controlled_inbox:
+            parser.error("Task25 requires --controlled-inbox and a supported task25 condition set.")
         CONDITIONS, CONDITION_SETS, PROMPT = task25.CONDITIONS, task25.CONDITION_SETS, task25.PROMPT
         build_environment, make_suite, score_episode = task25.build_environment, task25.make_suite, task25.score_episode
     if args.condition_set not in CONDITION_SETS:
@@ -109,7 +121,10 @@ def main():
         if len(set(args.conditions)) != len(args.conditions) or any(n not in selected for n in args.conditions):
             parser.error("--conditions must be distinct members of the selected condition set.")
         selected = tuple(args.conditions)
-    if args.inbox_exposure == "agent-selected" and args.task != "33-discovery":
+    if args.inbox_exposure is None:
+        args.inbox_exposure = default_inbox_exposure(args.task, args.condition_set)
+    if args.inbox_exposure == "agent-selected" and not (
+            args.task == "33-discovery" or (args.task == "25" and args.condition_set != "core-seven")):
         parser.error("Agent-selected inbox exposure is restricted to the recipient-discovery variant.")
     if any(CONDITIONS[n].evidence == "document_only" for n in selected) and not args.controlled_inbox:
         parser.error("Document-only comparisons require --controlled-inbox for all conditions.")
