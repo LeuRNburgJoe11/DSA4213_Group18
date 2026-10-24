@@ -22,19 +22,22 @@ from agentdojo.agent_pipeline.tool_execution import ToolsExecutionLoop
 from agentdojo.functions_runtime import FunctionsRuntime
 from agentdojo.logging import OutputLogger
 
-from agentdojo_budget.identity_task import CONDITIONS, CONDITION_SETS, PROMPT, ENVIRONMENT_VERSION, PROMPT_VERSION, build_environment, make_suite, score_episode
+from agentdojo_budget import identity_task25_discovery, identity_task33_discovery, identity_task33_change
 from agentdojo_budget.inbox_exposure import RequiredInboxExposure
 from agentdojo_budget.provider_compat import ReasoningMetadata, completion_failure
 
 HERE = Path(__file__).resolve().parent
 MODEL = "google/gemini-2.5-flash"
 REASONING_FLASH_MODELS = {"google/gemini-3.5-flash", "google/gemini-3.8-flash"}
+TASKS = {"25": identity_task25_discovery, "33-discovery": identity_task33_discovery,
+         "33-change": identity_task33_change}
 
 
 def execution_limits(task):
     """Initial model call plus one model continuation per execution round."""
-    rounds = 20 if task in ("25", "33-discovery") else 10
-    return rounds, rounds + 1
+    if task not in TASKS:
+        raise ValueError(f"Unknown active task: {task}")
+    return 20, 21
 
 
 def reasoning_settings(model):
@@ -42,12 +45,17 @@ def reasoning_settings(model):
 
 
 def default_condition_set(task):
-    return "compact-six" if task == "33" else "discovery-seven"
+    if task == "33-change":
+        return "change-eight"
+    if task not in TASKS:
+        raise ValueError(f"Unknown active task: {task}")
+    return "discovery-seven"
 
 
 def default_inbox_exposure(task, condition_set):
-    discovery = task == "33-discovery" or (task == "25" and condition_set != "core-seven")
-    return "agent-selected" if discovery else "required"
+    if task not in TASKS:
+        raise ValueError(f"Unknown active task: {task}")
+    return "required" if task == "33-change" else "agent-selected"
 
 
 def plain(value):
@@ -79,41 +87,27 @@ def observed_ids(messages):
 
 
 def main():
-    global CONDITIONS, CONDITION_SETS, PROMPT, build_environment, make_suite, score_episode
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--task", choices=("33", "25", "33-discovery"), default="33")
+    parser.add_argument("--task", choices=TASKS, default="33-discovery")
     parser.add_argument("--model", choices=(MODEL, *sorted(REASONING_FLASH_MODELS)), default=MODEL)
     parser.add_argument("--inbox-exposure", choices=("required", "agent-selected"), default=None,
                         help="Allow autonomous evidence retrieval in recipient-discovery conditions.")
     parser.add_argument("--conditions", nargs="+", help="Run only these members of the selected condition set (fresh output directory).")
     parser.add_argument("--controlled-inbox", action="store_true",
                         help="Use the selected task's controlled mail fixture")
-    parser.add_argument("--condition-set", choices=(*CONDITION_SETS, "discovery-five", "discovery-seven", "history-vs-context", "history-vs-contradiction"), default=None,
-                        help="Both discovery tasks default to discovery-seven and agent-selected retrieval; task33 legacy defaults to compact-six")
+    parser.add_argument("--condition-set", choices=sorted({name for module in TASKS.values() for name in module.CONDITION_SETS}), default=None,
+                        help="Defaults: discovery-seven for discovery; change-eight for 33-change")
     args = parser.parse_args()
     model = args.model
     max_iters, max_calls = execution_limits(args.task)
-    environment_version, prompt_version = ENVIRONMENT_VERSION, PROMPT_VERSION
     if args.condition_set is None:
         args.condition_set = default_condition_set(args.task)
-    if args.task == "33-discovery":
-        from agentdojo_budget import identity_task33_discovery as discovery
-        if args.condition_set not in discovery.CONDITION_SETS or not args.controlled_inbox:
-            parser.error("Recipient discovery requires its own condition set and --controlled-inbox.")
-        CONDITIONS, CONDITION_SETS, PROMPT = discovery.CONDITIONS, discovery.CONDITION_SETS, discovery.PROMPT
-        build_environment, make_suite, score_episode = discovery.build_environment, discovery.make_suite, discovery.score_episode
-        environment_version, prompt_version = discovery.ENVIRONMENT_VERSION, discovery.PROMPT_VERSION
-    if args.task == "25":
-        if args.condition_set == "core-seven":
-            from agentdojo_budget import identity_task25 as task25
-        else:
-            from agentdojo_budget import identity_task25_discovery as task25
-        environment_version = task25.ENVIRONMENT_VERSION
-        prompt_version = task25.PROMPT_VERSION
-        if args.condition_set not in task25.CONDITION_SETS or not args.controlled_inbox:
-            parser.error("Task25 requires --controlled-inbox and a supported task25 condition set.")
-        CONDITIONS, CONDITION_SETS, PROMPT = task25.CONDITIONS, task25.CONDITION_SETS, task25.PROMPT
-        build_environment, make_suite, score_episode = task25.build_environment, task25.make_suite, task25.score_episode
+    module = TASKS[args.task]
+    if not args.controlled_inbox:
+        parser.error("RQ2 experiments require --controlled-inbox.")
+    CONDITIONS, CONDITION_SETS, PROMPT = module.CONDITIONS, module.CONDITION_SETS, module.PROMPT
+    build_environment, make_suite, score_episode = module.build_environment, module.make_suite, module.score_episode
+    environment_version, prompt_version = module.ENVIRONMENT_VERSION, module.PROMPT_VERSION
     if args.condition_set not in CONDITION_SETS:
         parser.error("Selected condition set is not available for this task.")
     selected = CONDITION_SETS[args.condition_set]
@@ -123,11 +117,6 @@ def main():
         selected = tuple(args.conditions)
     if args.inbox_exposure is None:
         args.inbox_exposure = default_inbox_exposure(args.task, args.condition_set)
-    if args.inbox_exposure == "agent-selected" and not (
-            args.task == "33-discovery" or (args.task == "25" and args.condition_set != "core-seven")):
-        parser.error("Agent-selected inbox exposure is restricted to the recipient-discovery variant.")
-    if any(CONDITIONS[n].evidence == "document_only" for n in selected) and not args.controlled_inbox:
-        parser.error("Document-only comparisons require --controlled-inbox for all conditions.")
     load_dotenv(HERE.parent / ".env")
     load_dotenv(HERE / ".env")
     key = os.getenv("OPENROUTER_API_KEY")
@@ -143,8 +132,9 @@ def main():
     required_inbox = args.controlled_inbox and args.inbox_exposure == "required"
     mode = ("required_inbox_first" if required_inbox else
             "controlled_agent_selected" if args.controlled_inbox else "natural_retrieval")
-    task_prefix = {"33": "identity_pilot_", "25": "identity_task25_pilot_",
-                   "33-discovery": "identity_task33_discovery_pilot_"}[args.task]
+    task_prefix = {"25": "identity_task25_pilot_",
+                   "33-discovery": "identity_task33_discovery_pilot_",
+                   "33-change": "identity_task33_change_pilot_"}[args.task]
     out = HERE / "runs" / (task_prefix + mode + "_" + args.condition_set + "_" + datetime.now().strftime("%Y%m%d_%H%M%S"))
     out.mkdir(parents=True)
     state = {"model": model, "cap_usd": 1.0, "accounted_usd": 0.0,
