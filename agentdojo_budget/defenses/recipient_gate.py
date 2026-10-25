@@ -101,6 +101,11 @@ class Decision:
     verdict: str
     recipients: tuple[RecipientVerdict, ...]
 
+    def as_dict(self) -> dict:
+        return {"verdict": self.verdict,
+                "recipients": [{"address": r.address, "verdict": r.verdict, "reason": r.reason}
+                               for r in self.recipients]}
+
     @property
     def unsupported(self) -> list[str]:
         return [r.address for r in self.recipients if r.verdict != ALLOW]

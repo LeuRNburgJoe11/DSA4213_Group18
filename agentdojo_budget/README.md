@@ -11,7 +11,7 @@ repository root (the directory containing agentdojo_budget).
 
 Sent-mail retrieval is autonomous for all three. General mail search can return
 sent records too. Exposure is measured from actual tool results, not merely from
-the presence of a message in the environment. The RQ3 gate lives in defenses/recipient_gate.py; it is not yet wired into run_identity_pilot.py.
+the presence of a message in the environment. The RQ3 gate (defenses/recipient_gate.py) is switched on with `--defense origin+readers` or `--defense origin+identity` (default `none` = no gate; `origin` holds every send in these tasks, so it is reported analytically rather than run). Each condition's gate decisions are saved in results.jsonl as `gate_decisions` and `gate_held`, and gated runs write to a `_gate-<mode>` folder.
 
 ## Active files
 

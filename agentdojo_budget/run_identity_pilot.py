@@ -18,10 +18,11 @@ from openai import OpenAI
 from agentdojo.task_suite.load_suites import get_suite  # initialise registry first
 from agentdojo.agent_pipeline import AgentPipeline, PipelineConfig
 from agentdojo.agent_pipeline.llms.openai_llm import OpenAILLM
-from agentdojo.agent_pipeline.tool_execution import ToolsExecutionLoop
+from agentdojo.agent_pipeline.tool_execution import ToolsExecutionLoop, ToolsExecutor
 from agentdojo.functions_runtime import FunctionsRuntime
 from agentdojo.logging import OutputLogger
 
+from agentdojo_budget.defenses.recipient_gate import MODES as GATE_MODES, RecipientGate
 from agentdojo_budget.identity import identity_task25_discovery, identity_task33_discovery, identity_task33_change
 from agentdojo_budget.inbox_exposure import RequiredInboxExposure
 from agentdojo_budget.provider_compat import ReasoningMetadata, completion_failure
@@ -58,6 +59,59 @@ def default_inbox_exposure(task, condition_set):
     return "required" if task == "33-change" else "agent-selected"
 
 
+DEFENSES = ("none", *GATE_MODES)
+
+
+def install_gate(pipeline, mode, env):
+    """Wrap the pipeline's ToolsExecutor in a RecipientGate and snapshot send history from `env`.
+
+    `env` must be the environment as it is before the agent acts: the gate treats mail the
+    user had already sent as history, and the agent's own sends must not count.
+    """
+    gate = None
+    for element in pipeline.elements:
+        if isinstance(element, ToolsExecutionLoop):
+            wrapped = []
+            for inner in element.elements:
+                if isinstance(inner, ToolsExecutor):
+                    gate = RecipientGate(mode, executor=inner)
+                    inner = gate
+                wrapped.append(inner)
+            element.elements = wrapped
+    if gate is None:
+        raise ValueError("pipeline has no ToolsExecutor to wrap")
+    gate.snapshot(env)
+    return gate
+
+
+def build_pipeline(client, model, *, max_iters, required_inbox, defense="none", env=None):
+    """The episode pipeline used by main(): model, optional forced inbox read, optional gate.
+
+    Returns (pipeline, gate); gate is None unless `defense` is a gate mode.
+    """
+    if defense not in DEFENSES:
+        raise ValueError(f"defense must be one of {DEFENSES}")
+    if defense != "none" and env is None:
+        raise ValueError("a gate defense needs the pre-episode environment")
+    pipeline = AgentPipeline.from_config(PipelineConfig(
+        llm=OpenAILLM(client, model, temperature=0.0), model_id=None,
+        defense=None, system_message_name=None, system_message=None))
+    if required_inbox:
+        pipeline.elements = [*pipeline.elements[:2], RequiredInboxExposure(), *pipeline.elements[2:]]
+    for element in pipeline.elements:
+        if isinstance(element, ToolsExecutionLoop):
+            element.max_iters = max_iters
+    gate = install_gate(pipeline, defense, env) if defense != "none" else None
+    return pipeline, gate
+
+
+def gate_summary(defense, gate):
+    """Result fields describing what the gate decided during one episode."""
+    decisions = [d.as_dict() for d in gate.decisions] if gate else []
+    return {"defense": defense, "gate_decisions": decisions,
+            "gate_held": sum(d["verdict"] != "allow" for d in decisions)}
+
+
 def plain(value):
     if hasattr(value, "model_dump"):
         return value.model_dump(mode="json")
@@ -90,6 +144,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", choices=TASKS, default="33-discovery")
     parser.add_argument("--model", choices=(MODEL, *sorted(REASONING_FLASH_MODELS)), default=MODEL)
+    parser.add_argument("--defense", choices=DEFENSES, default="none",
+                        help="RQ3 recipient gate mode (none = no gate). origin holds every send in RQ2, "
+                             "so it is normally reported analytically instead of run.")
     parser.add_argument("--inbox-exposure", choices=("required", "agent-selected"), default=None,
                         help="Allow autonomous evidence retrieval in recipient-discovery conditions.")
     parser.add_argument("--conditions", nargs="+", help="Run only these members of the selected condition set (fresh output directory).")
@@ -135,7 +192,8 @@ def main():
     task_prefix = {"25": "identity_task25_pilot_",
                    "33-discovery": "identity_task33_discovery_pilot_",
                    "33-change": "identity_task33_change_pilot_"}[args.task]
-    out = HERE / "runs" / (task_prefix + mode + "_" + args.condition_set + "_" + datetime.now().strftime("%Y%m%d_%H%M%S"))
+    defense_tag = "" if args.defense == "none" else "_gate-" + args.defense.replace("+", "-")
+    out = HERE / "runs" / (task_prefix + mode + defense_tag + "_" + args.condition_set + "_" + datetime.now().strftime("%Y%m%d_%H%M%S"))
     out.mkdir(parents=True)
     state = {"model": model, "cap_usd": 1.0, "accounted_usd": 0.0,
              "reported_usd": 0.0, "calls": 0, "condition": None}
@@ -147,7 +205,7 @@ def main():
         "max_iters": max_iters, "max_api_calls_per_condition": max_calls,
         "environment_version": environment_version,
         "prompt_version": prompt_version,
-        "max_output_tokens": 4096, "defense": "none",
+        "max_output_tokens": 4096, "defense": args.defense,
         "reasoning": reasoning_settings(model),
         "reasoning_metadata_preserved": model in REASONING_FLASH_MODELS,
         "provider_error_handling": "classify_incomplete_without_retry_v1",
@@ -235,14 +293,8 @@ def main():
         pre = env.model_copy(deep=True)
         (out / f"{name}_pre.json").write_text(pre.model_dump_json(indent=2))
         suite = make_suite(name, controlled_inbox=args.controlled_inbox)
-        pipeline = AgentPipeline.from_config(PipelineConfig(
-            llm=OpenAILLM(client, model, temperature=0.0), model_id=None,
-            defense=None, system_message_name=None, system_message=None))
-        if required_inbox:
-            pipeline.elements = [*pipeline.elements[:2], RequiredInboxExposure(), *pipeline.elements[2:]]
-        for element in pipeline.elements:
-            if isinstance(element, ToolsExecutionLoop):
-                element.max_iters = max_iters
+        pipeline, gate = build_pipeline(client, model, max_iters=max_iters, required_inbox=required_inbox,
+                                        defense=args.defense, env=env)
         messages, error, termination = [], None, "completed"
         try:
             with OutputLogger(str(out / name)):
@@ -261,7 +313,7 @@ def main():
         result.update({"model": model, "trial": 0, "retrieval_mode": mode,
                        "final_text": text, "error": error,
                        "provider_failure": provider_failure,
-                       "api_calls": per_condition_calls})
+                       "api_calls": per_condition_calls, **gate_summary(args.defense, gate)})
         (out / f"{name}_trace.json").write_text(json.dumps(messages, indent=2, default=plain))
         (out / f"{name}_post.json").write_text(env.model_dump_json(indent=2))
         with (out / "results.jsonl").open("a") as f:
