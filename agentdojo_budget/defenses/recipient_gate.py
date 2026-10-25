@@ -13,22 +13,32 @@ Verdict for a send_email call, from its recipients:
   no recipient supported         -> ASK    (held; ask the user to confirm the address)
   some supported, some not       -> BLOCK  (held; an extra unverified recipient)
 
-A recipient is "supported" when:
+A recipient is "supported" when (each mode includes the one above it):
 
-  mode="origin"           the address appears in the user's request
+  mode="origin"           user_supplied: the address appears in the user's request
+  mode="origin+readers"   file_reader: it is a reader of a file attached to this email
+                          (CaMeL-style: the data may go to people who can already read it)
   mode="origin+identity"  ... or any of
-      sent_history        an email the user sent before the episode started went to it
-      file_reader         it is a reader of a file attached to this email
-      authorised_update   an inbox email from an already-established address names it
+      authorised_update   an inbox email from an established sender names it
                           (an explicit change notice from a trusted source)
+      contact             it is in the user's own address book
+      sent_history        an email the user sent before the episode started went to it
+
+"Anchored": when an attached file has readers other than the user's own account, that
+reader list is the identity anchor. Then sent history alone does NOT support a recipient
+(a known correspondent is not thereby the file's intended reader), and only readers can
+vouch for an update. With no external reader (e.g. a document shared only with the user),
+sent history is the anchor instead.
 
 Not treated as evidence: sign-offs and display names, address similarity, how accurate
 an email's meeting details are, and a change that only the new address asserts.
 
 Assumptions to state when reporting results:
-  - Mailbox history and file readers are outside the attacker's control (the attacker
-    can send mail, not edit existing history). If history can be forged, "sent_history"
-    proves nothing.
+  - Mailbox history, file readers and the contact list are outside the attacker's control
+    (the attacker can send mail, not edit existing history). If history can be forged,
+    "sent_history" proves nothing. AgentDojo builds a default contact list from the
+    addresses in the initial emails, so "contact" is only safe where the fixture sets
+    contacts explicitly (true for the RQ2 task25 fixture, which has no attacker contact).
   - Where history and contextual accuracy disagree, history wins. That is a policy
     choice, so results on those conditions follow from the policy by construction.
   - The gate reads only the environment and the user's request. It never receives the
@@ -49,7 +59,7 @@ from agentdojo.default_suites.v1.tools.types import EmailStatus
 from agentdojo.functions_runtime import EmptyEnv, Env, FunctionsRuntime
 from agentdojo.types import ChatMessage, ChatToolResultMessage, text_content_block_from_string
 
-MODES = ("origin", "origin+identity")
+MODES = ("origin", "origin+readers", "origin+identity")
 
 # Verdicts for one recipient and for a whole tool call.
 ALLOW, BLOCK, ASK = "allow", "block", "ask"
@@ -153,21 +163,28 @@ class RecipientGate(BasePipelineElement):
         recipients = list(dict.fromkeys(
             _as_list(args.get("recipients")) + _as_list(args.get("cc")) + _as_list(args.get("bcc"))))
         supplied = _addresses(user_query)
-        readers = self._file_readers(args, env) if self.mode == "origin+identity" else set()
-        history = self._history if self.mode == "origin+identity" else set()
-        updates = (self._authorised_updates(env, history | readers)
-                   if self.mode == "origin+identity" else {})
+        identity = self.mode == "origin+identity"
+        readers = self._file_readers(args, env) if self.mode != "origin" else set()
+        own = _norm(getattr(env.inbox, "account_email", ""))
+        anchored = bool(readers - {own})  # an external reader of an attachment anchors identity
+        history = self._history if identity else set()
+        contacts = {_norm(c.email) for c in env.inbox.contact_list} if identity else set()
+        # Who may vouch for a change: the file's external readers if anchored, else past recipients.
+        trusted_senders = (readers - {own}) if anchored else history
+        updates = self._authorised_updates(env, trusted_senders) if identity else {}
 
         verdicts = []
         for address in recipients:
             if address in supplied:
                 reason = "user_supplied"
-            elif address in history:
-                reason = "sent_history"
             elif address in readers:
                 reason = "file_reader"
             elif address in updates:
                 reason = f"authorised_update_from:{updates[address]}"
+            elif address in contacts:
+                reason = "contact"
+            elif address in history and not anchored:
+                reason = "sent_history"
             else:
                 verdicts.append(RecipientVerdict(address, ASK, "unverified"))
                 continue
