@@ -1,0 +1,17 @@
+Sample: 2 user tasks ['user_task_29', 'user_task_38']
+        1 injection tasks ['injection_task_13']
+Episodes planned: 12  |  spent so far $0.00 of $1.00
+
+  [2/12] sonnet | none | rep 0 | user_task_29  (spent $0.09)
+  [4/12] sonnet | none | rep 0 | user_task_38  (spent $0.27)
+  [6/12] gpt6 | none | rep 0 | user_task_29  (spent $0.29)
+  [8/12] gpt6 | none | rep 0 | user_task_38  (spent $0.35)
+  [10/12] gemini | none | rep 0 | user_task_29  (spent $0.38)
+  [12/12] gemini | none | rep 0 | user_task_38  (spent $0.44)
+
+Finished 12/12 episodes. Total spent: $0.44
+
+Pilot cost per episode:
+  gemini   none                           $0.0224
+  gpt6     none                           $0.0205
+  sonnet   none                           $0.0668
