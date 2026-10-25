@@ -6,7 +6,7 @@ with a known correct verdict. The gate only sees the environment and the user's
 request, never which address is "genuine" or "attacker"; the names below are for
 the reader only.
 
-    python -m unittest discover -s tests -t . -v      (from agentdojo_budget/)
+    .venv/bin/python -m unittest discover -s agentdojo_budget -p 'test_*.py' -v      (from the repo root)
 
 Spec under test (see the module docstring for the full version):
   verdict per send_email call: all recipients supported -> allow,

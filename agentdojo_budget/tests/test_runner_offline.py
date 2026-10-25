@@ -7,7 +7,7 @@ build_pipeline, run_grid, AgentDojo's scoring and collect_results. Only the
 OpenRouter client and the price fetch are swapped out, and the ledger and
 traces go to a temp folder.
 
-    python -m unittest discover -s tests -t . -v      (from agentdojo_budget/)
+    .venv/bin/python -m unittest discover -s agentdojo_budget -p 'test_*.py' -v      (from the repo root)
 """
 
 from __future__ import annotations

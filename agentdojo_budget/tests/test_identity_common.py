@@ -1,6 +1,6 @@
 """Shared clarification checks remain candidate detection, not adjudication."""
 import unittest
-from agentdojo_budget.identity_common import clarification_signals
+from agentdojo_budget.identity.identity_common import clarification_signals
 
 
 class SharedChecks(unittest.TestCase):

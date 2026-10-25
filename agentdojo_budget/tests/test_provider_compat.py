@@ -1,6 +1,6 @@
 import unittest
 from agentdojo_budget.provider_compat import ReasoningMetadata, completion_failure
-from agentdojo_budget import identity_task33_discovery as discovery
+from agentdojo_budget.identity import identity_task33_discovery as discovery
 
 
 class ProviderCompatibilityTests(unittest.TestCase):

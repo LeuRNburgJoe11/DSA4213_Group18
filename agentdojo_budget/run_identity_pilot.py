@@ -22,7 +22,7 @@ from agentdojo.agent_pipeline.tool_execution import ToolsExecutionLoop
 from agentdojo.functions_runtime import FunctionsRuntime
 from agentdojo.logging import OutputLogger
 
-from agentdojo_budget import identity_task25_discovery, identity_task33_discovery, identity_task33_change
+from agentdojo_budget.identity import identity_task25_discovery, identity_task33_discovery, identity_task33_change
 from agentdojo_budget.inbox_exposure import RequiredInboxExposure
 from agentdojo_budget.provider_compat import ReasoningMetadata, completion_failure
 

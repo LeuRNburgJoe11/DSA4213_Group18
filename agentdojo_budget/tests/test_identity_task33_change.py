@@ -1,6 +1,6 @@
 """Offline evidence controls, role reversal, delivery and exposure checks."""
 import unittest
-from agentdojo_budget import identity_task33_change as t
+from agentdojo_budget.identity import identity_task33_change as t
 from agentdojo.functions_runtime import FunctionsRuntime
 from agentdojo_budget.run_identity_pilot import default_condition_set, default_inbox_exposure, execution_limits
 from agentdojo_budget.run_identity_pilot import observed_ids

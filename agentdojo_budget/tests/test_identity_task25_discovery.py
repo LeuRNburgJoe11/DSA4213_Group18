@@ -1,12 +1,12 @@
 """Offline task25 discovery evidence and partial-progress evaluation checks."""
 import unittest
-from agentdojo_budget import identity_task25_discovery as t
+from agentdojo_budget.identity import identity_task25_discovery as t
 from agentdojo.functions_runtime import FunctionsRuntime
 
 
 class Task25DiscoveryTests(unittest.TestCase):
     def test_discovery_options_and_defaults_match_task33(self):
-        from agentdojo_budget import identity_task33_discovery as d
+        from agentdojo_budget.identity import identity_task33_discovery as d
         from agentdojo_budget.run_identity_pilot import default_condition_set, default_inbox_exposure
         self.assertEqual(t.CONDITION_SETS, d.CONDITION_SETS)
         for task in ("25", "33-discovery"):

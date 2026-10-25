@@ -48,7 +48,7 @@ def main():
     if env.model_dump(mode="json") != saved_env:
         raise RuntimeError("Saved environment did not round-trip exactly; no API calls made.")
     if args.ablation == "prompt":
-        from agentdojo_budget.identity_task33_discovery import PROMPT
+        from agentdojo_budget.identity.identity_task33_discovery import PROMPT
         config["prompt"] = PROMPT
         expected_first["messages"][1]["content"] = [{"type": "text", "text": PROMPT}]
     elif args.ablation in ("sharing", "sharing-self"):

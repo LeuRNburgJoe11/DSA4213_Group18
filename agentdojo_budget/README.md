@@ -11,24 +11,26 @@ repository root (the directory containing agentdojo_budget).
 
 Sent-mail retrieval is autonomous for all three. General mail search can return
 sent records too. Exposure is measured from actual tool results, not merely from
-the presence of a message in the environment. No RQ3 defence is implemented yet.
+the presence of a message in the environment. The RQ3 gate lives in defenses/recipient_gate.py; it is not yet wired into run_identity_pilot.py.
 
 ## Active files
 
 ```text
-identity_task33_discovery.py   John: discover recipient from correspondence
-identity_task25_discovery.py   David: discover recipient; complete Linda/Mark work
-identity_task33_change.py      Retain or replace an established recipient address
-identity_common.py             Shared constants, clarification and delivery checks
-run_identity_pilot.py          One trial per selected condition; shared US$1 cap
-inbox_exposure.py              Required inbox read, where selected
-provider_compat.py             Gemini reasoning metadata and provider-error labels
-test_*.py                     Offline tests for the active setup
-IDENTITY_TASK*_DISCOVERY.md    Detailed discovery protocols
-IDENTITY_TASK33_CHANGE.md      Detailed change protocol
-archive/                      Earlier tasks, diagnostics and benchmark scripts
-runs/                         All existing raw results, preserved in place
+identity/identity_task33_discovery.py   John: discover recipient from correspondence
+identity/identity_task25_discovery.py   David: discover recipient; complete Linda/Mark work
+identity/identity_task33_change.py      Retain or replace an established recipient address
+identity/identity_common.py             Shared constants, clarification and delivery checks
+defenses/recipient_gate.py              RQ3: evidence-based recipient verification gate
+run_identity_pilot.py                   One trial per selected condition; shared US$1 cap
+inbox_exposure.py                       Required inbox read, where selected
+provider_compat.py                      Gemini reasoning metadata and provider-error labels
+tests/test_*.py                         Offline tests for the active setup and the gate
+IDENTITY_TASK*_DISCOVERY.md             Detailed discovery protocols
+IDENTITY_TASK33_CHANGE.md               Detailed change protocol
+archive/                                Earlier tasks, diagnostics and benchmark scripts
+runs/                                   All existing raw results, preserved in place
 ```
+
 
 ## Setup and offline checks
 

@@ -1,6 +1,6 @@
 """Offline fixture isolation, message balance, history and delivery checks."""
 import unittest
-from agentdojo_budget import identity_task33_discovery as d
+from agentdojo_budget.identity import identity_task33_discovery as d
 from agentdojo_budget.inbox_exposure import RequiredInboxExposure
 from agentdojo_budget.run_identity_pilot import observed_ids, execution_limits, reasoning_settings
 from agentdojo.functions_runtime import FunctionsRuntime

@@ -1,7 +1,7 @@
 """Offline checks that evidence precedes any model decision in both tasks."""
 import unittest
 import yaml
-from agentdojo_budget import identity_task33_discovery, identity_task25_discovery, identity_task33_change
+from agentdojo_budget.identity import identity_task33_discovery, identity_task25_discovery, identity_task33_change
 from agentdojo_budget.inbox_exposure import RequiredInboxExposure
 from agentdojo.functions_runtime import FunctionsRuntime
 from agentdojo.agent_pipeline import AgentPipeline
