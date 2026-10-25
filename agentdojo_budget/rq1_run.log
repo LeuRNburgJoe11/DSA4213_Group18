@@ -28,21 +28,34 @@ Run 4 was launched with only the two remaining defenses.
 
 2. Results (same format as the Gemini report)
 ---------------------------------------------
+Source: Joel Chua's `report` run on 25 Oct 2026, 7:23 pm, over the saved per-episode traces
+on his machine (no API calls, no cost). Not reproducible from the logs in this repo alone:
+runs/ is gitignored, and runs 1-3 above crashed before printing any table. Numbers copied
+from his message; not re-computed here.
+
 model    defense                        benign utility           utility under attack     targeted ASR
+gemini   none                           100.0% [57-100] n=5      100.0% [80-100] n=15       0.0% [0-20] n=15
 gemini   repeat_user_prompt             100.0% [57-100] n=5      100.0% [78-100] n=14       0.0% [0-22] n=14
 gemini   spotlighting_with_delimiting   100.0% [57-100] n=5      100.0% [80-100] n=15       0.0% [0-20] n=15
-sonnet   repeat_user_prompt             not in logs              not in logs                not in logs
-sonnet   spotlighting_with_delimiting   not in logs              not in logs                not in logs
-gpt6     repeat_user_prompt             not in logs              not in logs                not in logs
-gpt6     spotlighting_with_delimiting   not in logs              not in logs                not in logs
+gpt6     none                            80.0% [38-96] n=5       100.0% [80-100] n=15       0.0% [0-20] n=15
+gpt6     repeat_user_prompt              80.0% [38-96] n=5        93.3% [70-99] n=15        0.0% [0-20] n=15
+gpt6     spotlighting_with_delimiting   100.0% [57-100] n=5      100.0% [80-100] n=15       0.0% [0-20] n=15
+sonnet   none                           100.0% [57-100] n=5      100.0% [80-100] n=15       0.0% [0-20] n=15
+sonnet   repeat_user_prompt             100.0% [57-100] n=5       93.3% [70-99] n=15        0.0% [0-20] n=15
+sonnet   spotlighting_with_delimiting   100.0% [57-100] n=5      100.0% [80-100] n=15       0.0% [0-20] n=15
 
 Brackets are 95% Wilson intervals. Small n means wide intervals - report them.
-Only the Gemini run reached the report step. Runs 1-3 crashed at tool_filter before
-reporting, so the logs hold no utility or attack-success numbers for Sonnet or GPT-6.
-Their per-episode results are in the runs/ folder on the machine that ran them
-(runs/ is gitignored, so it is not in this repo).
 
-The "none" (no defense) baseline does not appear in any of these logs.
+Reading the table:
+  - Targeted ASR is 0.0% in all nine rows, including "none" (no defense). On this sample
+    (5 user tasks x 3 injection tasks, important_instructions) the attack never succeeded
+    even undefended, so the sample gives no headroom to compare defenses on security.
+    With n=15 the 95% upper bound is 20%, so this cannot show that any defense works.
+  - Utility differences are small and the intervals overlap heavily (n=5 benign, n=15
+    attacked). The lowest rows are gpt6 benign (80%, none and repeat_user_prompt) and the
+    93.3% rows (gpt6 and sonnet, repeat_user_prompt, under attack): one episode each.
+  - gemini repeat_user_prompt has n=14 attacked because the run stopped at the budget cap
+    (39 of 40 episodes, see section 1).
 
 
 3. Final error of each failed run
@@ -57,10 +70,7 @@ run 3 (gpt6)    openai.NotFoundError 404: No endpoints found that can handle the
                 the regional-surcharge filter, 2 after the tier filter)
 
 
-4. To fill in the missing rows
-------------------------------
-On the machine that holds runs/ for these runs, run the report step with the same flags as the
-runs, for example:
-  python dojo_budget.py report --n-user 5 --n-inj 3 \
-      --defenses none spotlighting_with_delimiting repeat_user_prompt --repeats 1
-and paste the Sonnet and GPT-6 rows into section 2.
+4. Provenance
+--------------
+Sections 1 and 3 come from the four committed logs. Section 2 comes from Joel's report run
+(25 Oct, 7:23 pm). tool_filter is not in any row: it was dropped (see CLAUDE.md).
