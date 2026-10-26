@@ -69,7 +69,7 @@ class Wiring(unittest.TestCase):
         return next(e for e in pipeline.elements if isinstance(e, ToolsExecutionLoop))
 
     def test_defenses_offered(self):
-        self.assertEqual(runner.DEFENSES, ("none", "origin", "origin+readers", "origin+identity"))
+        self.assertEqual(runner.GATE_MODES, ("origin", "origin+readers", "origin+identity"))
 
     def test_none_leaves_the_pipeline_untouched(self):
         pipeline, gate = self.build("none")
@@ -78,7 +78,7 @@ class Wiring(unittest.TestCase):
         self.assertFalse(any(isinstance(e, RecipientGate) for e in self.loop(pipeline).elements))
 
     def test_gate_wraps_the_executor_inside_the_tool_loop(self):
-        for defense in runner.DEFENSES[1:]:
+        for defense in runner.GATE_MODES:
             with self.subTest(defense=defense):
                 pipeline, gate = self.build(defense)
                 elements = self.loop(pipeline).elements
