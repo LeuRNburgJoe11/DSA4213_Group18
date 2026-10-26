@@ -46,18 +46,29 @@ Do not commit credentials. Offline tests need no API key or network:
 The archive deliberately is not an offline-test discovery package; old tests
 and command examples are historical rather than the current CLI contract.
 
-## Paid pilots: run only when intended
+## RQ2: no-defense baseline runs
 
-These commands each start a separate paid run, not one combined run:
+These commands run the three RQ2 variants without a gate on Gemini 3.8 Flash
+with low reasoning effort. Each command starts a separate paid run with one
+trial per condition: 7 discovery conditions, 7 multi-recipient discovery
+conditions and 8 address-change conditions (22 episodes for a full pass).
 
 ```sh
-.venv/bin/python -m agentdojo_budget.run_identity_pilot --task 33-discovery --controlled-inbox --model google/gemini-3.5-flash
-.venv/bin/python -m agentdojo_budget.run_identity_pilot --task 25 --controlled-inbox --model google/gemini-3.5-flash
-.venv/bin/python -m agentdojo_budget.run_identity_pilot --task 33-change --controlled-inbox --model google/gemini-3.5-flash
+.venv/bin/python -m agentdojo_budget.run_identity_pilot --task 33-discovery --controlled-inbox --model google/gemini-3.8-flash --defense none
+.venv/bin/python -m agentdojo_budget.run_identity_pilot --task 25 --controlled-inbox --model google/gemini-3.8-flash --defense none
+.venv/bin/python -m agentdojo_budget.run_identity_pilot --task 33-change --controlled-inbox --model google/gemini-3.8-flash --defense none
 ```
 
+For three total trials per condition, run each command three times. Each
+invocation creates a fresh timestamped output folder under agentdojo_budget/runs/;
+episode scores are stored in results.jsonl alongside the saved traces and states.
+An existing pilot can count as one trial only if its setup and settings match.
+Three full passes produce 66 episodes. Keep these baseline results for RQ3,
+but compare them only with defense runs using the same model, reasoning effort,
+conditions and exposure settings. The RQ3 examples below use a different model ID.
+
 The CLI defaults to 33-discovery and Gemini 2.5 Flash if selectors are omitted.
-Gemini 3.5/3.8 Flash use low reasoning effort with opaque reasoning metadata
+Gemini 3.8 Flash use low reasoning effort with opaque reasoning metadata
 preserved; 2.5 uses reasoning disabled. There are 20 execution rounds / 21 API
 calls per condition. The US$1 cap covers one invocation, NOT cumulative spending
 across separate runs. Prices/provider checks may stop a run before that cap.
