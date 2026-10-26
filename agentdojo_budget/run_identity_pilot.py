@@ -1,12 +1,14 @@
-"""Selected identity conditions, one trial each, with a shared USD 1 budget.
+"""Selected identity conditions, one trial each, with a USD 1 budget per invocation.
 
 Run from repo root: .venv/bin/python -m agentdojo_budget.run_identity_pilot
-Uses Gemini 2.5 Flash, the existing benign pilot's model. No automatic reruns.
+Defaults to Gemini 2.5 Flash, the existing benign pilot's model; --model also accepts Gemini 3.5/3.8
+Flash, Claude Sonnet 5.5 and GPT-6 Sol (see MODELS). No automatic reruns.
 """
 import argparse
 from dataclasses import asdict
 import json
 import os
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from types import SimpleNamespace
@@ -30,6 +32,23 @@ from agentdojo_budget.provider_compat import ReasoningMetadata, completion_failu
 HERE = Path(__file__).resolve().parent
 MODEL = "google/gemini-2.5-flash"
 REASONING_FLASH_MODELS = {"google/gemini-3.5-flash", "google/gemini-3.8-flash"}
+
+# One entry per model the runner may use: the OpenRouter provider its requests are pinned to (no
+# fallbacks, so runs stay comparable), the per-million-token price ceiling the run refuses to exceed
+# (about 25% above the listed price), and the `reasoning` setting to send, or None to send none.
+# Sonnet and GPT-6 send none: that matches the RQ1 runner, which ran them without a reasoning setting.
+MODELS = {
+    "google/gemini-2.5-flash": {"provider": "Google AI Studio", "reasoning": {"enabled": False},
+                                "price_limits": {"prompt": 1, "completion": 5}},
+    "google/gemini-3.5-flash": {"provider": "Google AI Studio", "reasoning": {"effort": "low"},
+                                "price_limits": {"prompt": 2, "completion": 10}},
+    "google/gemini-3.8-flash": {"provider": "Google AI Studio", "reasoning": {"effort": "low"},
+                                "price_limits": {"prompt": 1, "completion": 5}},
+    "anthropic/claude-sonnet-5.5": {"provider": "Anthropic", "reasoning": None,
+                                    "price_limits": {"prompt": 2.5, "completion": 12.5}},
+    "openai/gpt-6-sol": {"provider": "OpenAI", "reasoning": None,
+                         "price_limits": {"prompt": 2.5, "completion": 12.5}},
+}
 TASKS = {"25": identity_task25_discovery, "33-discovery": identity_task33_discovery,
          "33-change": identity_task33_change}
 
@@ -41,8 +60,45 @@ def execution_limits(task):
     return 20, 21
 
 
+def model_spec(model):
+    if model not in MODELS:
+        raise ValueError(f"Unknown model {model!r}; choose from {sorted(MODELS)}")
+    return MODELS[model]
+
+
 def reasoning_settings(model):
-    return {"effort": "low"} if model in REASONING_FLASH_MODELS else {"enabled": False}
+    """The `reasoning` request setting for this model, or None when none should be sent."""
+    return model_spec(model)["reasoning"]
+
+
+def provider_settings(model):
+    spec = model_spec(model)
+    return {"order": [spec["provider"]], "allow_fallbacks": False, "max_price": spec["price_limits"]}
+
+
+def request_extra_body(model):
+    """Everything sent to OpenRouter beyond the standard chat arguments."""
+    body = {"usage": {"include": True}, "provider": provider_settings(model)}
+    if reasoning_settings(model) is not None:
+        body["reasoning"] = reasoning_settings(model)
+    return body
+
+
+def price_within_limits(model, prices):
+    """True if OpenRouter's listed per-token prices are within this model's ceiling and it has no per-request fee."""
+    limits = model_spec(model)["price_limits"]
+    return not (float(prices["prompt"]) > limits["prompt"] * 1e-6
+                or float(prices["completion"]) > limits["completion"] * 1e-6
+                or float(prices.get("request", 0) or 0))
+
+
+def git_provenance():
+    """Commit and uncommitted-changes flag of the code behind a run, so runs from different machines can be matched."""
+    try:
+        run = lambda *args: subprocess.run(["git", *args], cwd=HERE, capture_output=True, text=True, check=True).stdout
+        return {"commit": run("rev-parse", "HEAD").strip(), "dirty": bool(run("status", "--porcelain").strip())}
+    except (OSError, subprocess.SubprocessError):
+        return {"commit": None, "dirty": None}
 
 
 def default_condition_set(task):
@@ -59,7 +115,15 @@ def default_inbox_exposure(task, condition_set):
     return "required" if task == "33-change" else "agent-selected"
 
 
-DEFENSES = ("none", *GATE_MODES)
+BUILTIN_DEFENSES = ("spotlighting_with_delimiting", "repeat_user_prompt")  # AgentDojo's own, as in RQ1
+DEFENSES = ("none", *BUILTIN_DEFENSES, *GATE_MODES)
+
+
+def defense_tag(defense):
+    """Output-folder suffix saying which kind of defence ran."""
+    if defense == "none":
+        return ""
+    return ("_gate-" if defense in GATE_MODES else "_defense-") + defense.replace("+", "-")
 
 
 def install_gate(pipeline, mode, env):
@@ -87,21 +151,22 @@ def install_gate(pipeline, mode, env):
 def build_pipeline(client, model, *, max_iters, required_inbox, defense="none", env=None):
     """The episode pipeline used by main(): model, optional forced inbox read, optional gate.
 
+    `defense` is "none", one of AgentDojo's built-in defences, or a gate mode.
     Returns (pipeline, gate); gate is None unless `defense` is a gate mode.
     """
     if defense not in DEFENSES:
         raise ValueError(f"defense must be one of {DEFENSES}")
-    if defense != "none" and env is None:
+    if defense in GATE_MODES and env is None:
         raise ValueError("a gate defense needs the pre-episode environment")
     pipeline = AgentPipeline.from_config(PipelineConfig(
         llm=OpenAILLM(client, model, temperature=0.0), model_id=None,
-        defense=None, system_message_name=None, system_message=None))
+        defense=defense if defense in BUILTIN_DEFENSES else None, system_message_name=None, system_message=None))
     if required_inbox:
         pipeline.elements = [*pipeline.elements[:2], RequiredInboxExposure(), *pipeline.elements[2:]]
     for element in pipeline.elements:
         if isinstance(element, ToolsExecutionLoop):
             element.max_iters = max_iters
-    gate = install_gate(pipeline, defense, env) if defense != "none" else None
+    gate = install_gate(pipeline, defense, env) if defense in GATE_MODES else None
     return pipeline, gate
 
 
@@ -143,10 +208,10 @@ def observed_ids(messages):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--task", choices=TASKS, default="33-discovery")
-    parser.add_argument("--model", choices=(MODEL, *sorted(REASONING_FLASH_MODELS)), default=MODEL)
+    parser.add_argument("--model", choices=tuple(MODELS), default=MODEL)
     parser.add_argument("--defense", choices=DEFENSES, default="none",
-                        help="RQ3 recipient gate mode (none = no gate). origin holds every send in RQ2, "
-                             "so it is normally reported analytically instead of run.")
+                        help="none, one of AgentDojo's built-in defences, or an RQ3 recipient gate mode "
+                             "(origin holds every send in RQ2, so it is normally reported analytically instead of run).")
     parser.add_argument("--inbox-exposure", choices=("required", "agent-selected"), default=None,
                         help="Allow autonomous evidence retrieval in recipient-discovery conditions.")
     parser.add_argument("--conditions", nargs="+", help="Run only these members of the selected condition set (fresh output directory).")
@@ -183,8 +248,8 @@ def main():
     response.raise_for_status()
     prices = next(m["pricing"] for m in response.json()["data"] if m["id"] == model)
     pi, po = float(prices["prompt"]), float(prices["completion"])
-    price_limits = {"prompt": 2, "completion": 10} if model == "google/gemini-3.5-flash" else {"prompt": 1, "completion": 5}
-    if pi > price_limits["prompt"] * 1e-6 or po > price_limits["completion"] * 1e-6 or float(prices.get("request", 0) or 0):
+    price_limits = MODELS[model]["price_limits"]
+    if not price_within_limits(model, prices):
         raise SystemExit("Price outside configured limits; no paid requests made.")
     required_inbox = args.controlled_inbox and args.inbox_exposure == "required"
     mode = ("required_inbox_first" if required_inbox else
@@ -192,8 +257,7 @@ def main():
     task_prefix = {"25": "identity_task25_pilot_",
                    "33-discovery": "identity_task33_discovery_pilot_",
                    "33-change": "identity_task33_change_pilot_"}[args.task]
-    defense_tag = "" if args.defense == "none" else "_gate-" + args.defense.replace("+", "-")
-    out = HERE / "runs" / (task_prefix + mode + defense_tag + "_" + args.condition_set + "_" + datetime.now().strftime("%Y%m%d_%H%M%S"))
+    out = HERE / "runs" / (task_prefix + mode + defense_tag(args.defense) + "_" + args.condition_set + "_" + datetime.now().strftime("%Y%m%d_%H%M%S"))
     out.mkdir(parents=True)
     state = {"model": model, "cap_usd": 1.0, "accounted_usd": 0.0,
              "reported_usd": 0.0, "calls": 0, "condition": None}
@@ -205,7 +269,8 @@ def main():
         "max_iters": max_iters, "max_api_calls_per_condition": max_calls,
         "environment_version": environment_version,
         "prompt_version": prompt_version,
-        "max_output_tokens": 4096, "defense": args.defense,
+        "max_output_tokens": 4096, "defense": args.defense, "git": git_provenance(),
+        "provider": MODELS[model]["provider"],
         "reasoning": reasoning_settings(model),
         "reasoning_metadata_preserved": model in REASONING_FLASH_MODELS,
         "provider_error_handling": "classify_incomplete_without_retry_v1",
@@ -240,9 +305,7 @@ def main():
         (out / "budget.json").write_text(json.dumps(state, indent=2))
         kwargs["max_tokens"] = 4096
         kwargs.pop("reasoning_effort", None)
-        kwargs["extra_body"] = {"reasoning": reasoning_settings(model), "usage": {"include": True},
-            "provider": {"order": ["Google AI Studio"], "allow_fallbacks": False,
-                         "max_price": price_limits}}
+        kwargs["extra_body"] = request_extra_body(model)
         try:
             result = real.chat.completions.create(**kwargs)
         except Exception as exc:
