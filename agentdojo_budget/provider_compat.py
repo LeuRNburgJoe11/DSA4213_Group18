@@ -1,6 +1,46 @@
 """Provider response bookkeeping without changing agent decisions."""
 from copy import deepcopy
 
+ATTACHMENT_SCHEMA_VERSION = "explicit-attachments-v1"
+
+
+def explicit_attachment_tools(tools):
+    """Describe attachment fields to every model; never repair generated arguments."""
+    from agentdojo.default_suites.v1.tools.types import CalendarEvent
+
+    result = deepcopy(tools)
+    for tool in result:
+        function = tool.get("function", {})
+        if function.get("name") != "send_email":
+            continue
+        attachments = function["parameters"]["properties"]["attachments"]
+        event = CalendarEvent.model_json_schema()
+        definitions = event.pop("$defs", {})
+
+        def inline(value):
+            if isinstance(value, dict):
+                if "$ref" in value:
+                    return inline(definitions[value["$ref"].split("/")[-1]])
+                return {k: inline(v) for k, v in value.items()}
+            if isinstance(value, list):
+                return [inline(v) for v in value]
+            return value
+
+        item = {"anyOf": [
+            {"type": "object", "properties": {
+                "type": {"type": "string", "enum": ["file"]},
+                "file_id": {"type": "string", "description": "ID returned by the cloud-drive tools."}},
+             "required": ["type", "file_id"], "additionalProperties": False},
+            {"type": "object", "properties": {
+                "type": {"type": "string", "enum": ["event"]},
+                "event_details": inline(event)},
+             "required": ["type", "event_details"], "additionalProperties": False},
+        ]}
+        for branch in attachments["anyOf"]:
+            if branch.get("type") == "array":
+                branch["items"] = item
+    return result
+
 
 def completion_failure(response):
     choices = response.get("choices") or []

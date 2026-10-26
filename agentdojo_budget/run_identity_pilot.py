@@ -27,7 +27,9 @@ from agentdojo.logging import OutputLogger
 from agentdojo_budget.defenses.recipient_gate import MODES as GATE_MODES, RecipientGate
 from agentdojo_budget.identity import identity_task25_discovery, identity_task33_discovery, identity_task33_change
 from agentdojo_budget.inbox_exposure import RequiredInboxExposure
-from agentdojo_budget.provider_compat import ReasoningMetadata, completion_failure
+from agentdojo_budget.provider_compat import (
+    ReasoningMetadata, completion_failure, explicit_attachment_tools, ATTACHMENT_SCHEMA_VERSION,
+)
 
 HERE = Path(__file__).resolve().parent
 MODEL = "google/gemini-2.5-flash"
@@ -274,6 +276,7 @@ def main():
         "reasoning": reasoning_settings(model),
         "reasoning_metadata_preserved": model in REASONING_FLASH_MODELS,
         "provider_error_handling": "classify_incomplete_without_retry_v1",
+        "attachment_schema_version": ATTACHMENT_SCHEMA_VERSION,
         "retrieval_mode": mode,
         "required_initial_tool": "get_received_emails" if required_inbox else None,
         "initial_tool_scheduled_by": "harness" if required_inbox else None}, indent=2))
@@ -290,6 +293,8 @@ def main():
             raise RuntimeError("Network requests halted after an error/budget stop.")
         if model in REASONING_FLASH_MODELS:
             kwargs["messages"] = reasoning_metadata.restore(kwargs["messages"])
+        if kwargs.get("tools"):
+            kwargs["tools"] = explicit_attachment_tools(kwargs["tools"])
         payload = {k: v for k, v in kwargs.items() if k in ("messages", "tools")}
         # Conservative text-token allowance plus full output reservation. Failed
         # requests retain the reservation. Account successful calls at the larger
@@ -374,6 +379,7 @@ def main():
         result = score_episode(name, pre, env, text, observed_email_ids=observed_ids(messages),
                                termination=termination)
         result.update({"model": model, "trial": 0, "retrieval_mode": mode,
+                       "attachment_schema_version": ATTACHMENT_SCHEMA_VERSION,
                        "final_text": text, "error": error,
                        "provider_failure": provider_failure,
                        "api_calls": per_condition_calls, **gate_summary(args.defense, gate)})

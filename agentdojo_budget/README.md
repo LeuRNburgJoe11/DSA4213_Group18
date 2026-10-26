@@ -152,6 +152,17 @@ Totals per model: 3 baseline + 6 RQ1 + 6 RQ3 = 15 runs, 110 episodes. For the th
 
 ### Options and defaults
 
+**Shared attachment schema (RQ2 and RQ3).** All models and all defense settings
+use `explicit-attachments-v1`, including no defense, built-in defenses and both
+recipient gates. The runner makes the attachment fields explicit in the tool
+schema before every API request; it does not fill in or repair generated
+arguments. File attachments require `type: "file"` and a `file_id`; calendar
+attachments require `type: "event"` and `event_details`. The version is recorded
+as `attachment_schema_version` in each run's config.json and each episode result.
+No extra CLI flag is needed. Runs without this field used the earlier schema;
+keep them as historical pilots and rerun matched model/defense comparisons on
+the shared version. The gate policies and task evidence are unchanged.
+
 The CLI defaults to 33-discovery and Gemini 2.5 Flash if selectors are omitted.
 Gemini 3.8 Flash use low reasoning effort with opaque reasoning metadata
 preserved; 2.5 uses reasoning disabled. There are 20 execution rounds / 21 API
