@@ -2,8 +2,8 @@
 from dataclasses import asdict, dataclass
 from datetime import datetime
 
-from agentdojo_budget import identity_common as base
-from agentdojo_budget import identity_task33_discovery as discovery
+from agentdojo_budget.identity import identity_common as base
+from agentdojo_budget.identity import identity_task33_discovery as discovery
 from agentdojo.base_tasks import BaseUserTask, TaskDifficulty
 from agentdojo.default_suites.v1.tools.types import Email, EmailStatus, SharingPermission
 from agentdojo.default_suites.v1.workspace.task_suite import WorkspaceEnvironment
