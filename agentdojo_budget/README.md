@@ -59,7 +59,8 @@ MODEL=google/gemini-3.8-flash          # or anthropic/claude-sonnet-5.5, or open
 Each model is pinned to its own OpenRouter provider (no fallbacks) and has its own price ceiling, so a
 run refuses to start if the listed price is above it. Gemini uses a low reasoning setting; Sonnet and
 GPT-6 send no reasoning setting, as in RQ1. All three models passed a one-condition smoke test on
-26 Oct (see the smoke-test commands under RQ3); the full passes have not been run.
+26 Oct (see the smoke-test commands under RQ3). The no-defence RQ2 pass on all three models is done (see
+"RQ2 results so far"); the RQ1 and RQ3 passes have not been run.
 
 Settings, by research question. `none` is the no-defence run and is shared by all three:
 
@@ -86,6 +87,26 @@ An existing pilot can count as one trial only if its setup and settings match.
 Each invocation creates a fresh timestamped folder; scores are in results.jsonl
 alongside saved traces and states. Keep these no-defense results as the baseline
 for comparisons using the same model, reasoning effort, conditions and exposure.
+
+#### RQ2 results so far
+
+The reported no-defence pass (Robin, 26 Oct, 17:04) is `evaluation/rq2_reported_set_20261026_1704/`: all
+66 episodes completed, one trial per condition and model, no episode replaced or retried. `SUMMARY.md`
+has the outcome tables, `episodes.csv` the per-episode labels and `manifest.json` the exact source
+folders, settings, git commit and cost. Earlier passes are kept unchanged in the other `evaluation/`
+folders.
+
+| Model | Completed | Episodes with attacker delivery | Pre-send identity clarification | Cost (US$) |
+|---|---:|---:|---:|---:|
+| Gemini 3.8 Flash | 22/22 | 6 | 0 | 0.35 |
+| Claude Sonnet 5.5 | 22/22 | 0 | 2 | 0.91 |
+| GPT-6 Sol | 22/22 | 2 | 2 | 0.21 |
+
+These are counts over a mix of conditions, not model-wide failure rates. A separate matched-schema pass
+under the same protocol gave different counts (attacker delivery: Gemini 5, Sonnet 0, GPT-6 3; Gemini had
+2 incomplete episodes), so single-trial counts are not stable. The gated and defended runs must use the same
+fixtures, settings and `explicit-attachments-v1` attachment schema as this pass to be comparable; each run's
+`config.json` records the schema version and the git commit.
 
 ### RQ1: AgentDojo's built-in defences on the same tasks
 
@@ -198,10 +219,10 @@ EOF
 
 - **Budget.** The US$1 cap covers one invocation, NOT cumulative spending across separate runs, and a
   run stops at US$0.95 of accounted cost (price/provider checks may stop it earlier).
-  `spend_ledger.jsonl` tracks RQ1 only, so for RQ2 and RQ3 check the OpenRouter dashboard. The one
-  smoke-test episodes cost about US$0.008 (Gemini 3.8), US$0.010 (GPT-6) and US$0.031 (Sonnet). At those
-  rates all 330 episodes come to roughly US$6 (about 1.2 + 1.1 + 3.4). That is a rough figure from single
-  episodes; defended and gated episodes may run longer.
+  `spend_ledger.jsonl` tracks RQ1 only, so for RQ2 and RQ3 check the OpenRouter dashboard. The
+  reported no-defence pass (22 episodes per model) cost US$0.35 (Gemini 3.8), US$0.91 (Sonnet) and
+  US$0.21 (GPT-6), US$1.47 in total. If the other four settings cost about the same, all 330 episodes come
+  to roughly US$7 (5 x 1.47); defended and gated episodes may run longer.
 - **Who runs it** (from the 26 Oct team chat; confirm). Robin runs the no-defence baseline, Sherwin runs
   `origin+readers` and `origin+identity`, and Joel re-runs RQ1 (`spotlighting_with_delimiting` and
   `repeat_user_prompt`). For the settings to be comparable everyone must use the same models,
@@ -209,8 +230,9 @@ EOF
   the default exposure (no `--inbox-exposure`).
   The runner's spend is not in a shared ledger, so each person checks the OpenRouter dashboard.
 - **Repeats.** Rerun a command for a new timestamped folder; nothing is overwritten.
-- **Status.** Only the one-condition smoke tests above have been run live. The full passes, and the
-  built-in defences on a live model, have not.
+- **Status (26 Oct).** Done: the no-defence RQ2 pass on all three models (66 episodes, US$1.47). Not yet
+  run: the RQ3 gate passes and the RQ1 built-in-defence passes. Only one-condition smoke tests of the gate
+  and of the new models exist.
 
 ## Detailed protocols
 
