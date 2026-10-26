@@ -148,6 +148,13 @@ class BudgetedClient:
             if o.spent >= o.cap - SAFETY_MARGIN_USD:
                 raise BudgetExceeded(f"Budget cap reached: spent ${o.spent:.2f} of ${o.cap:.2f}")
 
+            # AgentDojo's main calls send `temperature or NOT_GIVEN`, so 0.0 is never sent,
+            # but tool_filter's filtering call sends temperature=0.0 explicitly. Sonnet 5.5 and
+            # GPT-6 endpoints don't support temperature, so with require_parameters that one
+            # call matched no endpoint (404). Treat it like the main calls: drop a zero.
+            if not kwargs.get("temperature"):
+                kwargs.pop("temperature", None)
+
             extra = dict(kwargs.pop("extra_body", None) or {})
             extra["usage"] = {"include": True}  # ask OpenRouter to report cost
             if o.provider:

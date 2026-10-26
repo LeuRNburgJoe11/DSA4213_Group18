@@ -1,0 +1,67 @@
+Sample: 5 user tasks ['user_task_4', 'user_task_5', 'user_task_27', 'user_task_29', 'user_task_38']
+        3 injection tasks ['injection_task_2', 'injection_task_5', 'injection_task_13']
+Episodes planned: 180  |  spent so far $1.60 of $7.00
+
+  [4/180] sonnet | spotlighting_with_delimiting | rep 0 | user_task_4  (spent $1.78)
+  [8/180] sonnet | spotlighting_with_delimiting | rep 0 | user_task_5  (spent $1.88)
+  [12/180] sonnet | spotlighting_with_delimiting | rep 0 | user_task_27  (spent $2.07)
+  [16/180] sonnet | spotlighting_with_delimiting | rep 0 | user_task_29  (spent $2.25)
+  [20/180] sonnet | spotlighting_with_delimiting | rep 0 | user_task_38  (spent $2.61)
+C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\agentdojo\agent_pipeline\basic_elements.py:22: UserWarning: The query is not being added as the first message or after the system message
+  warnings.warn("The query is not being added as the first message or after the system message")
+  [24/180] sonnet | repeat_user_prompt | rep 0 | user_task_4  (spent $2.80)
+C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\agentdojo\task_suite\task_suite.py:397: UserWarning: Model output was None for task user_task_5
+  warnings.warn(f"Model output was None for task {user_task.ID}")
+  [28/180] sonnet | repeat_user_prompt | rep 0 | user_task_5  (spent $2.90)
+  [32/180] sonnet | repeat_user_prompt | rep 0 | user_task_27  (spent $3.10)
+  [36/180] sonnet | repeat_user_prompt | rep 0 | user_task_29  (spent $3.28)
+  [40/180] sonnet | repeat_user_prompt | rep 0 | user_task_38  (spent $3.65)
+Traceback (most recent call last):
+  File "C:\Users\j03lr\OneDrive - National University of Singapore\Desktop\AY26_27 Sem 1\DSA4213\group project\agentdojo_budget\dojo_budget.py", line 501, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\j03lr\OneDrive - National University of Singapore\Desktop\AY26_27 Sem 1\DSA4213\group project\agentdojo_budget\dojo_budget.py", line 484, in main
+    run_grid(a.models, a.defenses, a.repeats, sample, a.budget, a.max_iters, phase="run")
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\j03lr\OneDrive - National University of Singapore\Desktop\AY26_27 Sem 1\DSA4213\group project\agentdojo_budget\dojo_budget.py", line 297, in run_grid
+    run_task_without_injection_tasks(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        suite, pipeline, ut, logdir, force_rerun=False, benchmark_version=BENCHMARK_VERSION
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\agentdojo\benchmark.py", line 283, in run_task_without_injection_tasks
+    utility, security = suite.run_task_with_pipeline(agent_pipeline, task, injection_task=None, injections={})
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\agentdojo\task_suite\task_suite.py", line 386, in run_task_with_pipeline
+    _, _, task_environment, messages, _ = agent_pipeline.query(prompt, runtime, task_environment)
+                                          ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\agentdojo\agent_pipeline\agent_pipeline.py", line 178, in query
+    query, runtime, env, messages, extra_args = element.query(query, runtime, env, messages, extra_args)
+                                                ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\agentdojo\agent_pipeline\llms\openai_llm.py", line 224, in query
+    completion = self.client.chat.completions.create(
+        model=self.model,
+    ...<3 lines>...
+        temperature=self.temperature,
+    )
+  File "C:\Users\j03lr\OneDrive - National University of Singapore\Desktop\AY26_27 Sem 1\DSA4213\group project\agentdojo_budget\dojo_budget.py", line 157, in create
+    completion = o._real.chat.completions.create(**kwargs)
+  File "C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_utils\_utils.py", line 298, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1318, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<53 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1440, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\j03lr\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\openai\_base_client.py", line 1213, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found that can handle the requested parameters. To learn more about provider routing, visit: https://openrouter.ai/docs/guides/routing/provider-selection', 'code': 404, 'metadata': {'routing_funnel': [{'step': 'Initial Endpoints', 'endpoint_count': 8}, {'step': 'Filter by Regional Surcharge', 'endpoint_count': 5}], 'failed_routing_step': 'Filter by Parameters'}}}
