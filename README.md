@@ -1,6 +1,12 @@
 # DSA4213_assignment
 This repo contains all the necessary files for DSA4213 Group Project
 
+Current RQ2 experiments are the three AgentDojo variants documented in
+[`agentdojo_budget/README.md`](agentdojo_budget/README.md): task33 discovery,
+task25 discovery, and task33 address change. Earlier pilots and diagnostics are
+archived under `agentdojo_budget/archive/`; saved results remain in place.
+The preliminary harness documentation below is retained for reference.
+
 ## Task A: Simulation harness (preliminary)
 
 The harness in [`harness/`](harness/) includes:

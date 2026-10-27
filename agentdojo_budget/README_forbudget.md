@@ -49,7 +49,7 @@ episodes = n_user (benign)  +  n_user × n_inj (attacked)
 | Option | Models | Defenses | n_user × n_inj | Repeats | Episodes |
 |---|---|---|---|---|---|
 | A: model comparison | 3 | none | 5 × 3 | 1 | 60 |
-| B: defense comparison | 1 | none + 3 built-ins | 5 × 3 | 2 | 160 |
+| B: defense comparison | 1 | none + 2 built-ins | 5 × 3 | 2 | 120 |
 | C: both | 3 | none + 1 | 8 × 4 | 1 | 240 |
 
 Multiply by the measured $/episode from the pilot to see what fits.
@@ -81,3 +81,8 @@ Multiply by the measured $/episode from the pilot to see what fits.
   `security`).
 - **Your own defenses** (privilege separation, classifier gate, hybrid) and your RQ2–RQ4 task
   variants are not included yet. They plug into `build_pipeline()` and a custom task suite.
+- **`tool_filter` is not offered.** It was dropped on 23 Oct. Its extra filtering call failed on
+  OpenRouter with `404 No endpoints found that can handle the requested parameters` under provider
+  pinning (seen on Sonnet 5.5 and GPT-6), and relaxing the pinning to get past it gave invalid
+  results. The built-in defenses are now `spotlighting_with_delimiting` and `repeat_user_prompt`.
+  Details in `CLAUDE.md` ("Dropped: tool_filter") and `rq1_run.log`.

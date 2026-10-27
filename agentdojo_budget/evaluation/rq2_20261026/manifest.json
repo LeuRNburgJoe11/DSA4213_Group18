@@ -1,0 +1,125 @@
+{
+  "protocol": "One no-defense trial per condition and model; default exposure; temperature 0. Gemini reasoning low, other models no explicit reasoning setting.",
+  "note": "Original results unchanged. Assistant clarification annotations are separate and require team review. Gemini runs reuse verified matching fixtures/prompts; missing git metadata recorded.",
+  "runs": [
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_discovery-seven_20261026_144746",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-discovery",
+      "reused_pilot": true,
+      "planned": 7,
+      "recorded": 7,
+      "completed": 7,
+      "reported_usd": 0.0642795,
+      "git": null
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_discovery-seven_20261026_144759",
+      "model": "google/gemini-3.8-flash",
+      "task": "25",
+      "reused_pilot": true,
+      "planned": 7,
+      "recorded": 7,
+      "completed": 7,
+      "reported_usd": 0.14281275000000002,
+      "git": null
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_change-eight_20261026_144802",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-change",
+      "reused_pilot": true,
+      "planned": 8,
+      "recorded": 8,
+      "completed": 8,
+      "reported_usd": 0.04607475,
+      "git": null
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_discovery-seven_20261026_162813",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-discovery",
+      "reused_pilot": false,
+      "planned": 7,
+      "recorded": 7,
+      "completed": 7,
+      "reported_usd": 0.19977,
+      "git": {
+        "commit": "55fd91a3aeef17f930cadcabf17eeb1e8a93a4a6",
+        "dirty": false
+      }
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_discovery-seven_20261026_162826",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "25",
+      "reused_pilot": false,
+      "planned": 7,
+      "recorded": 7,
+      "completed": 7,
+      "reported_usd": 0.37059200000000014,
+      "git": {
+        "commit": "55fd91a3aeef17f930cadcabf17eeb1e8a93a4a6",
+        "dirty": false
+      }
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_change-eight_20261026_162829",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-change",
+      "reused_pilot": false,
+      "planned": 8,
+      "recorded": 8,
+      "completed": 8,
+      "reported_usd": 0.24381199999999997,
+      "git": {
+        "commit": "55fd91a3aeef17f930cadcabf17eeb1e8a93a4a6",
+        "dirty": false
+      }
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_discovery-seven_20261026_162834",
+      "model": "openai/gpt-6-sol",
+      "task": "33-discovery",
+      "reused_pilot": false,
+      "planned": 7,
+      "recorded": 6,
+      "completed": 1,
+      "reported_usd": 0.3150005000000001,
+      "git": {
+        "commit": "55fd91a3aeef17f930cadcabf17eeb1e8a93a4a6",
+        "dirty": false
+      }
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_discovery-seven_20261026_162837",
+      "model": "openai/gpt-6-sol",
+      "task": "25",
+      "reused_pilot": false,
+      "planned": 7,
+      "recorded": 7,
+      "completed": 7,
+      "reported_usd": 0.1384996,
+      "git": {
+        "commit": "55fd91a3aeef17f930cadcabf17eeb1e8a93a4a6",
+        "dirty": false
+      }
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_change-eight_20261026_162839",
+      "model": "openai/gpt-6-sol",
+      "task": "33-change",
+      "reused_pilot": false,
+      "planned": 8,
+      "recorded": 5,
+      "completed": 0,
+      "reported_usd": 0.2932636,
+      "git": {
+        "commit": "55fd91a3aeef17f930cadcabf17eeb1e8a93a4a6",
+        "dirty": false
+      }
+    }
+  ],
+  "reported_usd_total_selected": 1.8141047000000003,
+  "reported_usd_new_runs": 1.5609377000000004
+}

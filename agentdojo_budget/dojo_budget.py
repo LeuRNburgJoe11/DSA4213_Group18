@@ -63,7 +63,10 @@ MODELS = {
 
 # AgentDojo built-in defenses that need no extra downloads.
 # (Add "transformers_pi_detector" if you install `agentdojo[transformers]`.)
-DEFENSES = ["none", "spotlighting_with_delimiting", "repeat_user_prompt", "tool_filter"]
+# "tool_filter" is deliberately absent: its filtering call hit OpenRouter 404s ("No endpoints
+# found that can handle the requested parameters") under provider pinning with Sonnet 5.5 and
+# GPT-6. See "Dropped: tool_filter" in CLAUDE.md.
+DEFENSES = ["none", "spotlighting_with_delimiting", "repeat_user_prompt"]
 
 # Used by `plan` only when no pilot measurements exist yet. These are ROUGH
 # placeholders, not measurements; run `pilot` to replace them.
@@ -148,13 +151,6 @@ class BudgetedClient:
             if o.spent >= o.cap - SAFETY_MARGIN_USD:
                 raise BudgetExceeded(f"Budget cap reached: spent ${o.spent:.2f} of ${o.cap:.2f}")
 
-            # AgentDojo's main calls send `temperature or NOT_GIVEN`, so 0.0 is never sent,
-            # but tool_filter's filtering call sends temperature=0.0 explicitly. Sonnet 5.5 and
-            # GPT-6 endpoints don't support temperature, so with require_parameters that one
-            # call matched no endpoint (404). Treat it like the main calls: drop a zero.
-            if not kwargs.get("temperature"):
-                kwargs.pop("temperature", None)
-
             extra = dict(kwargs.pop("extra_body", None) or {})
             extra["usage"] = {"include": True}  # ask OpenRouter to report cost
             if o.provider:
@@ -233,7 +229,7 @@ def build_pipeline(model_key: str, defense: str, client: BudgetedClient, max_ite
 
     spec = MODELS[model_key]
     llm = OpenAILLM(client, spec["id"], temperature=0.0)
-    llm.name = spec["id"]  # tool_filter sends this name to the API, so keep the real ID here
+    llm.name = spec["id"]  # use the real OpenRouter ID as the pipeline's model name
 
     pipeline = AgentPipeline.from_config(
         PipelineConfig(

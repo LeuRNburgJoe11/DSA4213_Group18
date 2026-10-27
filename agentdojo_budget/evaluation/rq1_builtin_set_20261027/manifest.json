@@ -1,0 +1,271 @@
+{
+  "selection": "Runs listed in runs/rq1_builtin_*.log; no episode replaced or retried. The no-defence rows are copied from the RQ2 reported set (evaluation/rq2_reported_set_20261026_1704).",
+  "protocol": "One trial per condition/model/defence, explicit-attachments-v1, temperature 0. Default exposure: discovery agent-selected, change required inbox-first. Gemini low reasoning; Sonnet/GPT no explicit reasoning setting.",
+  "runs": [
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_defense-spotlighting_with_delimiting_change-eight_20261027_201634",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-change",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 8,
+      "reported_usd": 0.05469824999999999,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_defense-repeat_user_prompt_change-eight_20261027_201741",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-change",
+      "defense": "repeat_user_prompt",
+      "episodes": 8,
+      "reported_usd": 0.05798925,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_defense-spotlighting_with_delimiting_discovery-seven_20261027_201855",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-discovery",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 7,
+      "reported_usd": 0.068721,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_defense-repeat_user_prompt_discovery-seven_20261027_202015",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-discovery",
+      "defense": "repeat_user_prompt",
+      "episodes": 7,
+      "reported_usd": 0.13792950000000004,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_defense-spotlighting_with_delimiting_discovery-seven_20261027_202302",
+      "model": "google/gemini-3.8-flash",
+      "task": "25",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 7,
+      "reported_usd": 0.15290475000000006,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_defense-repeat_user_prompt_discovery-seven_20261027_202529",
+      "model": "google/gemini-3.8-flash",
+      "task": "25",
+      "defense": "repeat_user_prompt",
+      "episodes": 7,
+      "reported_usd": 0.168774,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_defense-spotlighting_with_delimiting_change-eight_20261027_202816",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-change",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 8,
+      "reported_usd": 0.28264,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_defense-repeat_user_prompt_change-eight_20261027_202955",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-change",
+      "defense": "repeat_user_prompt",
+      "episodes": 8,
+      "reported_usd": 0.301232,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_defense-spotlighting_with_delimiting_discovery-seven_20261027_203141",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-discovery",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 7,
+      "reported_usd": 0.22853999999999997,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_defense-repeat_user_prompt_discovery-seven_20261027_203247",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-discovery",
+      "defense": "repeat_user_prompt",
+      "episodes": 7,
+      "reported_usd": 0.23537400000000003,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_defense-spotlighting_with_delimiting_discovery-seven_20261027_203346",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "25",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 7,
+      "reported_usd": 0.406116,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_defense-repeat_user_prompt_discovery-seven_20261027_203515",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "25",
+      "defense": "repeat_user_prompt",
+      "episodes": 7,
+      "reported_usd": 0.434944,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_defense-spotlighting_with_delimiting_change-eight_20261027_203723",
+      "model": "openai/gpt-6-sol",
+      "task": "33-change",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 8,
+      "reported_usd": 0.0643231,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_defense-repeat_user_prompt_change-eight_20261027_203830",
+      "model": "openai/gpt-6-sol",
+      "task": "33-change",
+      "defense": "repeat_user_prompt",
+      "episodes": 8,
+      "reported_usd": 0.0928769,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_defense-spotlighting_with_delimiting_discovery-seven_20261027_203951",
+      "model": "openai/gpt-6-sol",
+      "task": "33-discovery",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 7,
+      "reported_usd": 0.0543293,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_defense-repeat_user_prompt_discovery-seven_20261027_204051",
+      "model": "openai/gpt-6-sol",
+      "task": "33-discovery",
+      "defense": "repeat_user_prompt",
+      "episodes": 7,
+      "reported_usd": 0.06718460000000001,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_defense-spotlighting_with_delimiting_discovery-seven_20261027_204206",
+      "model": "openai/gpt-6-sol",
+      "task": "25",
+      "defense": "spotlighting_with_delimiting",
+      "episodes": 7,
+      "reported_usd": 0.1210905,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_defense-repeat_user_prompt_discovery-seven_20261027_204401",
+      "model": "openai/gpt-6-sol",
+      "task": "25",
+      "defense": "repeat_user_prompt",
+      "episodes": 7,
+      "reported_usd": 0.1318219,
+      "git": {
+        "commit": "63b78829586b007b76cdedd524306e05669bc408",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    }
+  ],
+  "total_reported_usd": 3.06148905
+}
