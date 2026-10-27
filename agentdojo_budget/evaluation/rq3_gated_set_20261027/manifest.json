@@ -1,0 +1,271 @@
+{
+  "selection": "Gated runs listed in runs/rq3_gate_{gemini,gpt6,sonnet}.log; no episode replaced or retried. The no-defence rows are copied from the RQ2 reported set (evaluation/rq2_reported_set_20261026_1704).",
+  "protocol": "One trial per condition/model/defence, explicit-attachments-v1, temperature 0. Default exposure: discovery agent-selected, change required inbox-first. Gemini low reasoning; Sonnet/GPT no explicit reasoning setting.",
+  "runs": [
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_gate-origin-readers_change-eight_20261027_142614",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-change",
+      "defense": "origin+readers",
+      "episodes": 8,
+      "reported_usd": 0.07247850000000002,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_gate-origin-identity_change-eight_20261027_143222",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-change",
+      "defense": "origin+identity",
+      "episodes": 8,
+      "reported_usd": 0.05924624999999999,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_gate-origin-readers_discovery-seven_20261027_143338",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-discovery",
+      "defense": "origin+readers",
+      "episodes": 7,
+      "reported_usd": 0.14525775,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_gate-origin-identity_discovery-seven_20261027_143706",
+      "model": "google/gemini-3.8-flash",
+      "task": "33-discovery",
+      "defense": "origin+identity",
+      "episodes": 7,
+      "reported_usd": 0.1594353,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_gate-origin-readers_discovery-seven_20261027_144039",
+      "model": "google/gemini-3.8-flash",
+      "task": "25",
+      "defense": "origin+readers",
+      "episodes": 7,
+      "reported_usd": 0.27406559999999996,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_gate-origin-identity_discovery-seven_20261027_144520",
+      "model": "google/gemini-3.8-flash",
+      "task": "25",
+      "defense": "origin+identity",
+      "episodes": 7,
+      "reported_usd": 0.2438412000000001,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": {
+        "effort": "low"
+      },
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_gate-origin-readers_change-eight_20261027_184643",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-change",
+      "defense": "origin+readers",
+      "episodes": 8,
+      "reported_usd": 0.27380999999999994,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_gate-origin-identity_change-eight_20261027_184815",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-change",
+      "defense": "origin+identity",
+      "episodes": 8,
+      "reported_usd": 0.270724,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_gate-origin-readers_discovery-seven_20261027_184942",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-discovery",
+      "defense": "origin+readers",
+      "episodes": 7,
+      "reported_usd": 0.22674199999999994,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_gate-origin-identity_discovery-seven_20261027_185041",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "33-discovery",
+      "defense": "origin+identity",
+      "episodes": 7,
+      "reported_usd": 0.23400200000000004,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_gate-origin-readers_discovery-seven_20261027_185138",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "25",
+      "defense": "origin+readers",
+      "episodes": 7,
+      "reported_usd": 0.474164,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_gate-origin-identity_discovery-seven_20261027_185354",
+      "model": "anthropic/claude-sonnet-5.5",
+      "task": "25",
+      "defense": "origin+identity",
+      "episodes": 7,
+      "reported_usd": 0.41906599999999994,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": false
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_gate-origin-readers_change-eight_20261027_182622",
+      "model": "openai/gpt-6-sol",
+      "task": "33-change",
+      "defense": "origin+readers",
+      "episodes": 8,
+      "reported_usd": 0.07744540000000001,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": true
+      },
+      "reasoning": null,
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_change_pilot_required_inbox_first_gate-origin-identity_change-eight_20261027_182732",
+      "model": "openai/gpt-6-sol",
+      "task": "33-change",
+      "defense": "origin+identity",
+      "episodes": 8,
+      "reported_usd": 0.0457879,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": true
+      },
+      "reasoning": null,
+      "retrieval_mode": "required_inbox_first"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_gate-origin-readers_discovery-seven_20261027_182845",
+      "model": "openai/gpt-6-sol",
+      "task": "33-discovery",
+      "defense": "origin+readers",
+      "episodes": 7,
+      "reported_usd": 0.061498299999999985,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": true
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task33_discovery_pilot_controlled_agent_selected_gate-origin-identity_discovery-seven_20261027_182953",
+      "model": "openai/gpt-6-sol",
+      "task": "33-discovery",
+      "defense": "origin+identity",
+      "episodes": 7,
+      "reported_usd": 0.0495582,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": true
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_gate-origin-readers_discovery-seven_20261027_183106",
+      "model": "openai/gpt-6-sol",
+      "task": "25",
+      "defense": "origin+readers",
+      "episodes": 7,
+      "reported_usd": 0.12016610000000003,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": true
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    },
+    {
+      "run_directory": "identity_task25_pilot_controlled_agent_selected_gate-origin-identity_discovery-seven_20261027_183317",
+      "model": "openai/gpt-6-sol",
+      "task": "25",
+      "defense": "origin+identity",
+      "episodes": 7,
+      "reported_usd": 0.1071923,
+      "git": {
+        "commit": "f2c949e5cd64a047759312b5dbaae0650e88f5bb",
+        "dirty": true
+      },
+      "reasoning": null,
+      "retrieval_mode": "controlled_agent_selected"
+    }
+  ],
+  "total_reported_usd": 3.3144808
+}
