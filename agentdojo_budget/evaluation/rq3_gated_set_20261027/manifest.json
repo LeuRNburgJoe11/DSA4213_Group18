@@ -1,5 +1,5 @@
 {
-  "selection": "Gated runs listed in runs/rq3_gate_{gemini,gpt6,sonnet}.log; no episode replaced or retried. The no-defence rows are copied from the RQ2 reported set (evaluation/rq2_reported_set_20261026_1704).",
+  "selection": "Runs listed in runs/rq3_gate_*.log; no episode replaced or retried. The no-defence rows are copied from the RQ2 reported set (evaluation/rq2_reported_set_20261026_1704).",
   "protocol": "One trial per condition/model/defence, explicit-attachments-v1, temperature 0. Default exposure: discovery agent-selected, change required inbox-first. Gemini low reasoning; Sonnet/GPT no explicit reasoning setting.",
   "runs": [
     {
