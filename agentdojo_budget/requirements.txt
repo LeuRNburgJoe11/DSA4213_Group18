@@ -1,3 +1,5 @@
 agentdojo==0.1.35
 openai==3.26.1
 httpx==0.28.1
+matplotlib
+numpy
