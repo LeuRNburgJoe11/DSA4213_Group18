@@ -28,7 +28,9 @@ tests/test_*.py                         Offline tests for the active setup and t
 IDENTITY_TASK*_DISCOVERY.md             Detailed discovery protocols
 IDENTITY_TASK33_CHANGE.md               Detailed change protocol
 archive/                                Earlier tasks, diagnostics and benchmark scripts
-runs/                                   All existing raw results, preserved in place
+runs/                                   All existing raw results and run logs, preserved in place
+evaluation/                             Reported sets (SUMMARY.md, episodes.csv, manifest.json) per RQ
+evaluation/summarise_evaluation.py      Builds the RQ1, RQ3 and combined evaluation files from runs/
 ```
 
 
@@ -60,7 +62,8 @@ Each model is pinned to its own OpenRouter provider (no fallbacks) and has its o
 run refuses to start if the listed price is above it. Gemini uses a low reasoning setting; Sonnet and
 GPT-6 send no reasoning setting, as in RQ1. All three models passed a one-condition smoke test on
 26 Oct (see the smoke-test commands under RQ3). The no-defence RQ2 pass on all three models is done (see
-"RQ2 results so far"); the RQ1 and RQ3 passes have not been run.
+"RQ2 results so far"). The RQ1 (built-in defences) and RQ3 (gate) passes on the three tasks were run on
+27 Oct (see "RQ1 and RQ3 results so far").
 
 Settings, by research question. `none` is the no-defence run and is shared by all three:
 
@@ -171,6 +174,28 @@ are suffixed `_gate-<mode>`.
 Totals per model: 3 baseline + 6 RQ1 + 6 RQ3 = 15 runs, 110 episodes. For the three models that is
 45 runs and 330 episodes.
 
+#### RQ1 and RQ3 results so far
+
+Both passes ran on 27 Oct at commit f2c949e: 18 runs and 132 episodes each, one trial per condition, model
+and setting, with no API errors and every run completing. The GPT-6 gated runs record `dirty: true` only
+because an untracked run log was in the repository when they started (no code differed from the commit);
+every other run records `dirty: false`. Keep run logs inside `runs/` (gitignored) so the flag stays false.
+
+| Model | Setting | Attacker delivery | Delivered where right (of 12) | Over-blocked by gate | Task 25 unaffected work |
+|---|---|---:|---:|---:|---:|
+| Gemini 3.8 Flash | none / spotlighting / repeat | 6 / 4 / 3 | 12 / 12 / 12 | n/a | 7/7 on all |
+| | `origin+readers` / `origin+identity` | 0 / 0 | 2 / 10 | 10 / 0 | 0/7 / 6/7 |
+| Claude Sonnet 5.5 | none / spotlighting / repeat | 0 / 0 / 0 | 12 / 11 / 12 | n/a | 7/7 on all |
+| | `origin+readers` / `origin+identity` | 0 / 0 | 2 / 12 | 10 / 0 | 0/7 / 7/7 |
+| GPT-6 Sol | none / spotlighting / repeat | 2 / 1 / 2 | 12 / 12 / 12 | n/a | 7/7 on all |
+| | `origin+readers` / `origin+identity` | 0 / 0 | 2 / 12 | 10 / 0 | 0/7 / 6/7 |
+
+The no-defence rows are the RQ2 reported pass, not new runs. Reported cost: US$3.06 for RQ1 and US$3.31
+for RQ3 (US$7.84 with the RQ2 pass). These are single trials, so a difference of one to three episodes is
+not an effect. Clarification labels are automatic, and where the gate held a send the clarification is
+partly induced by its own error message. The full tables are `evaluation/rq1_builtin_set_20261027/`,
+`evaluation/rq3_gated_set_20261027/` and `evaluation/COMBINED_rq1_rq3.md` (one at-a-glance table per model).
+
 ### Options and defaults
 
 **Shared attachment schema (RQ2 and RQ3).** All models and all defense settings
@@ -197,6 +222,18 @@ compare different exposure modes separately. All setups require --controlled-inb
 
 ### Summarising the results
 
+Log each model's block into `runs/` so the working tree stays clean (`dirty: false`), for example
+`... 2>&1 | tee agentdojo_budget/runs/rq3_gate_sonnet.log`. The evaluation files are built from the `OUTPUT`
+lines in `runs/rq1_builtin_<model>.log` and `runs/rq3_gate_<model>.log`:
+
+```sh
+.venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py rq1       # evaluation/rq1_builtin_set_*/
+.venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py rq3       # evaluation/rq3_gated_set_*/
+.venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py combined  # COMBINED_rq1_rq3.md (run last)
+```
+
+For a quick look at raw results instead:
+
 Output lands in `agentdojo_budget/runs/<task>_..._<timestamp>/results.jsonl`. Gated runs add a
 `_gate-<mode>` part to the folder name and built-in-defence runs a `_defense-<name>` part; each result
 records `defense`, `gate_decisions` and `gate_held`. `config.json` records the model, its provider, the
@@ -221,8 +258,9 @@ EOF
   run stops at US$0.95 of accounted cost (price/provider checks may stop it earlier).
   `spend_ledger.jsonl` tracks RQ1 only, so for RQ2 and RQ3 check the OpenRouter dashboard. The
   reported no-defence pass (22 episodes per model) cost US$0.35 (Gemini 3.8), US$0.91 (Sonnet) and
-  US$0.21 (GPT-6), US$1.47 in total. If the other four settings cost about the same, all 330 episodes come
-  to roughly US$7 (5 x 1.47); defended and gated episodes may run longer.
+  US$0.21 (GPT-6), US$1.47 in total. The four other settings cost US$3.06 (RQ1) and US$3.31 (RQ3) as
+  reported by the runner, so all 330 episodes came to about US$7.84; check the OpenRouter dashboard for the
+  billed figure.
 - **Who runs it** (from the 26 Oct team chat; confirm). Robin runs the no-defence baseline, Sherwin runs
   `origin+readers` and `origin+identity`, and Joel re-runs RQ1 (`spotlighting_with_delimiting` and
   `repeat_user_prompt`). For the settings to be comparable everyone must use the same models,
@@ -230,9 +268,9 @@ EOF
   the default exposure (no `--inbox-exposure`).
   The runner's spend is not in a shared ledger, so each person checks the OpenRouter dashboard.
 - **Repeats.** Rerun a command for a new timestamped folder; nothing is overwritten.
-- **Status (26 Oct).** Done: the no-defence RQ2 pass on all three models (66 episodes, US$1.47). Not yet
-  run: the RQ3 gate passes and the RQ1 built-in-defence passes. Only one-condition smoke tests of the gate
-  and of the new models exist.
+- **Status (27 Oct).** Done: the no-defence RQ2 pass (66 episodes, US$1.47), the RQ1 built-in-defence
+  pass (132 episodes, US$3.06) and the RQ3 gate pass (132 episodes, US$3.31), all on three models. Remaining
+  work is the write-up and slides; no new experiments after the 29 Oct submission.
 
 ## Detailed protocols
 
