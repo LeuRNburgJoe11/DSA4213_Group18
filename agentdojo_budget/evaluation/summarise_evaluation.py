@@ -2,7 +2,7 @@
 Build the RQ3 evaluation folder from the gated runs, in the same form as Robin's RQ2 set
 (SUMMARY.md, episodes.csv, manifest.json), plus a no-defence comparison taken from his RQ2 set.
 
-    .venv/bin/python agentdojo_budget/evaluation/summarise_rq3.py [rq3|rq1]
+    .venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py [rq3|rq1]
 
 `rq1` builds the same folder for AgentDojo's built-in defences (runs/rq1_builtin_*.log).
 
@@ -24,7 +24,7 @@ RUNS = ROOT / "runs"
 RQ2 = ROOT / "evaluation" / "rq2_reported_set_20261026_1704" / "episodes.csv"
 MODE = sys.argv[1] if len(sys.argv) > 1 else "rq3"
 if MODE not in ("rq3", "rq1"):
-    raise SystemExit("usage: summarise_rq3.py [rq3|rq1]")
+    raise SystemExit("usage: summarise_evaluation.py [rq3|rq1]")
 OUT = ROOT / "evaluation" / ("rq3_gated_set_20261027" if MODE == "rq3" else "rq1_builtin_set_20261027")
 LOGS = ({"google/gemini-3.8-flash": "rq3_gate_gemini.log", "anthropic/claude-sonnet-5.5": "rq3_gate_sonnet.log",
          "openai/gpt-6-sol": "rq3_gate_gpt6.log"} if MODE == "rq3" else
