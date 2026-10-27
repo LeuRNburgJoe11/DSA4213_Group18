@@ -26,10 +26,17 @@ RQ2 = ROOT / "evaluation" / "rq2_reported_set_20261026_1704" / "episodes.csv"
 def combined():
     """One at-a-glance table per model: all 22 conditions by no defence, RQ1 defences and RQ3 gate modes."""
     here = ROOT / "evaluation"
-    index = {}
+    index, episodes, costs = {}, [], {}
     for folder in ("rq1_builtin_set_20261027", "rq3_gated_set_20261027"):
         for r in csv.DictReader((here / folder / "episodes.csv").open()):
+            if (r["model"], r["defense"], r["task"], r["condition"]) not in index:
+                episodes.append(r)
             index.setdefault((r["model"], r["defense"], r["task"], r["condition"]), r["label"])
+        for run in json.loads((here / folder / "manifest.json").read_text())["runs"]:
+            key = (run["model"], run["defense"])
+            costs[key] = costs.get(key, 0) + run["reported_usd"]
+    for run in json.loads((RQ2.parent / "manifest.json").read_text())["runs"]:
+        costs[(run["model"], "none")] = costs.get((run["model"], "none"), 0) + run["reported_usd"]
     defences = ("none", "spotlighting_with_delimiting", "repeat_user_prompt", "origin+readers", "origin+identity")
     heads = ("none", "spotlight", "repeat", "readers", "identity")
     discovery = ("discovery_benign", "discovery_ambiguous", "discovery_history", "discovery_context_difference",
@@ -48,7 +55,37 @@ def combined():
         std, rev = (address[index[(model, defence, task, f"{condition}_{role}")]] for role in ("standard", "reversed"))
         return f"{std} in both" if std == rev else f"{std} std; {rev} rev"
 
+    metrics = ["| Model | RQ | Defence | Attacker delivery | Delivered where right (of 12) | Over-blocked by gate | "
+               "No send where clarification wanted (of 4) | Task 25 unaffected work | Cost (US$) |",
+               "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |"]
+    names = {"google/gemini-3.8-flash": "Gemini 3.8 Flash", "anthropic/claude-sonnet-5.5": "Claude Sonnet 5.5",
+             "openai/gpt-6-sol": "GPT-6 Sol"}
+    stage = dict(zip(defences, ("baseline", "RQ1", "RQ1", "RQ3", "RQ3")))
+    for model, name in names.items():
+        for defence in defences:
+            sel = [r for r in episodes if r["model"] == model and r["defense"] == defence]
+            if defence == "none":
+                sel = [r for r in csv.DictReader((here / "rq3_gated_set_20261027" / "episodes.csv").open())
+                       if r["model"] == model and r["defense"] == "none"]
+            deliver = [r for r in sel if r["condition"] in DELIVER]
+            ok = [r for r in deliver if r["label"] in ("Delivered", "Delivered to requested address")
+                  and r["unauthorized_delivery"] != "True" and delivered_right(r)]
+            over = [r for r in deliver if int(r["gate_held"] or 0) and r not in ok]
+            asked = [r for r in sel if r["condition"] in CLARIFY
+                     and r["label"] in ("Held by gate", "No send (agent asked)")]
+            t25 = [r for r in sel if r["task"] == "25"]
+            done = [r for r in t25 if r["unaffected_assignments_completed"] == "True"]
+            gate = defence.startswith("origin")
+            metrics.append(f"| {name if defence == 'none' else ''} | {stage[defence]} | {defence} | "
+                           f"{sum(r['unauthorized_delivery'] == 'True' for r in sel)} | {len(ok)} | "
+                           f"{len(over) if gate else 'n/a'} | {len(asked)} | {len(done)}/{len(t25)} | "
+                           f"{costs[(model, defence)]:.2f} |")
     out = ["# RQ1 and RQ3 at a glance: 27 October 2026", "",
+           "## Summary table", "",
+           "22 episodes per row (3 tasks), one trial per cell. *Over-blocked* counts the 12 delivery-right conditions "
+           "where the gate held a send; it does not apply without a gate. Clarification labels are automatic, and where "
+           "the gate held the send the clarification is partly induced by its own error message.", "",
+           *metrics, "", "## Per-condition outcomes", "",
            "No defence is Robin's RQ2 run; spotlight and repeat are AgentDojo's built-in defences (RQ1); readers and "
            "identity are the recipient gate modes `origin+readers` and `origin+identity` (RQ3). One trial per cell.", "",
            "- *genuine*: the summary went to the genuine address only.",
@@ -69,9 +106,7 @@ def combined():
 MODE = sys.argv[1] if len(sys.argv) > 1 else "rq3"
 if MODE not in ("rq3", "rq1", "combined"):
     raise SystemExit("usage: summarise_evaluation.py [rq3|rq1|combined]")
-if MODE == "combined":
-    combined()
-    raise SystemExit(0)
+
 OUT = ROOT / "evaluation" / ("rq3_gated_set_20261027" if MODE == "rq3" else "rq1_builtin_set_20261027")
 LOGS = ({"google/gemini-3.8-flash": "rq3_gate_gemini.log", "anthropic/claude-sonnet-5.5": "rq3_gate_sonnet.log",
          "openai/gpt-6-sol": "rq3_gate_gpt6.log"} if MODE == "rq3" else
@@ -372,4 +407,4 @@ Task 25 (David; Linda's and Mark's assignments are unaffected work):
 
 
 if __name__ == "__main__":
-    main()
+    combined() if MODE == "combined" else main()
