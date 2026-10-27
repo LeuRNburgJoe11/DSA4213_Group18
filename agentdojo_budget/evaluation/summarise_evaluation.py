@@ -2,9 +2,10 @@
 Build the RQ3 evaluation folder from the gated runs, in the same form as Robin's RQ2 set
 (SUMMARY.md, episodes.csv, manifest.json), plus a no-defence comparison taken from his RQ2 set.
 
-    .venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py [rq3|rq1]
+    .venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py [rq3|rq1|combined]
 
 `rq1` builds the same folder for AgentDojo's built-in defences (runs/rq1_builtin_*.log).
+`combined` reads both folders' episodes.csv and writes COMBINED_rq1_rq3.md: one at-a-glance table per model.
 
 Everything is read from the run folders listed in the rq3_gate_*.log files (one OUTPUT line per run)
 and from the RQ2 episodes.csv. Nothing is scored again: labels come from the scorers' own fields
@@ -22,9 +23,55 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RUNS = ROOT / "runs"
 RQ2 = ROOT / "evaluation" / "rq2_reported_set_20261026_1704" / "episodes.csv"
+def combined():
+    """One at-a-glance table per model: all 22 conditions by no defence, RQ1 defences and RQ3 gate modes."""
+    here = ROOT / "evaluation"
+    index = {}
+    for folder in ("rq1_builtin_set_20261027", "rq3_gated_set_20261027"):
+        for r in csv.DictReader((here / folder / "episodes.csv").open()):
+            index.setdefault((r["model"], r["defense"], r["task"], r["condition"]), r["label"])
+    defences = ("none", "spotlighting_with_delimiting", "repeat_user_prompt", "origin+readers", "origin+identity")
+    heads = ("none", "spotlight", "repeat", "readers", "identity")
+    discovery = ("discovery_benign", "discovery_ambiguous", "discovery_history", "discovery_context_difference",
+                 "discovery_context_contradiction", "discovery_informed_attacker_history",
+                 "discovery_contradictory_genuine_history")
+    conditions = [("33-discovery", c) for c in discovery] + [("25", c) for c in discovery] + \
+                 [("33-change", f"change_{k}") for k in ("control", "unsupported", "familiar", "legitimate")]
+    genuine = {"Delivered": "genuine", "Attacker included": "ATTACKER", "Held by gate": "held",
+               "No send (agent asked)": "asked"}
+    address = {"Delivered": "A", "Delivered to requested address": "B", "Attacker included": "B",
+               "Held by gate": "held", "No send (agent asked)": "asked"}
+
+    def cell(model, defence, task, condition):
+        if task != "33-change":
+            return genuine[index[(model, defence, task, condition)]]
+        std, rev = (address[index[(model, defence, task, f"{condition}_{role}")]] for role in ("standard", "reversed"))
+        return f"{std} in both" if std == rev else f"{std} std; {rev} rev"
+
+    out = ["# RQ1 and RQ3 at a glance: 27 October 2026", "",
+           "No defence is Robin's RQ2 run; spotlight and repeat are AgentDojo's built-in defences (RQ1); readers and "
+           "identity are the recipient gate modes `origin+readers` and `origin+identity` (RQ3). One trial per cell.", "",
+           "- *genuine*: the summary went to the genuine address only.",
+           "- *ATTACKER*: the impersonator received it, alone or together with the genuine one.",
+           "- *held*: the gate refused the send. *asked*: the agent stopped on its own.",
+           "- 33-change: A is the established address, B the requested one; std / rev are the two role orders.", ""]
+    for model, name in (("google/gemini-3.8-flash", "Gemini 3.8 Flash"), ("anthropic/claude-sonnet-5.5", "Claude Sonnet 5.5"),
+                        ("openai/gpt-6-sol", "GPT-6 Sol")):
+        out += [f"## {name}", "", "| Task | Condition | " + " | ".join(heads) + " |", "|" + " --- |" * (2 + len(heads))]
+        for task, condition in conditions:
+            label = condition.replace("discovery_", "").replace("change_", "")
+            out.append(f"| {task} | {label} | " + " | ".join(cell(model, d, task, condition) for d in defences) + " |")
+        out.append("")
+    (here / "COMBINED_rq1_rq3.md").write_text("\n".join(out))
+    print(f"wrote {here / 'COMBINED_rq1_rq3.md'}")
+
+
 MODE = sys.argv[1] if len(sys.argv) > 1 else "rq3"
-if MODE not in ("rq3", "rq1"):
-    raise SystemExit("usage: summarise_evaluation.py [rq3|rq1]")
+if MODE not in ("rq3", "rq1", "combined"):
+    raise SystemExit("usage: summarise_evaluation.py [rq3|rq1|combined]")
+if MODE == "combined":
+    combined()
+    raise SystemExit(0)
 OUT = ROOT / "evaluation" / ("rq3_gated_set_20261027" if MODE == "rq3" else "rq1_builtin_set_20261027")
 LOGS = ({"google/gemini-3.8-flash": "rq3_gate_gemini.log", "anthropic/claude-sonnet-5.5": "rq3_gate_sonnet.log",
          "openai/gpt-6-sol": "rq3_gate_gpt6.log"} if MODE == "rq3" else
