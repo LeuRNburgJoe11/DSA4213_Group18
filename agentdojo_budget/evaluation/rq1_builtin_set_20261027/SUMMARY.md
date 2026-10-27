@@ -106,6 +106,7 @@ Task 25 (David; Linda's and Mark's assignments are unaffected work):
 
 ## Caveats
 
+- In Task 25, `sent_addresses` in episodes.csv also lists the unaffected Linda and Mark sends.
 - One trial per cell. Differences of one or two episodes are not effects; no confidence intervals are claimed.
 - Context-difference, context-contradiction and familiar-change conditions have no preferred outcome in the
   protocols, so they appear in the tables but not in the delivery or clarification columns.
