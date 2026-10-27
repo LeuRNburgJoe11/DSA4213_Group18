@@ -138,6 +138,29 @@ def label(unauthorized, outcome, decision, held):
     return "No send (agent asked)"
 
 
+# Column order of Robin's RQ2 episodes.csv; the extra columns (defence, gate and label fields) follow it.
+ROBIN_COLUMNS = ["model", "task", "condition", "automatic_outcome", "termination", "sent_addresses",
+                 "unauthorized_delivery", "protected_disclosure", "preferred_behavior_met_automatic",
+                 "pre_send_identity_clarification_reviewed", "preferred_behavior_met_after_assistant_review",
+                 "unaffected_assignments_completed", "attack_exposed", "sent_history_exposed",
+                 "attachment_schema_version", "notes", "final_text", "run_directory"]
+EXTRA_COLUMNS = ["defense", "expected", "label", "gate_held", "gate_verdicts", "clarification_candidate",
+                 "needs_review"]
+
+
+def sent_addresses(folder, condition):
+    """Addresses the agent emailed (To, Cc, Bcc), from the saved environment states, in send order."""
+    pre = json.loads((folder / f"{condition}_pre.json").read_text())["inbox"]["emails"]
+    post = json.loads((folder / f"{condition}_post.json").read_text())["inbox"]["emails"]
+    sent = [a for i, e in post.items() if i not in pre and e["status"] == "sent"
+            for a in (*e["recipients"], *e["cc"], *e["bcc"])]
+    return ";".join(dict.fromkeys(sent))
+
+
+def blank(value):
+    return "" if value is None else value
+
+
 def rows_gated():
     rows, manifest = [], []
     for model, log in LOGS.items():
@@ -158,6 +181,13 @@ def rows_gated():
                     "model": model, "defense": r["defense"], "task": TASKS[r["task"]], "condition": r["name"],
                     "automatic_outcome": r["outcome"], "label": label(r["unauthorized_delivery"], r["outcome"],
                                                                       r.get("delivery_decision"), held),
+                    "sent_addresses": sent_addresses(folder, r["name"]),
+                    # Not reviewed by hand for these runs, so left blank rather than guessed.
+                    "pre_send_identity_clarification_reviewed": "",
+                    "preferred_behavior_met_after_assistant_review": "",
+                    "attack_exposed": blank(r.get("attack_exposed")),
+                    "sent_history_exposed": blank(r.get("sent_history_exposed")),
+                    "attachment_schema_version": r["attachment_schema_version"], "notes": "",
                     "termination": r["termination"], "unauthorized_delivery": r["unauthorized_delivery"],
                     "protected_disclosure": r["protected_disclosure"], "expected": r["expected"],
                     "preferred_behavior_met_automatic": r["preferred_behavior_met"], "gate_held": held,
@@ -182,7 +212,13 @@ def rows_baseline():
             "expected": "", "preferred_behavior_met_automatic": r["preferred_behavior_met_automatic"],
             "gate_held": 0, "gate_verdicts": "", "clarification_candidate": "",
             "needs_review": "", "unaffected_assignments_completed": r["unaffected_assignments_completed"],
-            "final_text": r["final_text"], "run_directory": r["run_directory"]})
+            "final_text": r["final_text"], "run_directory": r["run_directory"],
+            # Robin's own columns, copied unchanged.
+            "sent_addresses": r["sent_addresses"],
+            "pre_send_identity_clarification_reviewed": r["pre_send_identity_clarification_reviewed"],
+            "preferred_behavior_met_after_assistant_review": r["preferred_behavior_met_after_assistant_review"],
+            "attack_exposed": r["attack_exposed"], "sent_history_exposed": r["sent_history_exposed"],
+            "attachment_schema_version": r["attachment_schema_version"], "notes": r["notes"]})
     return rows
 
 
@@ -315,9 +351,8 @@ def main():
         COSTS[(run["model"], "none")] = COSTS.get((run["model"], "none"), 0) + run["reported_usd"]
     rows = rows_baseline() + gated
     OUT.mkdir(exist_ok=True)
-    cols = list(gated[0])
     with (OUT / "episodes.csv").open("w", newline="") as f:
-        writer = csv.DictWriter(f, cols)
+        writer = csv.DictWriter(f, ROBIN_COLUMNS + EXTRA_COLUMNS)
         writer.writeheader()
         writer.writerows(rows)
     commits = sorted({str((m["git"] or {}).get("commit")) for m in manifest})
