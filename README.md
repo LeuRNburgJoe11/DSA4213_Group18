@@ -5,7 +5,10 @@ Current RQ2 experiments are the three AgentDojo variants documented in
 [`agentdojo_budget/README.md`](agentdojo_budget/README.md): task33 discovery,
 task25 discovery, and task33 address change. Earlier pilots and diagnostics are
 archived under `agentdojo_budget/archive/`; saved results remain in place.
-The preliminary harness documentation below is retained for reference.
+The preliminary harness documentation below is retained for reference. The harness code now lives in
+[`archive/harness/`](archive/harness/) (abandoned delayed-trigger direction) and the proposal files in
+`archive/proposal/`. The commands below assume the old location: run them from `archive/` and read
+`harness/` as `archive/harness/`.
 
 ## Task A: Simulation harness (preliminary)
 
