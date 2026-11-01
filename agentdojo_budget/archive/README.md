@@ -18,5 +18,5 @@ Historical documentation may show obsolete module paths or active-runner flags;
 use module paths under agentdojo_budget.archive for archived scripts.
 
 The active runner no longer offers --task 33, compact-six or core-seven. Read
-../README.md for the three supported variants. Archived tests that refer to the
+../../README.md for the three supported variants. Archived tests that refer to the
 former CLI are historical; active offline tests do not recurse into this folder.
