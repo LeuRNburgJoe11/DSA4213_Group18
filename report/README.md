@@ -29,7 +29,7 @@ This is a conversion, not a shortened or fact-checked rewrite. It preserves the 
 - The compiled document is 22 pages: 19 pages of main text, followed by contributions, references, and appendix. The template permits only 8 main-text pages. Substantial editing is still needed; changing font/margins is not a solution.
 - Project Summary remains an instruction/placeholder. Several final sections contain headings only.
 - Source headings are not sequential (including 3.2a/3.2b and 7.1/7.2). Internal prose section references need checking after the final structure is agreed.
-- Table X/Y/Z, Figure X, and Listing X/Y are retained source placeholders; X/Y/Z table labels are reused. Replace with unique numbering and LaTeX labels/references before submission.
+- Tables, figures, and trace listings use automatic numbering with unique labels. Prose table references use `\ref` and update after recompiling twice.
 - The aggregate table contains counts only in the supplied PDF although its caption mentions percentages. No values were invented or added.
 - Reference [4] is mentioned in the main text but absent from the final references. The source also contains an editorial note about optionally adding it. These need author review.
 - Contribution shares and one member's contributions are incomplete; no missing shares were invented. The AI attribution sentence is also incomplete.
@@ -38,3 +38,15 @@ This is a conversion, not a shortened or fact-checked rewrite. It preserves the 
 ## Verification
 
 The PDF was compiled twice with pdfLaTeX and all pages were visually reviewed. The final compilation has no overfull/underfull box warnings; extracted text lies within the 1-inch horizontal margins. The original source PDF and template were left unchanged.
+
+## Adding captions and references
+
+Use the shared caption command; never type a caption number:
+
+```tex
+\reportcaption{table}{tab:unique-name}{Caption text.}
+\reportcaption{figure}{fig:unique-name}{Caption text.}
+\reportcaption{listing}{lst:unique-name}{Caption text.}
+```
+
+Refer to them with `Table~\ref{tab:unique-name}`, `Figure~\ref{fig:unique-name}`, or `Listing~\ref{lst:unique-name}`. Each label must be unique. The three types have separate serial counters. The shared command handles bold labels, flush-left alignment, and caption spacing. Place captions before data tables and after figures, consistently with the existing document. Longtable counter increments are disabled because the caption command owns numbering. Administrative information is an unnumbered layout table.
