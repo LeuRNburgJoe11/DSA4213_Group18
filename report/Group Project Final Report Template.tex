@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\setstretch{1.10}
+\setlength{\emergencystretch}{2em}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!50!black,
+    urlcolor=blue!50!black,
+    citecolor=black
+}
+
+% --------------------
+% Course information
+% --------------------
+\newcommand{\course}{DSA4213: Natural Language Processing for Data Science}
+\newcommand{\semester}{Semester 1, AY2026/2027}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Group Project Final Report}\\[0.4em]
+{\large Project Title}\\[0.9em]
+Group ID: \underline{\hspace{3cm}}\\[0.9em]
+\course\\
+\semester
+\end{center}
+
+% ====================
+% Report structure, format, and length (delete this box before submission)
+% ====================
+\noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{%
+\textbf{Report structure, format, and length} (delete this box before submission)
+\begin{itemize}[leftmargin=*,itemsep=0.2em,topsep=0.3em]
+    \item The section structure is a guide. You may combine, rename, or reorder
+    sections to suit your project, as long as you address the relevant assessment
+    criteria and include the required contribution statement.
+    \item The main text must not exceed \textbf{8 pages}. The main text is everything
+    before the Contribution Statement, including the title block, figures, and tables.
+    The limit is strict. Reports whose main text exceeds 8 pages will be penalized.
+    \item The Contribution Statement, References, and Appendix do not count toward the
+    page limit.
+    \item Keep the 11pt font, 1-inch margins, and line spacing set in this template.
+    Reports that change these settings will be treated as exceeding the page limit.
+    \item The main text must be self-contained. The Appendix may contain supplementary
+    results, prompts, or agent traces, but graders are not required to read it.
+\end{itemize}}}
+
+% ====================
+% Administrative information
+% ====================
+\section*{Administrative Information}
+
+\begin{tabular}{@{}>{\bfseries\raggedright\arraybackslash}p{0.25\linewidth}
+                    >{\raggedright\arraybackslash}p{0.70\linewidth}@{}}
+Group members & Name (Student ID) for each member. \\[0.7em]
+Project direction & One short phrase describing the project area. \\[0.7em]
+Repository & Link to the code and project materials: \url{https://} \\
+\end{tabular}
+
+% ====================
+% Executive summary
+% ====================
+\section*{Project Summary (Optional)}
+
+Summarize the agent-related question, what the group built or studied, how it was
+evaluated, and the main findings, in one paragraph.
+
+% ====================
+% 1. Problem and motivation
+% ====================
+\section*{1. Problem, Research Question, and Motivation}
+
+State the question, objective, or hypothesis that the project addresses. Explain the
+practical or scientific motivation, the intended users or setting, and why an
+\emph{agent-based} approach is relevant. Define what success means for this project.
+
+If the question, scope, or design changed after the proposal, state the main change
+and the reason in two or three sentences.
+
+% ====================
+% 2. Related work and contribution
+% ====================
+\section*{2. Related Work and Contribution}
+
+Identify the prior systems, datasets, benchmarks, papers, or tools closest to the
+project. State what the group contributed beyond assembling existing components.
+Cite the models, APIs, datasets, environments, frameworks, and code that the project
+uses.
+
+% ====================
+% 3. Agent setup
+% ====================
+\section*{3. Agent and Task Setup}
+
+Describe the final setup precisely. For an empirical study, describe the agent
+system and the study design or conditions considered. The list below is a guide,
+not a checklist: you do not need to address every item. Include only the elements
+that are relevant to your project:
+
+\begin{itemize}[leftmargin=*,itemsep=0.25em]
+    \item task and operating environment;
+    \item inputs or observations and outputs or actions;
+    \item model(s), prompts, tools, APIs, retrieval sources, memory, or other agents;
+    \item users, simulators, datasets, benchmarks, or interaction protocols; and
+    \item stopping conditions, constraints, permissions, and failure recovery.
+\end{itemize}
+
+% ====================
+% 4. System or study design
+% ====================
+\section*{4. System or Study Design}
+
+Describe what the group implemented or investigated and how the main components fit
+together. Identify the part that is technically meaningful and owned by the group,
+and explain the reasons for the main design choices. If useful, include a system
+diagram, pseudocode, or an example agent trajectory.
+
+Include the implementation details needed to understand the results. Further detail
+can go in the repository or the Appendix.
+
+% ====================
+% 5. Evaluation
+% ====================
+\section*{5. Evaluation and Results}
+
+Describe the evaluation protocol: the tasks or test cases, the metrics, rubrics, or
+other evidence used, the number of runs or examples, and, where relevant, how
+variability was handled. Then report the results and connect each main claim to the
+evidence that supports it.
+
+Present the results in whichever format best suits the project. Tables, figures,
+and short case studies are all acceptable.
+
+\subsection*{5.1 Comparisons and Ablations (if applicable)}
+
+Report any baselines, controlled comparisons, or ablations that help answer the
+project question, and explain what each one shows.
+
+% ====================
+% 6. Analysis
+% ====================
+\section*{6. Analysis of Results, Failures, Limitations, Costs, and Risks}
+
+Interpret the results. Use representative successes and failures, such as examples
+or agent traces, to explain the aggregate results. Describe the main failure modes
+and, where possible, their causes.
+
+Report the costs that matter for the project, such as API cost, tokens, latency, or
+compute. State the main limitations and risks of the system or study. Well-supported
+negative or mixed findings are acceptable.
+
+% ====================
+% 7. Reproducibility and responsible practice
+% ====================
+\section*{7. Reproducibility and Responsible Practice}
+
+Explain how the main results can be reproduced from the submitted materials: where
+the code and setup instructions are, which models and versions were used, and which
+data or environments are required. Refer to the setup instructions in the repository
+rather than repeating them here.
+
+Describe any safeguards for privacy, security, permissions, or safe use. Do not
+include credentials, private data, or material that the group does not have
+permission to share.
+
+% ====================
+% 8. Conclusion
+% ====================
+\section*{8. Conclusion (Optional as a separate section)}
+
+Summarize the main findings in a short paragraph.
+
+% ====================
+% End of main text (8-page limit)
+% ====================
+\clearpage
+
+% ====================
+% Contribution statement (not counted toward the page limit)
+% ====================
+\section*{Contribution Statement}
+
+List each member's main contributions and an approximate contribution share. The
+shares must sum to 100\%. If contributions were broadly comparable, equal shares are
+appropriate. The group should review this statement together before submission.
+
+\begin{center}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.28\linewidth}
+                >{\raggedright\arraybackslash}p{0.52\linewidth}
+                >{\centering\arraybackslash}p{0.12\linewidth}@{}}
+\toprule
+\textbf{Member (Student ID)} & \textbf{Main contributions} & \textbf{Share (\%)} \\
+\midrule
+Member 1 & & \\
+Member 2 & & \\
+Member 3 & & \\
+Member 4 & & \\
+Member 5 & & \\
+\midrule
+\textbf{Total} & & \textbf{100} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ====================
+% References (not counted toward the page limit)
+% ====================
+\bibliographystyle{plain}
+% \bibliography{references}
+
+% ====================
+% Appendix (optional, not counted toward the page limit)
+% ====================
+\appendix
+\section*{Appendix (Optional)}
+
+Supplementary results, prompts, additional examples, or agent traces. The main text
+must be understandable without the Appendix.
+
+\end{document}
