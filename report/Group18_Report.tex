@@ -377,7 +377,7 @@ Not treated as evidence. The gate ignores sign-offs and display names, address s
 \textbf{Setup and scoring.} The gate is installed in the same pipeline for all three models, with no other change. The baseline and the two AgentDojo built-ins ( s potlighting\_with\_delimiting , repeat\_user\_prompt ) use the standard executor. One trial was run per condition, model and defense (18 gated runs, 132 episodes). Before the paid runs, offline tests against a scripted fake client pinned the gate's verdict for every one of the 22 conditions. Scoring uses the same environment-state scorers as RQ2. Appropriate outcomes are counted over the 16 conditions with a predefined preferred behaviour: 12 where delivery is preferred and 4 where clarification is preferred. Over-blocking is counted as a gate hold in a delivery-preferred condition, and the reading of the gate's holds as clarification is explained in Section 7.2.
 
 \noindent\begin{minipage}{\linewidth}
-\begin{center}\includegraphics[width=1.000\linewidth]{assets/page-12-image-01.png}\end{center}
+{\centering\includegraphics[trim=0 55bp 0 0,clip,width=1.000\linewidth]{assets/page-12-image-01.png}\par}
 \reportcaption{figure}{fig:recipient-gate}{Recipient gate in the agent pipeline.}
 \end{minipage}\par
 
