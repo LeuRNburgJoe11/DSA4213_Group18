@@ -210,7 +210,6 @@ INPUT ./assets/page-18-image-01.png
 INPUT Group18_Report.aux
 INPUT ./Group18_Report.out
 INPUT ./Group18_Report.out
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb
