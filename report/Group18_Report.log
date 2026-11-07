@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.3)  8 NOV 2026 00:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.3)  8 NOV 2026 01:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -320,24 +320,24 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (./Group18_Report.aux)
 \openout1 = `Group18_Report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 44.
-LaTeX Font Info:    ... okay on input line 44.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -392,16 +392,16 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring ON on input line 44.
+Package hyperref Info: Link coloring ON on input line 45.
  (./Group18_Report.out) (./Group18_Report.out)
 \@outlinefile=\write3
 \openout3 = `Group18_Report.out'.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 55.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 56.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 55.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 56.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
@@ -410,78 +410,78 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <assets/page-06-image-01.png, id=46, 1690.315pt x 1762.585pt>
 File: assets/page-06-image-01.png Graphic file (type png)
 <use assets/page-06-image-01.png>
-Package pdftex.def Info: assets/page-06-image-01.png  used on input line 172.
+Package pdftex.def Info: assets/page-06-image-01.png  used on input line 173.
 (pdftex.def)             Requested size: 328.82707pt x 342.8824pt.
  [6 <./assets/page-06-image-01.png (PNG copy)>] [7
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.238 
+l.239 
       ]
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.264 \end{longtable}
+l.265 \end{longtable}
                      
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.292 \end{longtable}
+l.293 \end{longtable}
                      
 ignored: Infinite glue shrinkage found in box being split [8]
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.314 \end{longtable}
+l.315 \end{longtable}
                       [9]
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.342 \end{longtable}
+l.343 \end{longtable}
                      
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.366 \end{longtable}
+l.367 \end{longtable}
                       [10]
 <assets/page-12-image-01.png, id=85, 2055.68pt x 1375.1375pt>
 File: assets/page-12-image-01.png Graphic file (type png)
 <use assets/page-12-image-01.png>
-Package pdftex.def Info: assets/page-12-image-01.png  used on input line 380.
+Package pdftex.def Info: assets/page-12-image-01.png  used on input line 381.
 (pdftex.def)             Requested size: 469.75502pt x 301.62418pt.
  [11 <./assets/page-12-image-01.png>]
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.412 \end{longtable}
+l.413 \end{longtable}
                       [12]
 <assets/page-16-image-01.png, id=108, 1698.345pt x 933.4875pt>
 File: assets/page-16-image-01.png Graphic file (type png)
 <use assets/page-16-image-01.png>
-Package pdftex.def Info: assets/page-16-image-01.png  used on input line 434.
+Package pdftex.def Info: assets/page-16-image-01.png  used on input line 435.
 (pdftex.def)             Requested size: 469.75502pt x 258.19833pt.
 <assets/page-16-image-02.png, id=109, 1597.97pt x 538.01pt>
 File: assets/page-16-image-02.png Graphic file (type png)
 <use assets/page-16-image-02.png>
-Package pdftex.def Info: assets/page-16-image-02.png  used on input line 441.
+Package pdftex.def Info: assets/page-16-image-02.png  used on input line 442.
 (pdftex.def)             Requested size: 469.75502pt x 158.16154pt.
  [13 <./assets/page-16-image-01.png (PNG copy)>]
 <assets/page-17-image-01.png, id=115, 929.4725pt x 981.6675pt>
 File: assets/page-17-image-01.png Graphic file (type png)
 <use assets/page-17-image-01.png>
-Package pdftex.def Info: assets/page-17-image-01.png  used on input line 455.
+Package pdftex.def Info: assets/page-17-image-01.png  used on input line 456.
 (pdftex.def)             Requested size: 305.33789pt x 322.48332pt.
  [14 <./assets/page-16-image-02.png (PNG copy)>]
 <assets/page-18-image-01.png, id=122, 796.9775pt x 558.085pt>
 File: assets/page-18-image-01.png Graphic file (type png)
 <use assets/page-18-image-01.png>
-Package pdftex.def Info: assets/page-18-image-01.png  used on input line 466.
+Package pdftex.def Info: assets/page-18-image-01.png  used on input line 467.
 (pdftex.def)             Requested size: 305.33789pt x 213.8117pt.
  [15 <./assets/page-17-image-01.png (PNG copy)>] [16 <./assets/page-18-image-01.png (PNG copy)>] [17] [18] [19]
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.560 \end{longtable}
+l.561 \end{longtable}
                       [20
 
 ] [21
@@ -490,7 +490,7 @@ l.560 \end{longtable}
 pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.606 \end{longtable}
+l.607 \end{longtable}
                       [22
 
 ] (./Group18_Report.aux)
@@ -502,15 +502,15 @@ Package rerunfilecheck Info: File `Group18_Report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 11585 strings out of 467525
- 175429 string characters out of 5418983
- 612292 words of memory out of 5000000
- 40279 multiletter control sequences out of 15000+600000
+ 11586 strings out of 467525
+ 175433 string characters out of 5418983
+ 613299 words of memory out of 5000000
+ 40280 multiletter control sequences out of 15000+600000
  639204 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,9n,79p,1062b,577s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,9n,79p,1122b,577s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on Group18_Report.pdf (22 pages, 1964224 bytes).
+Output written on Group18_Report.pdf (22 pages, 1967212 bytes).
 PDF statistics:
  228 PDF objects out of 1000 (max. 8388607)
  177 compressed objects within 2 object streams
