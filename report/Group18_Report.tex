@@ -534,9 +534,31 @@ Without a defense, Gemini sent to both addresses in this condition (Case 1, Sect
 
 \section*{6. Analysis of Results, Failures, Limitations, Costs, and Risks}
 
+The results show that identity impersonation poses a different challenge from conventional prompt injection attacks. While AgentDojo's built-in defenses reduced unauthorized deliveries, they did not eliminate them. This suggests that defenses designed to handle malicious instructions may be less effective when attackers instead manipulate the identity information that agents rely on to complete tasks.
+
+The RQ2 findings also show that agents were generally able to identify legitimate recipients when supported by previous correspondence. However, they struggled when identity evidence was ambiguous or insufficient. Some agents sent information to impersonators, while others avoided unauthorized deliveries but failed to seek clarification when necessary. This shows that avoiding an unauthorized delivery does not necessarily mean that an agent has made the appropriate decision.
+
+RQ3 further demonstrates why both security and task utility need to be considered when evaluating defenses. Although both recipient gates prevented unauthorized deliveries in the experiments, their effects on legitimate task completion differed significantly. The readers-only gate blocked many legitimate deliveries, while the identity-aware gate allowed most of them to proceed by considering additional identity evidence. However, the identity-aware gate did not eliminate every failure. In some cases, agents ended their tasks without attempting to send the requested information, even though the gate had not blocked them.
+
+These experiments had several limitations. First, the limited experimental budget meant that each condition was tested only once per model and defense, making it difficult to determine whether the observed outcomes would remain consistent across repeated trials. Second, the experiments used controlled inbox environments, which may not fully reflect the complexity of real-world email correspondence. Third, some conditions were exploratory and lacked a clearly defined preferred outcome, while certain clarification decisions required manual interpretation. These factors limit how confidently the findings can be generalized.
+
+The selected experiments incurred approximately US\$7.84 in reported API costs. Although this allowed us to evaluate multiple models and defenses within a limited budget, additional trials would be needed to establish more reliable results.
+
+Another important concern is the proposed gate's reliance on trustworthy identity evidence. The defense assumes that information such as previous correspondence, contact records and document-sharing permissions has not been manipulated. If attackers were able to forge or alter these sources, the gate might incorrectly treat an impersonator as a legitimate recipient. This remains an important risk that future research should investigate.
+
 \section*{7. Reproducibility and Responsible Practice}
 
-\section*{8. Conclusion (optional, keep it succinct)}
+To support reproducibility, the experiments were conducted using predefined conditions and documented model configurations within AgentDojo v1.2.2. The same 22 identity-evidence conditions were evaluated across three models and five defense configurations, allowing comparisons under consistent experimental settings.
+
+The experiments used a temperature setting of 0.0, although reasoning configurations differed between models. Experimental results and relevant configurations were recorded in structured files, including \code{episodes.csv} and \code{manifest.json}. These files, together with the analysis scripts maintained in the GitHub repository, allow the results to be examined and reproduced. The plotting script also generates figures directly from the saved evaluation data without requiring additional API calls. Offline tests were conducted before paid experiments to verify that the recipient gate behaved as intended.
+
+Responsible practice was also considered throughout the study. All experiments were conducted in simulated workspaces, avoiding the risk of sending information to real unauthorized recipients. The evaluation considered both security and legitimate task completion, since a defense that blocks every action may appear secure without being practically useful.
+
+Additionally, we distinguished between confirmed outcomes and those requiring further interpretation. Exploratory conditions were not automatically treated as successes or failures, and clarification outcomes were interpreted cautiously where manual review was incomplete. Compatibility issues, such as those encountered with \code{tool\_\allowbreak filter}, were also reported separately rather than being treated as evidence of poor defense performance.
+
+\section*{8. Conclusion}
+
+This study shows that AI agents can be misled through identity impersonation even without explicit malicious instructions. While existing defenses offered some protection, they did not consistently prevent unauthorized deliveries. The proposed identity-aware gate performed better in the tested scenarios by preventing observed unauthorized deliveries while allowing most legitimate tasks to proceed. Overall, the findings highlight the importance of verifying identity rather than relying solely on content-based or origin-based defenses. Future research could explore more experimental trials, realistic inbox environments and attackers capable of manipulating correspondence history.
 
 \clearpage
 \section*{Contribution Statement}
