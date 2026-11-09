@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.3)  9 NOV 2026 17:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.3)  9 NOV 2026 17:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -504,13 +504,13 @@ Package rerunfilecheck Info: File `Group18_Report.out' has not changed.
 Here is how much of TeX's memory you used:
  11603 strings out of 467525
  175703 string characters out of 5418983
- 613494 words of memory out of 5000000
+ 613552 words of memory out of 5000000
  40291 multiletter control sequences out of 15000+600000
  639204 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,9n,79p,1122b,603s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
-Output written on Group18_Report.pdf (23 pages, 1963903 bytes).
+Output written on Group18_Report.pdf (23 pages, 1964282 bytes).
 PDF statistics:
  234 PDF objects out of 1000 (max. 8388607)
  184 compressed objects within 2 object streams

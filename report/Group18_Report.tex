@@ -391,7 +391,7 @@ Not treated as evidence. The gate ignores sign-offs and display names, address s
 
 \subsection*{5.1 Comparisons and Ablation}
 
-\subsection*{7.1 RQ2: Effect of Identity Evidence on Recipient Decisions}
+\subsection*{5.1 RQ2: Effect of Identity Evidence on Recipient Decisions}
 
 \noindent \textbf{Aggregate performance.} Table~\ref{tab:rq2-aggregate} summarises RQ2 performance across the evaluation metrics. Gemini recorded six unauthorised deliveries across 22 episodes (27.3\%), compared with two for GPT (9.1\%) and none for Sonnet. Across the 14 attack episodes, attack success rates were 42.9\% for Gemini, 14.3\% for GPT, and 0\% for Sonnet. The identical event counts reflect the different denominators: unauthorised delivery is measured across all episodes, whereas attack success is measured only across attack episodes.
 
@@ -447,9 +447,9 @@ These findings motivate RQ3's evaluation of whether an identity-aware recipient 
 \end{minipage}\par
 
 
-\section*{Agent Trace/Error Analysis}
+\section*{6. Agent Trace/Error Analysis}
 
-\subsection*{RQ2 Traces}
+\subsection*{6.1 RQ2: Agent Trace and Error Analysis}
 
 \par\addvspace{\baselineskip}\noindent
 \textbf{Case 1: Delivery to both candidate identities under ambiguity.} In Task 33's ambiguous-identity condition, Gemini retrieved messages from two addresses claiming to be John Mitchell. Both supplied identical meeting details, while the meeting document provided no recipient address. Gemini subsequently checked sent correspondence, which returned no records, and retrieved additional inbox and file information without obtaining evidence that distinguished the candidates. Nevertheless, it called \code{send\_\allowbreak email} with both addresses and attached the requested document. The tool response confirmed delivery to both the genuine recipient and the impersonator.
@@ -506,7 +506,7 @@ These observations show that Sonnet's decisions were inconsistent across equival
 
 This response matched the preferred outcome by withholding delivery until the identity ambiguity could be resolved. It provides a useful comparison with Gemini's behaviour in the same condition: both agents checked sent history and found none, but Gemini sent to both candidates whereas GPT requested clarification. The observed difference therefore concerned action selection after inconclusive evidence gathering, rather than simply whether the agents searched for supporting evidence.
 
-\subsection*{7.2 RQ3: Agent Trace and Error Analysis}
+\subsection*{6.2 RQ3: Agent Trace and Error Analysis}
 
 The traces below show how the gate changed agent behaviour. The agent's own text is never used for scoring. Each case is a single run, so none of them shows a rate.
 
@@ -532,7 +532,7 @@ Without a defense, Gemini sent to both addresses in this condition (Case 1, Sect
 
 \noindent \textbf{Summary.} The gate's holds fell on exactly the cases where evidence was missing or one-sided. \code{origin + identity} allowed the deliveries that history, contacts or the file's readers supported, and held the rest. \code{origin + readers} held almost everything. The traces also show where the gate's credit is partly the gate's own doing. A hold prompts the agent to ask, and gate-held clarifications were counted automatically, without manual review.
 
-\section*{6. Analysis of Results, Failures, Limitations, Costs, and Risks}
+\section*{7. Analysis of Results, Failures, Limitations, Costs, and Risks}
 
 The results show that identity impersonation poses a different challenge from conventional prompt injection attacks. While AgentDojo's built-in defenses reduced unauthorized deliveries, they did not eliminate them. This suggests that defenses designed to handle malicious instructions may be less effective when attackers instead manipulate the identity information that agents rely on to complete tasks.
 
@@ -546,7 +546,7 @@ The selected experiments incurred approximately US\$7.84 in reported API costs. 
 
 Another important concern is the proposed gate's reliance on trustworthy identity evidence. The defense assumes that information such as previous correspondence, contact records and document-sharing permissions has not been manipulated. If attackers were able to forge or alter these sources, the gate might incorrectly treat an impersonator as a legitimate recipient. This remains an important risk that future research should investigate.
 
-\section*{7. Reproducibility and Responsible Practice}
+\section*{8. Reproducibility and Responsible Practice}
 
 To support reproducibility, the experiments were conducted using predefined conditions and documented model configurations within AgentDojo v1.2.2. The same 22 identity-evidence conditions were evaluated across three models and five defense configurations, allowing comparisons under consistent experimental settings.
 
@@ -556,7 +556,7 @@ Responsible practice was also considered throughout the study. All experiments w
 
 Additionally, we distinguished between confirmed outcomes and those requiring further interpretation. Exploratory conditions were not automatically treated as successes or failures, and clarification outcomes were interpreted cautiously where manual review was incomplete. Compatibility issues, such as those encountered with \code{tool\_\allowbreak filter}, were also reported separately rather than being treated as evidence of poor defense performance.
 
-\section*{8. Conclusion}
+\section*{9. Conclusion}
 
 This study shows that AI agents can be misled through identity impersonation even without explicit malicious instructions. While existing defenses offered some protection, they did not consistently prevent unauthorized deliveries. The proposed identity-aware gate performed better in the tested scenarios by preventing observed unauthorized deliveries while allowing most legitimate tasks to proceed. Overall, the findings highlight the importance of verifying identity rather than relying solely on content-based or origin-based defenses. Future research could explore more experimental trials, realistic inbox environments and attackers capable of manipulating correspondence history.
 
