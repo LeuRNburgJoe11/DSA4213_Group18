@@ -1,3 +1,7 @@
+# Current condensed report
+
+The main text is now in `sections/main.tex` (7 compiled pages), with detailed evidence in `appendix/supplement.tex`. `Group18_Report.tex` is the main file to compile. See `CUT_NOTES.md` for the rubric coverage, relocation map and remaining author decisions. The original course typography is preserved. Contribution Statement begins on page 8; references and appendix are excluded from the main-text limit.
+
 # Group 18 report: LaTeX conversion
 
 Main source: `Group18_Report.tex`
