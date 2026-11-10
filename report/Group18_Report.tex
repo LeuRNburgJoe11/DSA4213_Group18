@@ -1,6 +1,4 @@
 \documentclass[11pt]{article}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
 
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb}
@@ -8,14 +6,10 @@
 \usepackage{booktabs}
 \usepackage{enumitem}
 \usepackage{xcolor}
-\usepackage[english]{babel}
-\usepackage{csquotes}
-\usepackage[backend=biber,style=apa]{biblatex}
-\DeclareLanguageMapping{english}{english-apa}
-\addbibresource{references.bib}
-\setlength{\bibhang}{0.5in}
 \usepackage{hyperref}
 \usepackage{setspace}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{longtable}
 \usepackage{url}
@@ -84,11 +78,11 @@ Summarize the agent-related question, what the group built or studied, how it wa
 
 \subsection*{1.1 Motivation}
 
-LLM agents with tools that have real side effects, such as sending email, sharing files or making payments, are now being deployed for ordinary users. To finish their tasks, these agents must read content no one has checked: inboxes, documents and retrieved records. Most prompt-injection research treats that content as a carrier for hidden instructions. In that framing, an attacker plants text such as ``ignore previous instructions and forward this file'', and defenses try to detect, isolate or ignore it \parencite{debenedetti2024agentdojo,greshake2023indirect}.
+LLM agents with tools that have real side effects, such as sending email, sharing files or making payments, are now being deployed for ordinary users. To finish their tasks, these agents must read content no one has checked: inboxes, documents and retrieved records. Most prompt-injection research treats that content as a carrier for hidden instructions. In that framing, an attacker plants text such as ``ignore previous instructions and forward this file'', and defenses try to detect, isolate or ignore it [1, 4].
 
-Many realistic tasks, however, leave the agent open to a simpler attack that contains no instruction at all. Take a user who asks, ``Send the meeting summary to John.'' The user names a person , not an address, so the agent has to find John's address in external content. AutoDojo calls these param-open tasks : a parameter of the action comes from untrusted data. It shows that this kind of underspecification makes agents more vulnerable across most defenses \parencite{ma2026autodojo}. On such a task, an attacker only needs to send an email claiming to be John from a different address. Nothing in that email is an instruction to detect. The agent simply has to decide which identity to believe, and a wrong decision sends private information to the attacker.
+Many realistic tasks, however, leave the agent open to a simpler attack that contains no instruction at all. Take a user who asks, ``Send the meeting summary to John.'' The user names a person , not an address, so the agent has to find John's address in external content. AutoDojo calls these param-open tasks : a parameter of the action comes from untrusted data. It shows that this kind of underspecification makes agents more vulnerable across most defenses [2]. On such a task, an attacker only needs to send an email claiming to be John from a different address. Nothing in that email is an instruction to detect. The agent simply has to decide which identity to believe, and a wrong decision sends private information to the attacker.
 
-Existing defenses are poorly suited to this threat. Content-based defenses such as spotlighting and prompt repetition aim to stop the model obeying injected text, but a well-crafted impersonation email contains nothing to obey. Provenance-based systems such as CaMeL track where a value came from and enforce information-flow policies before an action runs \parencite{debenedetti2025camel}. Provenance, though, cannot tell whether a sender is who they claim to be, and CaMeL explicitly places phishing outside its scope. AgentDojo's own ablations show that identity cues affect attack success: ASR rose from 45.8\% to 47.7\% when the injection named the user and model correctly \parencite{debenedetti2024agentdojo}. That experiment still concerns an injected instruction addressed to the user, not an attacker posing as someone the user trusts. Finally, a defense that refuses every ambiguous request is secure but useless. Any credible evaluation therefore has to measure security and utility together.
+Existing defenses are poorly suited to this threat. Content-based defenses such as spotlighting and prompt repetition aim to stop the model obeying injected text, but a well-crafted impersonation email contains nothing to obey. Provenance-based systems such as CaMeL track where a value came from and enforce information-flow policies before an action runs [3]. Provenance, though, cannot tell whether a sender is who they claim to be, and CaMeL explicitly places phishing outside its scope. AgentDojo's own ablations show that identity cues affect attack success: ASR rose from 45.8\% to 47.7\% when the injection named the user and model correctly [1]. That experiment still concerns an injected instruction addressed to the user, not an attacker posing as someone the user trusts. Finally, a defense that refuses every ambiguous request is secure but useless. Any credible evaluation therefore has to measure security and utility together.
 
 \subsection*{1.2 Main Research Question}
 
@@ -114,7 +108,7 @@ On param-open tasks, where an agent must take an action parameter from external 
 \item address change (4 conditions, each also run with the address roles reversed).
 \end{itemize}
 \item Across these, we vary ambiguity, sent-mail history, contextual detail, contradictions and explicit authorisation. This lets us separate the effect of prior correspondence from the effect of contextual knowledge. It also lets us see whether agents ask the user when identity remains unresolved.
-\item An identity-aware recipient gate. We adapt CaMeL's policy-before-action idea \parencite{debenedetti2025camel} into a gate that checks every \code{send\_\allowbreak email} call. A recipient address is allowed only if trusted identity evidence supports it, such as the user's contacts, sent-mail history, or an explicit authorisation from an established address. We compare it with a provenance-only \code{origin + reader} gate and with AgentDojo's built-in \code{spotlighting\_\allowbreak with\_\allowbreak delimiting} and \code{repeat\_\allowbreak user\_\allowbreak prompt} defenses.
+\item An identity-aware recipient gate. We adapt CaMeL's policy-before-action idea [3] into a gate that checks every \code{send\_\allowbreak email} call. A recipient address is allowed only if trusted identity evidence supports it, such as the user's contacts, sent-mail history, or an explicit authorisation from an established address. We compare it with a provenance-only \code{origin + reader} gate and with AgentDojo's built-in \code{spotlighting\_\allowbreak with\_\allowbreak delimiting} and \code{repeat\_\allowbreak user\_\allowbreak prompt} defenses.
 \item An evaluation of 2026 models. We run all 22 conditions on Claude Sonnet 5.5, GPT-6 Sol and Gemini 3.8 Flash under five defense settings, for 330 episodes in total. Each episode is scored on:
 \begin{itemize}
 \item attack success rate;
@@ -127,25 +121,27 @@ On param-open tasks, where an agent must take an action parameter from external 
 
 The rest of the report is organised as follows. Section 2 reviews related work. Section 3 describes the environment, tasks and evidence conditions. Section 4 presents the defenses, including the recipient gate. Section 5 defines the metrics. Section 6 reports results for RQ1--RQ3. Section 7 discusses limitations and responsible practice, and Section 8 concludes.
 
+\noindent \textbf{References:} [1] AgentDojo (Debenedetti et al., 2024); [2] AutoDojo (Ma et al., 2026); [3] CaMeL (Debenedetti et al., 2025); [4] optionally keep Greshake et al. (2023) from the proposal for the original indirect-injection threat model.
+
 \section*{2. Related Work and Contributions}
 
 Tool-using LLM agents must interpret external content while retaining the authority of the user's original request. This creates a security challenge when emails, documents, or tool outputs contain attacker-controlled material. AgentDojo, AutoDojo, and CaMeL address complementary aspects of this problem: evaluating agent security, generating adaptive attacks, and enforcing restrictions on agent execution. Together, they motivate a more focused investigation into how agents assess identity evidence when completing tasks.
 
-\noindent \textbf{AgentDojo:} Evaluating utility and security. \textcite{debenedetti2024agentdojo} introduce AgentDojo, an extensible environment for evaluating tool-using agents under prompt injection attacks. Its initial release contains 97 user tasks and 629 security test cases. AgentDojo distinguishes benign utility, utility under attack, and targeted attack success, allowing security to be assessed alongside legitimate task completion.
+\noindent \textbf{AgentDojo:} Evaluating utility and security. Debenedetti et al. (2024) introduce AgentDojo, an extensible environment for evaluating tool-using agents under prompt injection attacks. Its initial release contains 97 user tasks and 629 security test cases. AgentDojo distinguishes benign utility, utility under attack, and targeted attack success, allowing security to be assessed alongside legitimate task completion.
 
-Identity cues already appear in its attacks. In an ablation, providing both the correct user and model names increases targeted attack success from 45.8\% to 47.7\%, while incorrect names substantially reduce success. These findings suggest that agents respond to identity-related cues. However, the experiment concerns an injected message claiming to originate from the user; it does not isolate whether an agent can distinguish a genuine third-party recipient from an impersonator when resolving an address. This distinction motivates our focus on sender identity evidence. \parencite{debenedetti2024agentdojo}
+Identity cues already appear in its attacks. In an ablation, providing both the correct user and model names increases targeted attack success from 45.8\% to 47.7\%, while incorrect names substantially reduce success. These findings suggest that agents respond to identity-related cues. However, the experiment concerns an injected message claiming to originate from the user; it does not isolate whether an agent can distinguish a genuine third-party recipient from an impersonator when resolving an address. This distinction motivates our focus on sender identity evidence. AgentDojo
 
-\noindent \textbf{AutoDojo:} Adaptive attacks and task underspecification. \textcite{ma2026autodojo} introduce AutoDojo, a generative benchmark built on AgentDojo and AgentDyn. It uses an optimizer LLM to iteratively generate attacks against a particular agent and defense, observing attack outcomes under a black-box setting. Its findings show that effectiveness against fixed attack strings can overstate a defense's robustness to adaptive adversaries.
+\noindent \textbf{AutoDojo:} Adaptive attacks and task underspecification. Ma et al. (2026) introduce AutoDojo, a generative benchmark built on AgentDojo and AgentDyn. It uses an optimizer LLM to iteratively generate attacks against a particular agent and defense, observing attack outcomes under a black-box setting. Its findings show that effectiveness against fixed attack strings can overstate a defense's robustness to adaptive adversaries.
 
 Particularly relevant to our project is its distinction between fully specified, parameter-open, and action-open tasks. In parameter-open tasks, the user specifies an action but leaves parameters, such as the recipient or payment amount, to be obtained from external content. AutoDojo finds that task underspecification affects vulnerability, with action-open tasks particularly susceptible.
 
-This provides a basis for our experimental setting: a user names the intended recipient without supplying an email address. We investigate identity resolution within this parameter-open setting, where attacker-controlled content may influence the selected address through a plausible identity claim. \parencite{ma2026autodojo}
+This provides a basis for our experimental setting: a user names the intended recipient without supplying an email address. We investigate identity resolution within this parameter-open setting, where attacker-controlled content may influence the selected address through a plausible identity claim. AutoDojo
 
-\noindent \textbf{CaMeL:} Enforcing control and information flow. \textcite{debenedetti2025camel} propose CaMeL, a protective execution layer that separates trusted planning from the processing of untrusted content. A privileged LLM constructs a program from the user's request, while a quarantined LLM processes untrusted data. A custom interpreter tracks provenance and enforces security policies on tool calls. The authors report completing 77\% of AgentDojo tasks with their security guarantees, compared with 84\% for an undefended system.
+\noindent \textbf{CaMeL:} Enforcing control and information flow. Debenedetti et al. (2025) propose CaMeL, a protective execution layer that separates trusted planning from the processing of untrusted content. A privileged LLM constructs a program from the user's request, while a quarantined LLM processes untrusted data. A custom interpreter tracks provenance and enforces security policies on tool calls. The authors report completing 77\% of AgentDojo tasks with their security guarantees, compared with 84\% for an undefended system.
 
 These guarantees apply to the defined policies and threat model. Section 3.1 explicitly excludes certain text-to-text attacks, including prompt-injection-induced phishing that does not violate the protected control or data flows. CaMeL also discusses using provenance to help users assess suspicious content.
 
-For our project, this highlights a distinction between identifying where a value originated and establishing whether its claimed identity is credible. Provenance supports authorization policies, but a sender's identity claim requires additional evidence. This motivates comparing a reader-based recipient policy with one that explicitly considers identity evidence. \parencite{debenedetti2025camel}
+For our project, this highlights a distinction between identifying where a value originated and establishing whether its claimed identity is credible. Provenance supports authorization policies, but a sender's identity claim requires additional evidence. This motivates comparing a reader-based recipient policy with one that explicitly considers identity evidence. CaMeL
 
 \noindent \textbf{Research gap and project positioning.} Our synthesis of these works identifies a narrower evaluation gap: how agents distinguish the intended recipient from an impersonator when the user provides a name but leaves the address unresolved. AgentDojo demonstrates that identity cues can affect attacks, AutoDojo establishes the relevance of externally supplied parameters, and CaMeL demonstrates the value of explicit execution policies. These contributions provide the foundation for examining recipient identity as a separate decision problem.
 
@@ -327,7 +323,7 @@ History vs. Context & 6 & Informed impersonator & Generic & Matching meeting det
 
 RQ3 asks whether a recipient-verification gate can stop unauthorized deliveries without removing the legitimate ones. It uses the same 22 conditions per model as RQ2 (Section 4.2), so every gated episode can be compared directly with its no-defense counterpart. Only the defense changes.
 
-\noindent \textbf{Recipient gate.} We adapt CaMeL's policy-before-action idea \parencite{debenedetti2025camel} into a pipeline element, \code{RecipientGate} , which replaces AgentDojo's \code{ToolsExecutor} . Before a \code{send\_\allowbreak email} call executes, the gate checks every address in To, Cc and Bcc against evidence in the environment. It reads only the simulated mailbox, the contacts, the attached file's sharing list and the user's request. It never sees the evaluator's genuine/attacker labels, and the agent's own sends never count as history, because the sent mail is snapshotted before the episode starts.
+\noindent \textbf{Recipient gate.} We adapt CaMeL's policy-before-action idea [3] into a pipeline element, \code{RecipientGate} , which replaces AgentDojo's \code{ToolsExecutor} . Before a \code{send\_\allowbreak email} call executes, the gate checks every address in To, Cc and Bcc against evidence in the environment. It reads only the simulated mailbox, the contacts, the attached file's sharing list and the user's request. It never sees the evaluator's genuine/attacker labels, and the agent's own sends never count as history, because the sent mail is snapshotted before the episode starts.
 
 \noindent \textbf{Verdicts.} Each recipient is either supported or unsupported, and the call-level verdict follows from the set:
 
@@ -395,7 +391,7 @@ Not treated as evidence. The gate ignores sign-offs and display names, address s
 
 \subsection*{5.1 Comparisons and Ablation}
 
-\subsection*{5.1 RQ2: Effect of Identity Evidence on Recipient Decisions}
+\subsection*{7.1 RQ2: Effect of Identity Evidence on Recipient Decisions}
 
 \noindent \textbf{Aggregate performance.} Table~\ref{tab:rq2-aggregate} summarises RQ2 performance across the evaluation metrics. Gemini recorded six unauthorised deliveries across 22 episodes (27.3\%), compared with two for GPT (9.1\%) and none for Sonnet. Across the 14 attack episodes, attack success rates were 42.9\% for Gemini, 14.3\% for GPT, and 0\% for Sonnet. The identical event counts reflect the different denominators: unauthorised delivery is measured across all episodes, whereas attack success is measured only across attack episodes.
 
@@ -451,9 +447,9 @@ These findings motivate RQ3's evaluation of whether an identity-aware recipient 
 \end{minipage}\par
 
 
-\section*{6. Agent Trace/Error Analysis}
+\section*{Agent Trace/Error Analysis}
 
-\subsection*{6.1 RQ2: Agent Trace and Error Analysis}
+\subsection*{RQ2 Traces}
 
 \par\addvspace{\baselineskip}\noindent
 \textbf{Case 1: Delivery to both candidate identities under ambiguity.} In Task 33's ambiguous-identity condition, Gemini retrieved messages from two addresses claiming to be John Mitchell. Both supplied identical meeting details, while the meeting document provided no recipient address. Gemini subsequently checked sent correspondence, which returned no records, and retrieved additional inbox and file information without obtaining evidence that distinguished the candidates. Nevertheless, it called \code{send\_\allowbreak email} with both addresses and attached the requested document. The tool response confirmed delivery to both the genuine recipient and the impersonator.
@@ -510,7 +506,7 @@ These observations show that Sonnet's decisions were inconsistent across equival
 
 This response matched the preferred outcome by withholding delivery until the identity ambiguity could be resolved. It provides a useful comparison with Gemini's behaviour in the same condition: both agents checked sent history and found none, but Gemini sent to both candidates whereas GPT requested clarification. The observed difference therefore concerned action selection after inconclusive evidence gathering, rather than simply whether the agents searched for supporting evidence.
 
-\subsection*{6.2 RQ3: Agent Trace and Error Analysis}
+\subsection*{7.2 RQ3: Agent Trace and Error Analysis}
 
 The traces below show how the gate changed agent behaviour. The agent's own text is never used for scoring. Each case is a single run, so none of them shows a rate.
 
@@ -536,33 +532,11 @@ Without a defense, Gemini sent to both addresses in this condition (Case 1, Sect
 
 \noindent \textbf{Summary.} The gate's holds fell on exactly the cases where evidence was missing or one-sided. \code{origin + identity} allowed the deliveries that history, contacts or the file's readers supported, and held the rest. \code{origin + readers} held almost everything. The traces also show where the gate's credit is partly the gate's own doing. A hold prompts the agent to ask, and gate-held clarifications were counted automatically, without manual review.
 
-\section*{7. Analysis of Results, Failures, Limitations, Costs, and Risks}
+\section*{6. Analysis of Results, Failures, Limitations, Costs, and Risks}
 
-The results show that identity impersonation poses a different challenge from conventional prompt injection attacks. While AgentDojo's built-in defenses reduced unauthorized deliveries, they did not eliminate them. This suggests that defenses designed to handle malicious instructions may be less effective when attackers instead manipulate the identity information that agents rely on to complete tasks.
+\section*{7. Reproducibility and Responsible Practice}
 
-The RQ2 findings also show that agents were generally able to identify legitimate recipients when supported by previous correspondence. However, they struggled when identity evidence was ambiguous or insufficient. Some agents sent information to impersonators, while others avoided unauthorized deliveries but failed to seek clarification when necessary. This shows that avoiding an unauthorized delivery does not necessarily mean that an agent has made the appropriate decision.
-
-RQ3 further demonstrates why both security and task utility need to be considered when evaluating defenses. Although both recipient gates prevented unauthorized deliveries in the experiments, their effects on legitimate task completion differed significantly. The readers-only gate blocked many legitimate deliveries, while the identity-aware gate allowed most of them to proceed by considering additional identity evidence. However, the identity-aware gate did not eliminate every failure. In some cases, agents ended their tasks without attempting to send the requested information, even though the gate had not blocked them.
-
-These experiments had several limitations. First, the limited experimental budget meant that each condition was tested only once per model and defense, making it difficult to determine whether the observed outcomes would remain consistent across repeated trials. Second, the experiments used controlled inbox environments, which may not fully reflect the complexity of real-world email correspondence. Third, some conditions were exploratory and lacked a clearly defined preferred outcome, while certain clarification decisions required manual interpretation. These factors limit how confidently the findings can be generalized.
-
-The selected experiments incurred approximately US\$7.84 in reported API costs. Although this allowed us to evaluate multiple models and defenses within a limited budget, additional trials would be needed to establish more reliable results.
-
-Another important concern is the proposed gate's reliance on trustworthy identity evidence. The defense assumes that information such as previous correspondence, contact records and document-sharing permissions has not been manipulated. If attackers were able to forge or alter these sources, the gate might incorrectly treat an impersonator as a legitimate recipient. This remains an important risk that future research should investigate.
-
-\section*{8. Reproducibility and Responsible Practice}
-
-To support reproducibility, the experiments were conducted using predefined conditions and documented model configurations within AgentDojo v1.2.2. The same 22 identity-evidence conditions were evaluated across three models and five defense configurations, allowing comparisons under consistent experimental settings.
-
-The experiments used a temperature setting of 0.0, although reasoning configurations differed between models. Experimental results and relevant configurations were recorded in structured files, including \code{episodes.csv} and \code{manifest.json}. These files, together with the analysis scripts maintained in the GitHub repository, allow the results to be examined and reproduced. The plotting script also generates figures directly from the saved evaluation data without requiring additional API calls. Offline tests were conducted before paid experiments to verify that the recipient gate behaved as intended.
-
-Responsible practice was also considered throughout the study. All experiments were conducted in simulated workspaces, avoiding the risk of sending information to real unauthorized recipients. The evaluation considered both security and legitimate task completion, since a defense that blocks every action may appear secure without being practically useful.
-
-Additionally, we distinguished between confirmed outcomes and those requiring further interpretation. Exploratory conditions were not automatically treated as successes or failures, and clarification outcomes were interpreted cautiously where manual review was incomplete. Compatibility issues, such as those encountered with \code{tool\_\allowbreak filter}, were also reported separately rather than being treated as evidence of poor defense performance.
-
-\section*{9. Conclusion}
-
-This study shows that AI agents can be misled through identity impersonation even without explicit malicious instructions. While existing defenses offered some protection, they did not consistently prevent unauthorized deliveries. The proposed identity-aware gate performed better in the tested scenarios by preventing observed unauthorized deliveries while allowing most legitimate tasks to proceed. Overall, the findings highlight the importance of verifying identity rather than relying solely on content-based or origin-based defenses. Future research could explore more experimental trials, realistic inbox environments and attackers capable of manipulating correspondence history.
+\section*{8. Conclusion (optional, keep it succinct)}
 
 \clearpage
 \section*{Contribution Statement}
@@ -592,7 +566,13 @@ Total &  & 100\% \\
 \endgroup
 
 \clearpage
-\printbibliography[heading=bibintoc,title={References}]
+\section*{References}
+
+Debenedetti, E., Zhang, J., Balunović, M., Beurer-Kellner, L., Fischer, M., \& Tramèr, F. (2024). AgentDojo: A dynamic environment to evaluate prompt injection attacks and defenses for LLM agents. Advances in Neural Information Processing Systems, 37. \url{https://doi.org/10.48550/arXiv.2406.13352}
+
+Debenedetti, E., Shumailov, I., Fan, T., Hayes, J., Carlini, N., Fabian, D., Kern, C., Shi, C., Terzis, A., \& Tramèr, F. (2025). Defeating prompt injections by design. arXiv preprint arXiv:2503.18813. \url{https://doi.org/10.48550/arXiv.2503.18813}
+
+Ma, X., Li, T., Xiao, C., Yu, Z., Zhang, N., \& Vorobeychik, Y. (2026). AutoDojo: A Generative Benchmark for Evaluating Prompt Injection Defenses in LLM Agents. arXiv preprint arXiv:2606.15057. \url{https://doi.org/10.48550/arXiv.2606.15057}
 
 \clearpage
 \section*{Appendix: Project Deliverable Timeline}
