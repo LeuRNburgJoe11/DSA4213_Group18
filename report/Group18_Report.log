@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.3)  9 NOV 2026 18:00
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.9.3)  10 NOV 2026 19:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -12,30 +12,23 @@ Document Class: article 2025/01/22 v1.4n Standard LaTeX document class
 (/usr/local/texlive/2026/texmf-dist/tex/latex/base/size11.clo
 File: size11.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count271
-\c@section=\count272
-\c@subsection=\count273
-\c@subsubsection=\count274
-\c@paragraph=\count275
-\c@subparagraph=\count276
-\c@figure=\count277
-\c@table=\count278
+\c@part=\count275
+\c@section=\count276
+\c@subsection=\count277
+\c@subsubsection=\count278
+\c@paragraph=\count279
+\c@subparagraph=\count280
+\c@figure=\count281
+\c@table=\count282
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen148
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 116.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/lm/t1lmr.fd
-File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)) (/usr/local/texlive/2026/texmf-dist/tex/latex/base/inputenc.sty
+) (/usr/local/texlive/2026/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
-
-
-Package inputenc Warning: inputenc package ignored with utf8 based engines.
-
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2026/03/07 v6.0 Page Geometry
  (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/keyval.sty
@@ -46,9 +39,9 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
  (/usr/local/texlive/2026/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 ))
-\Gm@cnth=\count279
-\Gm@cntv=\count280
-\c@Gm@tempcnt=\count281
+\Gm@cnth=\count283
+\Gm@cntv=\count284
+\c@Gm@tempcnt=\count285
 \Gm@bindingoffset=\dimen149
 \Gm@wd@mp=\dimen150
 \Gm@odd@mp=\dimen151
@@ -75,14 +68,14 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count282
+\inf@bad=\count286
 LaTeX Info: Redefining \frac on input line 233.
-\uproot@=\count283
-\leftroot@=\count284
+\uproot@=\count287
+\leftroot@=\count288
 LaTeX Info: Redefining \overline on input line 398.
 LaTeX Info: Redefining \colon on input line 409.
-\classnum@=\count285
-\DOTSCASE@=\count286
+\classnum@=\count289
+\DOTSCASE@=\count290
 LaTeX Info: Redefining \ldots on input line 495.
 LaTeX Info: Redefining \dots on input line 498.
 LaTeX Info: Redefining \cdots on input line 619.
@@ -95,20 +88,20 @@ LaTeX Info: Redefining \Bigg on input line 724.
 \big@size=\dimen159
 LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
-\macc@depth=\count287
+\macc@depth=\count291
 LaTeX Info: Redefining \bmod on input line 904.
 LaTeX Info: Redefining \pmod on input line 909.
 LaTeX Info: Redefining \smash on input line 939.
 LaTeX Info: Redefining \relbar on input line 969.
 LaTeX Info: Redefining \Relbar on input line 970.
-\c@MaxMatrixCols=\count288
+\c@MaxMatrixCols=\count292
 \dotsspace@=\muskip17
-\c@parentequation=\count289
-\dspbrk@lvl=\count290
+\c@parentequation=\count293
+\dspbrk@lvl=\count294
 \tag@help=\toks22
-\row@=\count291
-\column@=\count292
-\maxfields@=\count293
+\row@=\count295
+\column@=\count296
+\maxfields@=\count297
 \andhelp@=\toks23
 \eqnshift@=\dimen160
 \alignsep@=\dimen161
@@ -152,12 +145,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen175
 \cmidrulekern=\dimen176
 \defaultaddspace=\dimen177
-\@cmidla=\count294
-\@cmidlb=\count295
+\@cmidla=\count298
+\@cmidlb=\count299
 \@aboverulesep=\dimen178
 \@belowrulesep=\dimen179
-\@thisruleclass=\count296
-\@lastruleclass=\count297
+\@thisruleclass=\count300
+\@lastruleclass=\count301
 \@thisrulewidth=\dimen180
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/enumitem/enumitem.sty
 Package: enumitem 2025/02/06 v3.11 Customized lists
@@ -165,18 +158,19 @@ Package: enumitem 2025/02/06 v3.11 Customized lists
 \enit@outerparindent=\dimen181
 \enit@toks=\toks27
 \enit@inbox=\box57
-\enit@count@id=\count298
-\enitdp@description=\count299
+\enit@count@id=\count302
+\enitdp@description=\count303
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
  (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: xetex.def on input line 274.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-def/xetex.def
-File: xetex.def 2025/11/01 v5.0p Graphics/color driver for xetex
+Package xcolor Info: Driver file: pdftex.def on input line 274.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics/mathcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
 Package xcolor Info: Model `RGB' extended on input line 1365.
 Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1367.
 Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1368.
@@ -186,7 +180,7 @@ Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 ) (/usr/local/texlive/2026/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2026/03/08 v26.4 The multilingual framework for LuaLaTeX, pdfLaTeX and XeLaTeX
-\babel@savecnt=\count300
+\babel@savecnt=\count304
 LaTeX Encoding Info:    Redeclaring text command \ij (encoding OT1) on input line 2078.
 LaTeX Encoding Info:    Redeclaring text command \IJ (encoding OT1) on input line 2080.
 LaTeX Encoding Info:    Redeclaring text command \ij (encoding T1) on input line 2082.
@@ -196,9 +190,9 @@ LaTeX Encoding Info:    Ignoring declaration for text command \IJ (encoding ?) o
 LaTeX Encoding Info:    Ignoring declaration for text command \SS (encoding ?) on input line 2111.
 \U@D=\dimen182
 \l@unhyphenated=\language91
- (/usr/local/texlive/2026/texmf-dist/tex/generic/babel/xebabel.def)
+ (/usr/local/texlive/2026/texmf-dist/tex/generic/babel/txtbabel.def)
 \bbl@readstream=\read2
-\bbl@dirlevel=\count301
+\bbl@dirlevel=\count305
  (/usr/local/texlive/2026/texmf-dist/tex/generic/babel/locale/en/babel-english.tex)
 Package babel Info: Importing font and identification data for english
 (babel)             from babel-en.ini. Reported on input line 4330.
@@ -214,14 +208,14 @@ Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
 Package: csquotes 2024-04-04 v5.2o context-sensitive quotations (JAW)
  (/usr/local/texlive/2026/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count302
+\etb@tempcnta=\count306
 )
-\csq@reset=\count303
-\csq@gtype=\count304
-\csq@glevel=\count305
-\csq@qlevel=\count306
-\csq@maxlvl=\count307
-\csq@tshold=\count308
+\csq@reset=\count307
+\csq@gtype=\count308
+\csq@glevel=\count309
+\csq@qlevel=\count310
+\csq@maxlvl=\count311
+\csq@tshold=\count312
 \csq@ltx@everypar=\toks28
  (/usr/local/texlive/2026/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2024-04-04 v5.2o csquotes generic definitions (JAW)
@@ -241,14 +235,14 @@ Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode not found.
+Package pdftexcmds Info: \pdfdraftmode found.
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
  (/usr/local/texlive/2026/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
 )) (/usr/local/texlive/2026/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count309
+\lrq@indent=\count313
  (/usr/local/texlive/2026/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 )) (/usr/local/texlive/2026/texmf-dist/tex/latex/base/ifthen.sty
@@ -257,49 +251,49 @@ Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-\c@tabx@nest=\count310
-\c@listtotal=\count311
-\c@listcount=\count312
-\c@liststart=\count313
-\c@liststop=\count314
-\c@citecount=\count315
-\c@citetotal=\count316
-\c@multicitecount=\count317
-\c@multicitetotal=\count318
-\c@instcount=\count319
-\c@maxnames=\count320
-\c@minnames=\count321
-\c@maxitems=\count322
-\c@minitems=\count323
-\c@citecounter=\count324
-\c@maxcitecounter=\count325
-\c@savedcitecounter=\count326
-\c@uniquelist=\count327
-\c@uniquename=\count328
-\c@refsection=\count329
-\c@refsegment=\count330
-\c@maxextratitle=\count331
-\c@maxextratitleyear=\count332
-\c@maxextraname=\count333
-\c@maxextradate=\count334
-\c@maxextraalpha=\count335
-\c@abbrvpenalty=\count336
-\c@highnamepenalty=\count337
-\c@lownamepenalty=\count338
-\c@maxparens=\count339
-\c@parenlevel=\count340
-\blx@tempcnta=\count341
-\blx@tempcntb=\count342
-\blx@tempcntc=\count343
-\c@blx@maxsection=\count344
-\blx@maxsegment@0=\count345
-\blx@notetype=\count346
-\blx@parenlevel@text=\count347
-\blx@parenlevel@foot=\count348
-\blx@sectionciteorder@0=\count349
-\blx@sectionciteorderinternal@0=\count350
-\blx@entrysetcounter=\count351
-\blx@biblioinstance=\count352
+\c@tabx@nest=\count314
+\c@listtotal=\count315
+\c@listcount=\count316
+\c@liststart=\count317
+\c@liststop=\count318
+\c@citecount=\count319
+\c@citetotal=\count320
+\c@multicitecount=\count321
+\c@multicitetotal=\count322
+\c@instcount=\count323
+\c@maxnames=\count324
+\c@minnames=\count325
+\c@maxitems=\count326
+\c@minitems=\count327
+\c@citecounter=\count328
+\c@maxcitecounter=\count329
+\c@savedcitecounter=\count330
+\c@uniquelist=\count331
+\c@uniquename=\count332
+\c@refsection=\count333
+\c@refsegment=\count334
+\c@maxextratitle=\count335
+\c@maxextratitleyear=\count336
+\c@maxextraname=\count337
+\c@maxextradate=\count338
+\c@maxextraalpha=\count339
+\c@abbrvpenalty=\count340
+\c@highnamepenalty=\count341
+\c@lownamepenalty=\count342
+\c@maxparens=\count343
+\c@parenlevel=\count344
+\blx@tempcnta=\count345
+\blx@tempcntb=\count346
+\blx@tempcntc=\count347
+\c@blx@maxsection=\count348
+\blx@maxsegment@0=\count349
+\blx@notetype=\count350
+\blx@parenlevel@text=\count351
+\blx@parenlevel@foot=\count352
+\blx@sectionciteorder@0=\count353
+\blx@sectionciteorderinternal@0=\count354
+\blx@entrysetcounter=\count355
+\blx@biblioinstance=\count356
 \labelnumberwidth=\skip57
 \labelalphawidth=\skip58
 \biblabelsep=\skip59
@@ -311,9 +305,9 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 \blx@bcfin=\read3
 \blx@bcfout=\write3
 \blx@langwohyphens=\language92
-\c@mincomprange=\count353
-\c@maxcomprange=\count354
-\c@mincompwidth=\count355
+\c@mincomprange=\count357
+\c@maxcomprange=\count358
+\c@mincompwidth=\count359
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/blx-dm.def
@@ -326,84 +320,84 @@ File: apa.dbx 2025/08/27 v9.20 APA biblatex style data model
 )
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count356
-\c@savedafterword=\count357
-\c@annotator=\count358
-\c@savedannotator=\count359
-\c@author=\count360
-\c@savedauthor=\count361
-\c@bookauthor=\count362
-\c@savedbookauthor=\count363
-\c@commentator=\count364
-\c@savedcommentator=\count365
-\c@editor=\count366
-\c@savededitor=\count367
-\c@editora=\count368
-\c@savededitora=\count369
-\c@editorb=\count370
-\c@savededitorb=\count371
-\c@editorc=\count372
-\c@savededitorc=\count373
-\c@foreword=\count374
-\c@savedforeword=\count375
-\c@holder=\count376
-\c@savedholder=\count377
-\c@introduction=\count378
-\c@savedintroduction=\count379
-\c@namea=\count380
-\c@savednamea=\count381
-\c@nameb=\count382
-\c@savednameb=\count383
-\c@namec=\count384
-\c@savednamec=\count385
-\c@translator=\count386
-\c@savedtranslator=\count387
-\c@shortauthor=\count388
-\c@savedshortauthor=\count389
-\c@shorteditor=\count390
-\c@savedshorteditor=\count391
-\c@narrator=\count392
-\c@savednarrator=\count393
-\c@execproducer=\count394
-\c@savedexecproducer=\count395
-\c@execdirector=\count396
-\c@savedexecdirector=\count397
-\c@with=\count398
-\c@savedwith=\count399
-\c@labelname=\count400
-\c@savedlabelname=\count401
-\c@institution=\count402
-\c@savedinstitution=\count403
-\c@lista=\count404
-\c@savedlista=\count405
-\c@listb=\count406
-\c@savedlistb=\count407
-\c@listc=\count408
-\c@savedlistc=\count409
-\c@listd=\count410
-\c@savedlistd=\count411
-\c@liste=\count412
-\c@savedliste=\count413
-\c@listf=\count414
-\c@savedlistf=\count415
-\c@location=\count416
-\c@savedlocation=\count417
-\c@organization=\count418
-\c@savedorganization=\count419
-\c@origlocation=\count420
-\c@savedoriglocation=\count421
-\c@origpublisher=\count422
-\c@savedorigpublisher=\count423
-\c@publisher=\count424
-\c@savedpublisher=\count425
-\c@language=\count426
-\c@savedlanguage=\count427
-\c@origlanguage=\count428
-\c@savedoriglanguage=\count429
-\c@citation=\count430
-\c@savedcitation=\count431
-\c@pageref=\count432
-\c@savedpageref=\count433
+\c@afterword=\count360
+\c@savedafterword=\count361
+\c@annotator=\count362
+\c@savedannotator=\count363
+\c@author=\count364
+\c@savedauthor=\count365
+\c@bookauthor=\count366
+\c@savedbookauthor=\count367
+\c@commentator=\count368
+\c@savedcommentator=\count369
+\c@editor=\count370
+\c@savededitor=\count371
+\c@editora=\count372
+\c@savededitora=\count373
+\c@editorb=\count374
+\c@savededitorb=\count375
+\c@editorc=\count376
+\c@savededitorc=\count377
+\c@foreword=\count378
+\c@savedforeword=\count379
+\c@holder=\count380
+\c@savedholder=\count381
+\c@introduction=\count382
+\c@savedintroduction=\count383
+\c@namea=\count384
+\c@savednamea=\count385
+\c@nameb=\count386
+\c@savednameb=\count387
+\c@namec=\count388
+\c@savednamec=\count389
+\c@translator=\count390
+\c@savedtranslator=\count391
+\c@shortauthor=\count392
+\c@savedshortauthor=\count393
+\c@shorteditor=\count394
+\c@savedshorteditor=\count395
+\c@narrator=\count396
+\c@savednarrator=\count397
+\c@execproducer=\count398
+\c@savedexecproducer=\count399
+\c@execdirector=\count400
+\c@savedexecdirector=\count401
+\c@with=\count402
+\c@savedwith=\count403
+\c@labelname=\count404
+\c@savedlabelname=\count405
+\c@institution=\count406
+\c@savedinstitution=\count407
+\c@lista=\count408
+\c@savedlista=\count409
+\c@listb=\count410
+\c@savedlistb=\count411
+\c@listc=\count412
+\c@savedlistc=\count413
+\c@listd=\count414
+\c@savedlistd=\count415
+\c@liste=\count416
+\c@savedliste=\count417
+\c@listf=\count418
+\c@savedlistf=\count419
+\c@location=\count420
+\c@savedlocation=\count421
+\c@organization=\count422
+\c@savedorganization=\count423
+\c@origlocation=\count424
+\c@savedoriglocation=\count425
+\c@origpublisher=\count426
+\c@savedorigpublisher=\count427
+\c@publisher=\count428
+\c@savedpublisher=\count429
+\c@language=\count430
+\c@savedlanguage=\count431
+\c@origlanguage=\count432
+\c@savedoriglanguage=\count433
+\c@citation=\count434
+\c@savedcitation=\count435
+\c@pageref=\count436
+\c@savedpageref=\count437
 \shorthandwidth=\skip65
 \shortjournalwidth=\skip66
 \shortserieswidth=\skip67
@@ -418,9 +412,6 @@ Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
 \localshorttitlewidth=\skip76
 \localshortauthorwidth=\skip77
 \localshorteditorwidth=\skip78
-Package biblatex Info: Trying to load enhanced support for Unicode engines...
-Package biblatex Info: ... file 'blx-unicode.def' found.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/blx-unicode.def)
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/blx-compat.def
@@ -430,19 +421,19 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 2025/07/10 v3.21 biblatex compatibility (PK/MW)
-\c@textcitecount=\count434
-\c@textcitetotal=\count435
-\c@textcitemaxnames=\count436
-\c@biburlbigbreakpenalty=\count437
-\c@biburlbreakpenalty=\count438
-\c@biburlnumpenalty=\count439
-\c@biburlucpenalty=\count440
-\c@biburllcpenalty=\count441
+\c@textcitecount=\count438
+\c@textcitetotal=\count439
+\c@textcitemaxnames=\count440
+\c@biburlbigbreakpenalty=\count441
+\c@biburlbreakpenalty=\count442
+\c@biburlnumpenalty=\count443
+\c@biburlucpenalty=\count444
+\c@biburllcpenalty=\count445
 \biburlbigskip=\muskip19
 \biburlnumskip=\muskip20
 \biburlucskip=\muskip21
 \biburllcskip=\muskip22
-\c@smartand=\count442
+\c@smartand=\count446
 )
 Package biblatex Info: Trying to load bibliography style 'apa'...
 Package biblatex Info: ... file 'apa.bbx' found.
@@ -452,8 +443,8 @@ Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
 File: standard.bbx 2025/07/10 v3.21 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count443
-\c@bbx:relatedtotal=\count444
+\c@bbx:relatedcount=\count447
+\c@bbx:relatedtotal=\count448
 )
 Package biblatex Info: Delimiter 'nameyeardelim' in context 'bib' already defined, overwriting.
 Package biblatex Info: Delimiter 'nameyeardelim' in context 'biblist' already defined, overwriting.
@@ -487,16 +478,13 @@ Package biblatex Info: ... file 'biblatex.cfg' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/biblatex.cfg
 File: biblatex.cfg 
 )
-Package biblatex Info: XeTeX detected.
-(biblatex)             Assuming input encoding 'utf8'.
+Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Document encoding is UTF8 ....
  (/usr/local/texlive/2026/texmf-dist/tex/latex/l3kernel/expl3.sty
 Package: expl3 2026-01-19 L3 programming layer (loader) 
- (/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
-File: l3backend-xetex.def 2025-10-09 L3 backend support: XeTeX
-\g__graphics_track_int=\count445
-\g__pdfannot_backend_int=\count446
-\g__pdfannot_backend_link_int=\count447
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count449
 ))
 Package biblatex Info: ... and expl3
 (biblatex)             2026-01-19 L3 programming layer (loader) 
@@ -521,21 +509,25 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/local/texlive/2026/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count448
+\c@section@level=\count450
 ) (/usr/local/texlive/2026/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
 \@linkdim=\dimen183
-\Hy@linkcounter=\count449
-\Hy@pagecounter=\count450
+\Hy@linkcounter=\count451
+\Hy@pagecounter=\count452
  (/usr/local/texlive/2026/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2026-01-29 v7.01p Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
 ) (/usr/local/texlive/2026/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count451
+\Hy@SavedSpaceFactor=\count453
  (/usr/local/texlive/2026/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2026-01-29 v7.01p Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
 )
 Package hyperref Info: Hyper figures OFF on input line 4201.
 Package hyperref Info: Link nesting OFF on input line 4206.
@@ -544,7 +536,7 @@ Package hyperref Info: Plain pages OFF on input line 4216.
 Package hyperref Info: Backreferencing OFF on input line 4221.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4468.
-\c@Hy@tempcnt=\count452
+\c@Hy@tempcnt=\count454
 LaTeX Info: Redefining \url on input line 4807.
 \XeTeXLinkMargin=\dimen184
  (/usr/local/texlive/2026/texmf-dist/tex/generic/bitset/bitset.sty
@@ -552,7 +544,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
  (/usr/local/texlive/2026/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count453
+\Fld@menulength=\count455
 \Field@Width=\dimen185
 \Fld@charsize=\dimen186
 Package hyperref Info: Hyper figures OFF on input line 6084.
@@ -562,16 +554,13 @@ Package hyperref Info: backreferencing OFF on input line 6099.
 Package hyperref Info: Link coloring OFF on input line 6104.
 Package hyperref Info: Link coloring with OCG OFF on input line 6109.
 Package hyperref Info: PDF/A mode OFF on input line 6114.
-\Hy@abspage=\count454
-\c@Item=\count455
-\c@Hfootnote=\count456
+\Hy@abspage=\count456
+\c@Item=\count457
+\c@Hfootnote=\count458
 )
-Package hyperref Info: Driver (autodetected): hxetex.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/hyperref/hxetex.def
-File: hxetex.def 2026-01-29 v7.01p Hyperref driver for XeTeX
-\pdfm@box=\box58
-\c@Hy@AnnotLevel=\count457
-\HyField@AnnotCount=\count458
+Package hyperref Info: Driver (autodetected): hpdftex.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2026-01-29 v7.01p Hyperref driver for pdfTeX
 \Fld@listcount=\count459
 \c@bookmark@seq@number=\count460
  (/usr/local/texlive/2026/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
@@ -593,7 +582,7 @@ Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: xetex.def on input line 106.
+Package graphics Info: Driver file: pdftex.def on input line 106.
 )
 \Gin@req@height=\dimen187
 \Gin@req@width=\dimen188
@@ -605,11 +594,11 @@ Package: longtable 2025-10-13 v4.24 Multi-page Table package (DPC)
 \LTpost=\skip83
 \LTchunksize=\count461
 \LTcapwidth=\dimen189
-\LT@head=\box59
-\LT@firsthead=\box60
-\LT@foot=\box61
-\LT@lastfoot=\box62
-\LT@gbox=\box63
+\LT@head=\box58
+\LT@firsthead=\box59
+\LT@foot=\box60
+\LT@lastfoot=\box61
+\LT@gbox=\box62
 \LT@cols=\count462
 \LT@rows=\count463
 \c@LT@tables=\count464
@@ -637,8 +626,6 @@ LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 58.
 LaTeX Font Info:    ... okay on input line 58.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 58.
 LaTeX Font Info:    ... okay on input line 58.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 58.
-LaTeX Font Info:    ... okay on input line 58.
 LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 58.
 LaTeX Font Info:    ... okay on input line 58.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 58.
@@ -649,9 +636,9 @@ LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 58.
 LaTeX Font Info:    ... okay on input line 58.
 
 *geometry* driver: auto-detecting
-*geometry* detected driver: xetex
+*geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
-* driver: xetex
+* driver: pdftex
 * paper: <default>
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
@@ -682,9 +669,28 @@ LaTeX Font Info:    ... okay on input line 58.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
+(/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count467
+\scratchdimen=\dimen190
+\scratchbox=\box63
+\nofMPsegments=\count468
+\nofMParguments=\count469
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count470
+\MPscratchDim=\dimen191
+\MPnumerator=\count471
+\makeMPintoPDFobject=\count472
+\everyMPtoPDFconversion=\toks31
+) (/usr/local/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
 Package biblatex Info: Trying to load language 'english' -> 'english-apa'...
 Package biblatex Info: ... file 'english-apa.lbx' found.
-(/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/english-apa.lbx
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex-apa/english-apa.lbx
 File: english-apa.lbx 2025/08/27 v9.20 APA biblatex localisation
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
@@ -704,8 +710,7 @@ Package biblatex Info: ... file 'english.lbx' found.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2025/07/10 v3.21 biblatex localization (PK/MW)
 ))))
-Package biblatex Info: XeTeX detected.
-(biblatex)             Assuming input encoding 'utf8'.
+Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
 \openout3 = `Group18_Report.bcf'.
@@ -729,35 +734,92 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 69.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 117.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [2] [3] [4] [5]
-File: assets/page-06-image-01.png Graphic file (type bmp)
-<assets/page-06-image-01.png>
- [6] [7]
-ignored: Infinite glue shrinkage found in box being split [8] [9] [10]
-File: assets/page-12-image-01.png Graphic file (type bmp)
-<assets/page-12-image-01.png>
- [11] [12]
-File: assets/page-16-image-01.png Graphic file (type bmp)
-<assets/page-16-image-01.png>
-File: assets/page-16-image-02.png Graphic file (type bmp)
-<assets/page-16-image-02.png>
- [13]
-File: assets/page-17-image-01.png Graphic file (type bmp)
-<assets/page-17-image-01.png>
- [14]
-File: assets/page-18-image-01.png Graphic file (type bmp)
-<assets/page-18-image-01.png>
- [15] [16] [17] [18] [19] [20] [21
+{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}] [2{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [3] [4] [5]
+<assets/page-06-image-01.png, id=70, 1690.315pt x 1762.585pt>
+File: assets/page-06-image-01.png Graphic file (type png)
+<use assets/page-06-image-01.png>
+Package pdftex.def Info: assets/page-06-image-01.png  used on input line 181.
+(pdftex.def)             Requested size: 328.82707pt x 342.8824pt.
+ [6 <./assets/page-06-image-01.png (PNG copy)>] [7
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.247 
+      ]
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.273 \end{longtable}
+                     
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.301 \end{longtable}
+                     
+ignored: Infinite glue shrinkage found in box being split [8]
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.323 \end{longtable}
+                      [9]
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.351 \end{longtable}
+                     
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.375 \end{longtable}
+                      [10]
+<assets/page-12-image-01.png, id=110, 2055.68pt x 1375.1375pt>
+File: assets/page-12-image-01.png Graphic file (type png)
+<use assets/page-12-image-01.png>
+Package pdftex.def Info: assets/page-12-image-01.png  used on input line 389.
+(pdftex.def)             Requested size: 469.75502pt x 301.62418pt.
+ [11 <./assets/page-12-image-01.png>]
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.421 \end{longtable}
+                      [12]
+<assets/page-16-image-01.png, id=133, 1698.345pt x 933.4875pt>
+File: assets/page-16-image-01.png Graphic file (type png)
+<use assets/page-16-image-01.png>
+Package pdftex.def Info: assets/page-16-image-01.png  used on input line 443.
+(pdftex.def)             Requested size: 469.75502pt x 258.19833pt.
+<assets/page-16-image-02.png, id=134, 1597.97pt x 538.01pt>
+File: assets/page-16-image-02.png Graphic file (type png)
+<use assets/page-16-image-02.png>
+Package pdftex.def Info: assets/page-16-image-02.png  used on input line 450.
+(pdftex.def)             Requested size: 469.75502pt x 158.16154pt.
+ [13 <./assets/page-16-image-01.png (PNG copy)>]
+<assets/page-17-image-01.png, id=141, 929.4725pt x 981.6675pt>
+File: assets/page-17-image-01.png Graphic file (type png)
+<use assets/page-17-image-01.png>
+Package pdftex.def Info: assets/page-17-image-01.png  used on input line 464.
+(pdftex.def)             Requested size: 305.33789pt x 322.48332pt.
+ [14 <./assets/page-16-image-02.png (PNG copy)>]
+<assets/page-18-image-01.png, id=148, 796.9775pt x 558.085pt>
+File: assets/page-18-image-01.png Graphic file (type png)
+<use assets/page-18-image-01.png>
+Package pdftex.def Info: assets/page-18-image-01.png  used on input line 475.
+(pdftex.def)             Requested size: 305.33789pt x 213.8117pt.
+ [15 <./assets/page-17-image-01.png (PNG copy)>] [16 <./assets/page-18-image-01.png (PNG copy)>] [17] [18] [19] [20]
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.591 \end{longtable}
+                      [21
+
+] [22
 
 ]
-Missing character: There is no ć ("107) in font ec-lmr10!
-[22
-
-] [23
+pdfTeX warning (ext4): destination with the same identifier (name{LT@tables.0}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.631 \end{longtable}
+                      [23
 
 ] (./Group18_Report.aux)
  ***********
@@ -771,12 +833,18 @@ Package logreq Info: Writing requests to 'Group18_Report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21003 strings out of 468168
- 366745 string characters out of 5432816
- 1362115 words of memory out of 5000000
- 49487 multiletter control sequences out of 15000+600000
- 661676 words of font info for 71 fonts, out of 8000000 for 9000
- 1348 hyphenation exceptions out of 8191
- 60i,9n,69p,1159b,5214s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 21356 strings out of 467525
+ 370755 string characters out of 5418983
+ 1356938 words of memory out of 5000000
+ 49947 multiletter control sequences out of 15000+600000
+ 639893 words of font info for 69 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 63i,9n,69p,1159b,5050s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb>
+Output written on Group18_Report.pdf (23 pages, 1990139 bytes).
+PDF statistics:
+ 264 PDF objects out of 1000 (max. 8388607)
+ 211 compressed objects within 3 object streams
+ 78 named destinations out of 1000 (max. 500000)
+ 45 words of extra memory for PDF output out of 10000 (max. 10000000)
 
-Output written on Group18_Report.xdv (23 pages, 90756 bytes).
