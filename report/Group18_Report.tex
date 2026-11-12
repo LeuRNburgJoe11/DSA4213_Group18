@@ -20,6 +20,7 @@
 \usepackage{longtable}
 \usepackage{url}
 \usepackage{needspace}
+\usepackage{etoolbox}
 
 % Consistent hanging indents and spacing for all actual lists.
 \setlist{leftmargin=1.8em,labelsep=0.5em,itemindent=0pt,listparindent=0pt,
@@ -46,7 +47,13 @@
 \newcommand{\semester}{Semester 1, AY2026/2027}
 
 % Captions own the counters; longtable must not increment them a second time.
-\renewcommand{\LTcaptype}{}
+\makeatletter
+\ifdefined\LTcaptype
+  \renewcommand{\LTcaptype}{}% longtable 4.18+ (current TeX Live / Overleaf)
+\else
+  \patchcmd{\LT@array}{\refstepcounter{table}}{}{}{}% older longtable
+\fi
+\makeatother
 \newcommand{\code}[1]{\texttt{#1}}
 \newcounter{listing}
 \newcommand{\listingname}{Listing}
@@ -64,7 +71,6 @@ Group ID: 18\\[0.9em]
 \course\\
 \semester
 \end{center}
-% Faithful conversion of the supplied draft; incomplete sections and numbering retained.
 \section*{Administrative Information}
 
 \begin{tabular}{@{}>{\bfseries\raggedright\arraybackslash}p{0.25\linewidth}
@@ -77,7 +83,10 @@ Project direction & Trusting the Named Source: Evaluating Sender Impersonation a
 Repository & \url{https://github.com/LeuRNburgJoe11/DSA4213_Group18} \\
 \end{tabular}
 
-\input{sections/main}
+\section*{Project Summary}
+In parameter-open tasks, agents take a recipient's address from untrusted content. We test whether they verify the recipient's identity. Adapting two AgentDojo tasks into 22 identity-evidence conditions, we evaluate Claude Sonnet 5.5, GPT-6 Sol and Gemini 3.8 Flash under no defense, two built-in defenses and two recipient gates (330 episodes). Without defenses, Gemini and GPT delivered to an impersonator or unsupported replacement in six and two episodes. Built-in defenses reduced these deliveries but did not eliminate them. Both gates prevented every observed unauthorised delivery, but the identity-aware gate kept 34 of 36 legitimate deliveries, against six for the readers-only gate.
+
+\input{main}
 \clearpage
 \section*{Contribution Statement}
 
@@ -93,11 +102,11 @@ Repository & \url{https://github.com/LeuRNburgJoe11/DSA4213_Group18} \\
 \endhead
 Chua Yong Sheng Joel & Wrote the original harness for dry-testing (without calling the OpenRouter API). Organised (weekly) meeting planning and consolidated meeting notes. Wrote the code for and ran Research Question 1. Cleaned and tidied the GitHub repository and organised its final version for submission. & 25\% \\
 \addlinespace[0.3em]
-Ng Jia Hao Sherwin & Adapted CaMeL's idea of a recipient gate and extended it to check identity evidence. Implemented \code{RecipientGate} (three modes, per-recipient verdicts). Extended the runner to support all three models, AgentDojo's built-in defenses and \code{RecipientGate}. Merged the RQ1, RQ2 and RQ3 branches so the three experiments ran from one codebase. Ran the RQ3 experiments. Prepared presentation slides on the setup (suite, models, task categories, budget), defences and RQ3 (compared against RQ1). Wrote report Sections 4.3 and 7.2. & 25\% \\
+Ng Jia Hao Sherwin & Adapted CaMeL's idea of a recipient gate and extended it to check identity evidence. Implemented \code{RecipientGate} (three modes, per-recipient verdicts). Extended the runner to support all three models, AgentDojo's built-in defenses and \code{RecipientGate}. Merged the RQ1, RQ2 and RQ3 branches so the three experiments ran from one codebase. Ran the RQ3 experiments. Prepared presentation slides on the setup (suite, models, task categories, budget), defences and RQ3 (compared against RQ1). Wrote the report text on the recipient-gate design (Section~4, Appendix~A.3) and the RQ3 results (Section~5.2). & 25\% \\
 \addlinespace[0.3em]
 Chong Yu Xuan & Developed \code{plots.py} to analyse and visualise RQ1, RQ2 and RQ3 results, including the combined defense comparison. Verified results against evaluation summaries. Prepared presentation slides on evaluation metrics, limitations and conclusion. Wrote report Sections 6, 7 and 8. & 25\% \\
 \addlinespace[0.3em]
-Robin Ghosh & Literature review for the project. Set up Openrouter API backend. Designed the environment and executed the experiments for RQ2. Prepared presentation slides on related work, attack design and RQ2. Report write-up for 2, 3.2a, 3.2b, 4.2, 7.1 and 8 (RQ2). & 25\% \\
+Robin Ghosh & Literature review for the project. Set up Openrouter API backend. Designed the environment and executed the experiments for RQ2. Prepared presentation slides on related work, attack design and RQ2. Wrote the report text on related work (Section~2), the threat model (Section~3), the RQ2 conditions (Section~4, Appendix~A.2), the RQ2 results (Section~5.1, Appendix~B) and the RQ2 part of the conclusion (Section~8). & 25\% \\
 \addlinespace[0.3em]
 Total &  & 100\% \\
 \addlinespace[0.3em]
@@ -108,5 +117,5 @@ Total &  & 100\% \\
 
 \clearpage
 \printbibliography[heading=bibintoc,title={References}]
-\input{appendix/supplement}
+\input{supplement}
 \end{document}
