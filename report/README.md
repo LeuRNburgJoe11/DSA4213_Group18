@@ -1,6 +1,6 @@
 # Current condensed report
 
-The main text is now in `sections/main.tex` (7 compiled pages), with detailed evidence in `appendix/supplement.tex`. `Group18_Report.tex` is the main file to compile. See `CUT_NOTES.md` for the rubric coverage, relocation map and remaining author decisions. The original course typography is preserved. Contribution Statement begins on page 8; references and appendix are excluded from the main-text limit.
+The main text is in `main.tex` (7 compiled pages), with detailed evidence in `supplement.tex`. `Group18_Report.tex` is the main file to compile. See `CUT_NOTES.md` for the rubric coverage, relocation map and remaining author decisions. The original course typography is preserved. Contribution Statement begins on page 8; references and appendix are excluded from the main-text limit.
 
 # Group 18 report: LaTeX conversion
 
@@ -18,7 +18,7 @@ pdflatex -interaction=nonstopmode -halt-on-error Group18_Report.tex
 pdflatex -interaction=nonstopmode -halt-on-error Group18_Report.tex
 ```
 
-Alternatively upload `Group18_Report_LaTeX.zip` to Overleaf and set `Group18_Report.tex` as the main document, using pdfLaTeX.
+For Overleaf, upload the report sources, bibliography and `assets/` directory, then set `Group18_Report.tex` as the main document using pdfLaTeX.
 
 ## Formatting and conversion scope
 

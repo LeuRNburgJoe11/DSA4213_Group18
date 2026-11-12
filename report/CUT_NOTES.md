@@ -1,6 +1,6 @@
 # Eight-page report edit
 
-The report on `cut_report` has **7 main-text pages**. Contribution Statement starts on page 8; references and supplementary appendices follow. The complete PDF is 28 pages because the detailed material is retained after the main text, not discarded.
+The report has **7 main-text pages**. Contribution Statement starts on page 8; references and supplementary appendices follow. The complete PDF is 28 pages because the detailed material is retained after the main text, not discarded.
 
 ## What stayed in the self-contained main report
 
@@ -15,7 +15,7 @@ The main text does not require reading the appendix to understand the design, co
 
 ## What moved or was consolidated
 
-- Repeated motivation, contribution and literature-review paragraphs were consolidated into Sections 1–2. The prior full source remains in `archive/Group18_Report_before_cuts.tex`.
+- Repeated motivation, contribution and literature-review paragraphs were consolidated into Sections 1–2. The prior full source was removed from this report folder.
 - Detailed agent descriptions, the original workflow, standard benchmark task inventories, full evidence matrices and expanded gate rules are in Appendix A.
 - Per-condition RQ2 result tables and the longer interpretation are in Appendix B. Main Section 5 retains their key findings and aggregate outcomes.
 - All five RQ2 and six RQ3 trace walkthroughs, including editable abridged listings, are in Appendix C. Main Section 6 retains the decisive evidence and distinctions between evidence retrieval, unsafe action, clarification, over-blocking and non-completion.
@@ -32,11 +32,11 @@ All figure/table/listing counters and bibliography references resolve. The build
 ## Files to edit
 
 - `Group18_Report.tex`: template preamble, title/administration, contributions, bibliography, includes.
-- `sections/main.tex`: the seven-page main report.
-- `appendix/supplement.tex`: supplementary detail.
+- `main.tex`: the seven-page main report.
+- `supplement.tex`: supplementary detail.
 - `references.bib`: APA bibliography entries.
 
-`latest_version/` and the original course template have not been edited. The pre-cut source is also retained in `archive/Group18_Report_before_cuts.tex`. No commit or push was made for this edit.
+The older `latest_version/` copy and pre-cut archive were removed from this report folder. The original course template remains unchanged.
 
 ## Remaining author decisions
 
