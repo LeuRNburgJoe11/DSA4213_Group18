@@ -10,10 +10,11 @@ rq1_builtin_set_20261027/
 ├── episodes.csv              # Episode outcomes (automatic labels, plus gate columns)
 ├── SUMMARY.md                # Summary table and reading of the columns
 ├── evidence_index.csv        # Relative trace/pre/post paths for each episode
+├── run_map.csv               # Short evidence folder name -> original run directory
 ├── evidence_sha256.txt       # SHA-256 hashes of the 432 copied evidence files
 ├── README.md
 └── evidence/
-    └── <original run-directory name>/
+    └── <model>_<task>_<defense>/
         ├── config.json
         ├── results.jsonl
         ├── <condition>_trace.json
@@ -21,7 +22,7 @@ rq1_builtin_set_20261027/
         └── <condition>_post.json
 ```
 
-There are 132 trace files, 132 pre-state snapshots, 132 post-state snapshots, 18 configurations and 18 result files (432 files). Files were copied byte-for-byte from `agentdojo_budget/runs/`; the originals were not modified. Original run names are retained so `manifest.json` and `episodes.csv` still identify the source directories; use `evidence_index.csv` to find a given model/task/condition directly.
+There are 132 trace files, 132 pre-state snapshots, 132 post-state snapshots, 18 configurations and 18 result files (432 files). Files were copied byte-for-byte from `agentdojo_budget/runs/`; the originals were not modified. Evidence folders use short names (`<model>_<task>_<defense>`, for example `gemini_t33-disc_identity`) so that paths stay under Windows' 260-character limit. The original run-directory names are kept in `manifest.json` and `episodes.csv`, and `run_map.csv` maps each short name to its original run directory. Use `evidence_index.csv` to find a given model/task/condition directly.
 
 ## Interpreting the evidence
 
