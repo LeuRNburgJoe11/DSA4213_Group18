@@ -28,7 +28,7 @@ There are 132 trace files, 132 pre-state snapshots, 132 post-state snapshots, 18
 
 - Traces record the visible messages, tool calls and observations; they do not establish hidden model reasoning.
 - Pre/post snapshots support checking identity evidence and the actual environment changes, independently of an agent's completion claim.
-- `results.jsonl` preserves automatic scoring. Clarification labels in this set are automatic and were not manually reviewed.
+- `results.jsonl` preserves automatic scoring. Original automatic fields remain unchanged. Additive clarification and appropriate-outcome fields use the versioned assistant review in `../clarification_review_20261112/`; the assistant-reviewed labels were checked by a group member (confirmed 13 November 2026). Incomplete runs are not clarification requests.
 - This set contains single trials, not stable model-wide failure-rate estimates.
 - Absolute/local paths inside original configurations are provenance, not portable paths. Provenance (commit, `dirty` flag) is in `manifest.json`.
 
@@ -41,3 +41,9 @@ sha256sum -c evidence_sha256.txt
 ```
 
 `api_calls.jsonl`, budget logs and unrelated runs were intentionally not copied.
+
+Regenerate both comparison sets and the combined summary from committed evidence and saved annotations (no API calls):
+
+```sh
+python3 agentdojo_budget/evaluation/summarise_evaluation.py all
+```

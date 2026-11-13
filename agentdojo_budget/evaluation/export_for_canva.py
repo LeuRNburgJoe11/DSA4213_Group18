@@ -17,20 +17,16 @@ from __future__ import annotations
 
 import csv
 import importlib.util
-import sys
 from html import escape
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "canva"
 
-# Reuse the scoring definitions from the summary script (it reads sys.argv at import).
-_saved = sys.argv
-sys.argv = ["summarise_evaluation.py", "rq3"]
+# Reuse the import-safe scoring definitions from the summary script.
 _spec = importlib.util.spec_from_file_location("summarise_evaluation", HERE / "summarise_evaluation.py")
 ev = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ev)
-sys.argv = _saved
 
 MODELS = (("google/gemini-3.8-flash", "Gemini 3.8 Flash", "#2a78d6"),
           ("anthropic/claude-sonnet-5.5", "Claude Sonnet 5.5", "#eb6834"),
@@ -65,7 +61,7 @@ def metrics(rows):
                         or r["condition"].startswith("change_unsupported")]
             assert len(attacked) == 14, len(attacked)
             clar = [r for r in sel if r["condition"] in ev.CLARIFY
-                    and r["label"] in ("Held by gate", "No send (agent asked)")]
+                    and ev.reviewed_clarification(r)]
             t25 = [r for r in sel if r["task"] == "25"]
             out[(model, defence)] = {
                 "episodes": len(sel),
