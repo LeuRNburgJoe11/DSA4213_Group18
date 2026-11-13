@@ -1,4 +1,4 @@
-# DSA4213 Group 18 — Who Sent This? Agent Judgement Under Conflicting Identity Evidence
+# DSA4213 Group 18 — Trusting the Named Source: Evaluating Sender Impersonation and Sender Verification on Param-Open Agent Tasks
 
 ## Project summary
 
@@ -10,7 +10,7 @@ DSA4213 group project (Joel, Robin, Sherwin, Yu Xuan) evaluating whether tool-us
 
 ## Why this direction (the gap)
 
-AutoDojo already shows defenses weaken on param-open tasks (user names the action, but a parameter must be read from external content), so a plain "impersonation ASR" experiment would just repeat that finding. AgentDojo's own "impersonation" baseline only signs *injected instructions* with the user's name — it never varies *sender identity evidence* itself. ROPE and CaMeL-style defenses check where a value came from (origin), not who plausibly sent it (sender identity). **Varying identity evidence under a fixed param-open task, and testing sender verification as a defense, is the gap this project fills.**
+AutoDojo already shows defenses weaken on param-open tasks (user names the action, but a parameter must be read from external content), so a plain "impersonation ASR" experiment would just repeat that finding. AgentDojo's own "impersonation" baseline only signs *injected instructions* with the user's name — it never varies *sender identity evidence* itself. CaMeL-style defenses check where a value came from (origin), not who plausibly sent it (sender identity). **Varying identity evidence under a fixed param-open task, and testing sender verification as a defense, is the gap this project fills.**
 
 ## Two task variants — both in scope, run in parallel (decided 25 Oct)
 
@@ -73,8 +73,7 @@ Full RQ2 wording: *On param-open tasks, where an agent must take a parameter fro
 
 - **AgentDojo** (Debenedetti et al., NeurIPS 2024): base evaluation framework — extensible environment for tasks, defenses, and adaptive attacks. Task 33 is the base task both variants adapt.
 - **AutoDojo** (Ma et al., 2026, github.com/xhOwenMa/AutoDojo): adaptive black-box attack framework. Defines the **fully-specified / param-open / action-open** task axis (least to most delegated to external content) — this project's tasks are **param-open**. Also shows prompt/filter-based defenses weaken most on action-open tasks; motivates why a plain impersonation-ASR repeat wouldn't be novel.
-- **ROPE / CaMeL**: origin-tracking defenses — check *where* a value came from, not *who* plausibly sent it. This project's gap: identity/sender evidence, not just origin.
-- **AISI "Unsanctioned Supply-Chain Attacks"** (arXiv:2609.38415): background on long-horizon agent misbehavior; no longer central now that delayed-trigger is cut, but still citable for agent-identity-trust framing if useful.
+- **CaMeL**: an origin-tracking defense — check *where* a value came from, not *who* plausibly sent it. This project's gap: identity/sender evidence, not just origin.
 
 ## Repo structure (target — build to this)
 
