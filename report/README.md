@@ -1,6 +1,6 @@
 # Current condensed report
 
-The main text is in `main.tex` (7 compiled pages), with detailed evidence in `supplement.tex`. `Group18_Report.tex` is the main file to compile. See `CUT_NOTES.md` for the rubric coverage, relocation map and remaining author decisions. The original course typography is preserved. Contribution Statement begins on page 8; references and appendix are excluded from the main-text limit.
+The main text is in `main.tex` (8 compiled pages), with detailed evidence in `supplement.tex`. `Group18_Report.tex` is the main file to compile. See `CUT_NOTES.md` for the rubric coverage, relocation map and remaining author decisions. The original course typography is preserved. Contribution Statement begins on page 9; references and appendix are excluded from the main-text limit.
 
 # Group 18 report: LaTeX conversion
 
@@ -26,11 +26,11 @@ The source retains the template's 11pt article class, default Computer Modern fo
 
 Text and the PDF's native tables have been converted to editable LaTeX. The workflow diagrams, two graphical results tables, and two graphical trace listings remain original images. Tables split across pages in the input have been reassembled. The title and administrative layout follow the supplied template. Contribution Statement, References, and Appendix are placed after the main text in template order.
 
-## Draft items preserved for the authors
+## Draft items preserved for the authors (written at the original conversion; several are resolved)
 
 This is a conversion, not a shortened or fact-checked rewrite. It preserves the supplied draft's wording, unfinished material, and section/caption labels.
 
-- The compiled document is 22 pages: 19 pages of main text, followed by contributions, references, and appendix. The template permits only 8 main-text pages. Substantial editing is still needed; changing font/margins is not a solution.
+- (Original conversion note, now out of date: the first compiled version was 22 pages with 19 pages of main text. The current main text is 8 pages, within the template's 8-page limit, with the Contribution Statement on page 9.)
 - Project Summary remains an instruction/placeholder. Several final sections contain headings only.
 - Source headings are not sequential (including 3.2a/3.2b and 7.1/7.2). Internal prose section references need checking after the final structure is agreed.
 - Tables, figures, and trace listings use automatic numbering with unique labels. Prose table references use `\ref` and update after recompiling twice.

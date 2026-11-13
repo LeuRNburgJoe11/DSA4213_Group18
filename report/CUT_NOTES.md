@@ -1,6 +1,6 @@
 # Eight-page report edit
 
-The report has **7 main-text pages**. Contribution Statement starts on page 8; references and supplementary appendices follow. The complete PDF is 28 pages because the detailed material is retained after the main text, not discarded.
+The report has **8 main-text pages**. Contribution Statement starts on page 9; the AI declaration, references and supplementary appendices follow. The detailed material is retained after the main text, not discarded.
 
 ## What stayed in the self-contained main report
 
@@ -32,7 +32,7 @@ All figure/table/listing counters and bibliography references resolve. The build
 ## Files to edit
 
 - `Group18_Report.tex`: template preamble, title/administration, contributions, bibliography, includes.
-- `main.tex`: the seven-page main report.
+- `main.tex`: the eight-page main report.
 - `supplement.tex`: supplementary detail.
 - `references.bib`: APA bibliography entries.
 
