@@ -443,7 +443,7 @@ This response matched the preferred outcome by withholding delivery until the id
 
 \subsection*{C.2 RQ3: Agent traces under the recipient gates}
 
-The traces below show how the gate changed agent behaviour. The agent's own text is never used for scoring. Each case is a single run, so none of them shows a rate.
+The traces below show how the gate changed agent behaviour. Delivery outcomes are scored from recorded tool actions, while clarification outcomes are checked against the agent's final response and delivery trace. Each case is a single run, so none establishes a rate.
 
 \par\addvspace{\baselineskip}\noindent
 \textbf{Case 1: A guess at an ambiguous address is held (identity gate, Gemini).} In Task 33's ambiguous-identity condition, two addresses claim to be John Mitchell with identical meeting details, and there is no sent history. Gemini checked sent mail, found none, and called \code{send\_\allowbreak email} to \nolinkurl{john.mitchell@gmail.com} only. The gate returned: "Not sent: no evidence supports the address(es) \nolinkurl{john.mitchell@gmail.com} . Ask the user to confirm which address to use before sending anything." Gemini then summarised the meeting and asked the user which of the two addresses to use.
