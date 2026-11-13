@@ -27,7 +27,7 @@ The main text does not require reading the appendix to understand the design, co
 
 The 11pt article class, default Computer Modern family, one-inch margins and 1.10 line spacing are preserved. Smaller-font commands were removed from the active source, including supplementary tables and trace listings. Space was saved through content editing, not font/margin reductions or negative vertical spacing. Original diagram labels remain part of the supplied images.
 
-All figure/table/listing counters and bibliography references resolve. The build reports no overfull text boxes, and extracted text stays within the horizontal margins. The rendered pages were visually checked. Build with `latexmk -pdf Group18_Report.tex`.
+All figure/table/listing counters and bibliography references resolve. The build reports no overfull text boxes, and extracted text stays within the horizontal margins. The rendered pages were visually checked. Build with `latexmk -pdf Group18_Report.tex`, or without Perl: `pdflatex`, `biber Group18_Report`, `pdflatex`, `pdflatex` (see `README.md`).
 
 ## Files to edit
 
@@ -38,8 +38,14 @@ All figure/table/listing counters and bibliography references resolve. The build
 
 The older `latest_version/` copy and pre-cut archive were removed from this report folder. The original course template remains unchanged.
 
+## Change log (13 Nov 2026)
+
+- Section 3 wording fixed: "User requests name the recipients without supplying their addresses."
+- The Section 4 recipient-gate figure was scaled from full width to 0.62 of the text width. This brought the main text back to 8 pages: the Contribution Statement is on page 9 (it had slipped to page 10), and the PDF is 30 pages. Tables 1-3 are on pages 5, 5 and 6.
+- The PDF was rebuilt with pdfLaTeX, Biber, pdfLaTeX twice. No errors, overfull boxes or unresolved references.
+
 ## Remaining author decisions
 
-Contribution shares are still incomplete (one is a range); they must be agreed by the group and sum to 100%. Existing contribution descriptions cite some old section numbers and should be reviewed against the new structure. The prior incomplete AI-attribution placeholder is preserved in the archived source, not presented as a finished declaration. The group should add an accurate attribution if required. These were not invented during condensation.
+Contribution shares (25% each, 100% total) and the AI-assistance declaration are now filled in; the group should confirm they are accurate. Contribution descriptions still cite section numbers (for example Sections 4, 5.1, 5.2, 6-8 and Appendices A-B), so check them against the current structure.
 
-Supplementary material intentionally preserves earlier wording for audit. In particular, the standard-task inventory includes Task 26 although the reported pipeline-check subset is 4, 5, 27, 29 and 38. Main results do not rely on Task 26. Review before a final submission if retaining the full inventory.
+The standard-task inventory in Appendix A.1 now lists only the pipeline-check tasks (4, 5, 27, 29, 38) plus modified Tasks 25 and 33; Task 26 no longer appears.
