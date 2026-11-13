@@ -1,4 +1,4 @@
-# DSA4213 Group 18: Who Sent This? Agent judgement under conflicting identity evidence
+# DSA4213 Group 18: Trusting the Named Source: Evaluating Sender Impersonation and Sender Verification on Param-Open Agent Tasks
 
 Group project repository. Everything active is in `agentdojo_budget/`; the abandoned delayed-trigger
 harness and the proposal files are kept in `archive/` (its README is `archive/README.md`).

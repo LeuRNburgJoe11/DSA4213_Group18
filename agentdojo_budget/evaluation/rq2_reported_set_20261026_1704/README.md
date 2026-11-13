@@ -10,11 +10,10 @@ rq2_reported_set_20261026_1704/
 ├── episodes.csv              # Episode outcomes, including reviewed clarification labels
 ├── SUMMARY.md                # Reported condition-level findings
 ├── evidence_index.csv        # Relative trace/pre/post paths for each episode
-├── run_map.csv               # Short evidence folder name -> original run directory
 ├── evidence_sha256.txt       # SHA-256 hashes of the 216 copied evidence files
 ├── README.md
 └── evidence/
-    └── <model>_<task>_<defense>/
+    └── <original run-directory name>/
         ├── config.json
         ├── results.jsonl
         ├── <condition>_trace.json
@@ -22,17 +21,17 @@ rq2_reported_set_20261026_1704/
         └── <condition>_post.json
 ```
 
-There are 66 trace files, 66 pre-state snapshots, 66 post-state snapshots, nine configurations and nine result files (216 files, approximately 2.39 MB). Files were copied byte-for-byte from `agentdojo_budget/runs/`; the originals were not modified. Evidence folders use short names (`<model>_<task>_<defense>`, for example `gemini_t33-disc_identity`) so that paths stay under Windows' 260-character limit. The original run-directory names are kept in `manifest.json` and `episodes.csv`, and `run_map.csv` maps each short name to its original run directory. Absolute/local paths inside original configurations are provenance, not portable paths.
+There are 66 trace files, 66 pre-state snapshots, 66 post-state snapshots, nine configurations and nine result files (216 files, approximately 2.39 MB). Files were copied byte-for-byte from `agentdojo_budget/runs/`; the originals were not modified. Original run names are retained so `manifest.json` and `episodes.csv` still identify the source directories. For this committed copy, resolve each run name under `evidence/`, or use `evidence_index.csv` directly. Absolute/local paths inside original configurations are provenance, not portable paths.
 
 ## Run mapping
 
 | Model | Task 33 discovery | Task 25 discovery | Task 33 address change |
 | --- | --- | --- | --- |
-| Gemini | `gemini_t33-disc_none` (`20261026_170405`) | `gemini_t25-disc_none` (`20261026_170406`) | `gemini_t33-change_none` (`20261026_170408`) |
-| Sonnet | `sonnet_t33-disc_none` (`20261026_170409`) | `sonnet_t25-disc_none` (`20261026_170411`) | `sonnet_t33-change_none` (`20261026_170413`) |
-| GPT | `gpt_t33-disc_none` (`20261026_170415`) | `gpt_t25-disc_none` (`20261026_170417`) | `gpt_t33-change_none` (`20261026_170418`) |
+| Gemini | `20261026_170405` | `20261026_170406` | `20261026_170408` |
+| Sonnet | `20261026_170409` | `20261026_170411` | `20261026_170413` |
+| GPT | `20261026_170415` | `20261026_170417` | `20261026_170418` |
 
-Cells show the evidence folder name and, in brackets, the ending timestamp of the original run directory (full names in `run_map.csv`). Discovery runs contain seven episodes each; address-change runs contain eight.
+Cells show the ending timestamp of the preserved run directory. Discovery runs contain seven episodes each; address-change runs contain eight.
 
 ## Finding a report case
 
