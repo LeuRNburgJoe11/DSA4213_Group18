@@ -55,14 +55,15 @@ Do not edit `Group Project Final Report Template.tex`; it is the original course
 4. Check table, figure and listing order in the PDF.
 5. Commit the sources and the rebuilt `Group18_Report.pdf` together. Auxiliary files (`.aux`, `.bbl`, `.log`, and so on) are git-ignored.
 
+
 ## Captions and cross-references
 
 Use the shared caption command; never type a caption number:
 
 ```tex
-eportcaption{table}{tab:unique-name}{Caption text.}
-eportcaption{figure}{fig:unique-name}{Caption text.}
-eportcaption{listing}{lst:unique-name}{Caption text.}
+\reportcaption{table}{tab:unique-name}{Caption text.}
+\reportcaption{figure}{fig:unique-name}{Caption text.}
+\reportcaption{listing}{lst:unique-name}{Caption text.}
 ```
 
-Refer to them with `Table~ef{tab:unique-name}`, `Figure~ef{fig:unique-name}` or `Listing~ef{lst:unique-name}`. Labels must be unique. Tables, figures and listings have separate counters, and the command handles bold labels, alignment and spacing. Put captions before tables and after figures, as in the existing document. Longtable's own counter increment is disabled because the caption command owns numbering. In prose, use `\code{...}` for identifiers and `llowbreak` after underscores in long names so they wrap.
+Refer to them with `Table~\ref{tab:unique-name}`, `Figure~\ref{fig:unique-name}` or `Listing~\ref{lst:unique-name}`. Labels must be unique. Tables, figures and listings have separate counters, and the command handles bold labels, alignment and spacing. Put captions before tables and after figures, as in the existing document. Longtable's own counter increment is disabled because the caption command owns numbering. In prose, use `\code{...}` for identifiers and `\allowbreak` after underscores in long names so they wrap.
