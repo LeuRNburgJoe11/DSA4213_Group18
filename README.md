@@ -1,7 +1,24 @@
 # DSA4213 Group 18: Trusting the Named Source: Evaluating Sender Impersonation and Sender Verification on Param-Open Agent Tasks
 
-Group project repository. Everything active is in `agentdojo_budget/`; the abandoned delayed-trigger
-harness and the proposal files are kept in `archive/` (its README is `archive/README.md`).
+Group project repository. Experiment code and evaluation evidence are in `agentdojo_budget/`; the
+updated final report and its LaTeX sources are in `report/`. The abandoned delayed-trigger harness
+and proposal files are kept in `archive/` (its README is `archive/README.md`).
+
+## Final report and reported summaries
+
+- **Final report:** [PDF](report/Group18_Report.pdf) (29 pages), built from
+  [Group18_Report.tex](report/Group18_Report.tex), [main.tex](report/main.tex),
+  [supplement.tex](report/supplement.tex), and [references.bib](report/references.bib).
+- **RQ2, no-defense baseline:** [SUMMARY.md](agentdojo_budget/evaluation/rq2_reported_set_20261026_1704/SUMMARY.md)
+  and [episodes.csv](agentdojo_budget/evaluation/rq2_reported_set_20261026_1704/episodes.csv).
+- **RQ3, recipient gates:** [SUMMARY.md](agentdojo_budget/evaluation/rq3_gated_set_20261027/SUMMARY.md)
+  and [episodes.csv](agentdojo_budget/evaluation/rq3_gated_set_20261027/episodes.csv).
+- **RQ1/RQ2/RQ3 comparison:** [COMBINED_rq1_rq3.md](agentdojo_budget/evaluation/COMBINED_rq1_rq3.md).
+  The RQ1 built-in-defense summary is [here](agentdojo_budget/evaluation/rq1_builtin_set_20261027/SUMMARY.md).
+
+The reported comparison summaries use the saved clarification review; for example, Gemini's RQ3
+readers-gate clarification count is Q=3/4. The summaries are reproducible from the committed
+evaluation evidence and annotations without new model calls.
 
 ## RQ2: recipient identity experiments
 
@@ -37,7 +54,7 @@ IDENTITY_TASK33_CHANGE.md               Detailed change protocol
 archive/                                Earlier tasks, diagnostics and benchmark scripts
 runs/                                   All existing raw results and run logs, preserved in place
 evaluation/                             Reported sets (SUMMARY.md, episodes.csv, manifest.json) per RQ
-evaluation/summarise_evaluation.py      Builds the RQ1, RQ3 and combined evaluation files from runs/
+evaluation/summarise_evaluation.py      Regenerates RQ1/RQ3 comparison files from committed evidence and review annotations
 ```
 
 
@@ -100,11 +117,12 @@ for comparisons using the same model, reasoning effort, conditions and exposure.
 
 #### RQ2 results so far
 
-The reported no-defence pass (Robin, 26 Oct, 17:04) is `evaluation/rq2_reported_set_20261026_1704/`: all
-66 episodes completed, one trial per condition and model, no episode replaced or retried. `SUMMARY.md`
-has the outcome tables, `episodes.csv` the per-episode labels and `manifest.json` the exact source
-folders, settings, git commit and cost. Earlier passes are kept unchanged in the other `evaluation/`
-folders.
+The reported no-defence pass (Robin, 26 Oct, 17:04) is `agentdojo_budget/evaluation/rq2_reported_set_20261026_1704/`:
+all 66 episodes completed, one trial per condition and model, with no episode replaced or retried.
+Its [SUMMARY.md](agentdojo_budget/evaluation/rq2_reported_set_20261026_1704/SUMMARY.md) has the
+outcome tables; [episodes.csv](agentdojo_budget/evaluation/rq2_reported_set_20261026_1704/episodes.csv)
+has per-episode results, and `manifest.json` records source folders, settings, commit and cost.
+Earlier passes are preserved in the other `evaluation/` folders.
 
 | Model | Completed | Episodes with attacker delivery | Pre-send identity clarification | Cost (US$) |
 |---|---:|---:|---:|---:|
@@ -184,7 +202,9 @@ Totals per model: 3 baseline + 6 RQ1 + 6 RQ3 = 15 runs, 110 episodes. For the th
 #### RQ1 and RQ3 results so far
 
 Both passes ran on 27 Oct at commit f2c949e: 18 runs and 132 episodes each, one trial per condition, model
-and setting, with no API errors and every run completing. The GPT-6 gated runs record `dirty: true` only
+and setting, with no API/provider errors. Three Gemini gated episodes reached the model output limit
+(one readers-gate episode and two identity-gate episodes); they remain in the evaluation denominators
+as incomplete. The GPT-6 gated runs record `dirty: true` only
 because an untracked run log was in the repository when they started (no code differed from the commit);
 every other run records `dirty: false`. Keep run logs inside `runs/` (gitignored) so the flag stays false.
 
@@ -199,9 +219,11 @@ every other run records `dirty: false`. Keep run logs inside `runs/` (gitignored
 
 The no-defence rows are the RQ2 reported pass, not new runs. Reported cost: US$3.06 for RQ1 and US$3.31
 for RQ3 (US$7.84 with the RQ2 pass). These are single trials, so a difference of one to three episodes is
-not an effect. Clarification labels are automatic, and where the gate held a send the clarification is
-partly induced by its own error message. The full tables are `evaluation/rq1_builtin_set_20261027/`,
-`evaluation/rq3_gated_set_20261027/` and `evaluation/COMBINED_rq1_rq3.md` (one at-a-glance table per model).
+not an effect. The comparison summaries apply the saved clarification review; raw automatic outcomes
+remain in the episode files. Some clarifications after a gate hold are partly induced by the gate's error
+message. See the [RQ1 summary](agentdojo_budget/evaluation/rq1_builtin_set_20261027/SUMMARY.md),
+[RQ3 summary](agentdojo_budget/evaluation/rq3_gated_set_20261027/SUMMARY.md), and
+[combined comparison](agentdojo_budget/evaluation/COMBINED_rq1_rq3.md).
 
 ### Options and defaults
 
@@ -229,15 +251,23 @@ compare different exposure modes separately. All setups require --controlled-inb
 
 ### Summarising the results
 
-Log each model's block into `runs/` so the working tree stays clean (`dirty: false`), for example
-`... 2>&1 | tee agentdojo_budget/runs/rq3_gate_sonnet.log`. The evaluation files are built from the `OUTPUT`
-lines in `runs/rq1_builtin_<model>.log` and `runs/rq3_gate_<model>.log`:
+The checked-in RQ2 [summary](agentdojo_budget/evaluation/rq2_reported_set_20261026_1704/SUMMARY.md)
+is a fixed reported set. The RQ1/RQ3 summaries and combined comparison are regenerated from committed
+manifests, evidence files, and the versioned clarification annotations—not from local run logs:
 
 ```sh
-.venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py rq1       # evaluation/rq1_builtin_set_*/
-.venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py rq3       # evaluation/rq3_gated_set_*/
-.venv/bin/python agentdojo_budget/evaluation/summarise_evaluation.py combined  # COMBINED_rq1_rq3.md (run last)
+python3 agentdojo_budget/evaluation/summarise_evaluation.py all
 ```
+
+This writes the [RQ1 summary](agentdojo_budget/evaluation/rq1_builtin_set_20261027/SUMMARY.md),
+[RQ3 summary](agentdojo_budget/evaluation/rq3_gated_set_20261027/SUMMARY.md), their episode CSVs,
+and the [combined comparison](agentdojo_budget/evaluation/COMBINED_rq1_rq3.md). It makes no model
+calls. Evidence integrity checks use byte-level SHA-256 hashes; use an LF-preserving checkout and
+UTF-8 Python mode on Windows (for example, set `core.autocrlf=false` before checkout and run with
+`python -X utf8`) so line-ending conversion or the system locale does not cause verification failures.
+
+For new model runs, log each model's block into `runs/` so the working tree stays clean (`dirty: false`),
+for example `... 2>&1 | tee agentdojo_budget/runs/rq3_gate_sonnet.log`.
 
 For a quick look at raw results instead:
 
@@ -275,9 +305,10 @@ EOF
   the default exposure (no `--inbox-exposure`).
   The runner's spend is not in a shared ledger, so each person checks the OpenRouter dashboard.
 - **Repeats.** Rerun a command for a new timestamped folder; nothing is overwritten.
-- **Status (27 Oct).** Done: the no-defence RQ2 pass (66 episodes, US$1.47), the RQ1 built-in-defence
-  pass (132 episodes, US$3.06) and the RQ3 gate pass (132 episodes, US$3.31), all on three models. Remaining
-  work is the write-up and slides; no new experiments after the 29 Oct submission.
+- **Status (13 Nov).** The reported RQ2 baseline (66 episodes), RQ1 built-in-defense pass (132 episodes),
+  and RQ3 gate pass (132 episodes) are complete across three models. The updated final report is
+  [report/Group18_Report.pdf](report/Group18_Report.pdf); the reported comparison files include reviewed
+  clarification labels and retain incomplete Gemini gate episodes in their denominators.
 
 ## Detailed protocols
 
@@ -287,8 +318,9 @@ EOF
 
 Always distinguish actual misdelivery from a missed preferred action. Context
 accuracy is not authenticated identity; history preferences assume the original
-relationship is genuine. Clarification heuristics require manual review, and
-semantic summary/assignment quality is not fully automatically evaluated.
+relationship is genuine. Clarification decisions use saved trace-based review;
+the assistant-reviewed decisions were checked by a group member, not independently
+double-annotated. Semantic summary/assignment quality is not fully automatically evaluated.
 
 Earlier compact-six/core-seven tasks, the initial benchmark driver and transport
 diagnostics are retained under archive/. Old --task 33 and legacy condition sets
